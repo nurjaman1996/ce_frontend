@@ -29,6 +29,18 @@ const Sidebar = () => {
                     <div>Products</div>
                 </Link>
 
+                <div className='font-medium text-gray-500'>Master</div>
+
+                <Link href="/supplier" className={`${params === '/supplier' ? `bg-[#F3F4F3]` : `hover:bg-[#fbfbfb]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center`}>
+                    <Icon.User size={20} />
+                    <div>Supplier</div>
+                </Link>
+
+                <Link href="/reseller" className={`${params === '/reseller' ? `bg-[#F3F4F3]` : `hover:bg-[#fbfbfb]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center`}>
+                    <Icon.Users size={20} />
+                    <div>Reseller</div>
+                </Link>
+
                 <div className='font-medium text-gray-500'>Purchasing</div>
 
                 <Link href="/purchaseorder" className={`${params === '/purchaseorder' ? `bg-[#F3F4F3]` : `hover:bg-[#fbfbfb]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center`}>
