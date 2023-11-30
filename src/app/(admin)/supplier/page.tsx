@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import Link from 'next/link'
 import {
   Table,
@@ -54,17 +55,21 @@ const datasupplier = [
 export default function Supplier() {
   return (
     <div>
-      <div className="flex flex-nowrap">
+      <div className="font-bold text-4xl">
+        Supplier
+      </div>
+      <div className="flex flex-nowrap mt-4">
+        {/*  */}
         <div className="font-bold text-4xl">
-          Supplier
+          <Input type="text" className='w-[400px] shadow-md' placeholder="Search Supplier.." />
         </div>
         <div className="absolute right-5">
-          <Button className=' bg-green-400'>Add New</Button>
+          <Button className='bg-blue-500 shadow-md'>Add New</Button>
         </div>
       </div>
 
-      <div className="mt-5">
-        <Table className='border border-black-500'>
+      <div className="mt-5 shadow-md">
+        <Table className='border border-black-500 bg-white'>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[150px]">ID Supplier</TableHead>

@@ -11,6 +11,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
 
 export default function Home() {
   const [Token, setToken]: any = useState("")
@@ -28,28 +30,115 @@ export default function Home() {
 
   return (
     <div className="w-full">
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Is it accessible?</AccordionTrigger>
-          <AccordionContent>
-            Yes. It adheres to the WAI-ARIA design pattern.
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Is it styled?</AccordionTrigger>
-          <AccordionContent>
-            Yes. It comes with default styles that matches the other
-            components&apos; aesthetic.
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Is it animated?</AccordionTrigger>
-          <AccordionContent>
-            Yes. It&apos;s animated by default, but you can disable it if you
-            prefer.
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <div className="flex flex-nowrap mt-4">
+        <div className="font-bold text-4xl">
+          Dashboard
+        </div>
+        <div className="absolute right-5">
+          <Button className='bg-blue-500 shadow-md'>INI DATE RANGE</Button>
+        </div>
+      </div>
+
+      <div className='flex flex-row mt-4 gap-8'>
+        <div className='basis-1/4 bg-white border-2 border-black-500 h-[110px] '>
+          <div className='text-xl font-semibold py-3 px-5'>
+            Users Total
+          </div>
+          <div className='flex flex-row text-center'>
+            <div className='basis-1/2 text-4xl font-semibold py-0 px-5'>
+              11.8M
+            </div>
+            <div className=' basis-1/2 pull-right mt-1 mx-5'>
+              <Badge className='bg-gray-300 text-[#000000] text-md absolute right'>+2,5%</Badge>
+            </div>
+          </div>
+        </div>
+        <div className='basis-1/4 bg-white border-2 border-black-500 h-[110px] '>
+          <div className='text-xl font-semibold py-3 px-5'>
+            New Users
+          </div>
+          <div className='flex flex-row text-center'>
+            <div className='basis-1/2 text-4xl font-semibold py-0 px-5'>
+              8.236k
+            </div>
+            <div className=' basis-1/2 pull-right mt-1 mx-5'>
+              <Badge className='bg-gray-400 text-white text-md absolute right'>-1,2%</Badge>
+            </div>
+          </div>
+        </div>
+        <div className='basis-1/4 bg-white border-2 border-black-500 h-[110px] '>
+          <div className='text-xl font-semibold py-3 px-5'>
+            Active Users
+          </div>
+          <div className='flex flex-row text-center'>
+            <div className='basis-1/2 text-4xl font-semibold py-0 px-5'>
+              2.352M
+            </div>
+            <div className=' basis-1/2 pull-right mt-1 mx-5'>
+              <Badge className='bg-gray-300 text-[#000000] text-md absolute right'>+11%</Badge>
+            </div>
+          </div>
+        </div>
+        <div className='basis-1/4 bg-white border-2 border-black-500 h-[110px] '>
+          <div className='text-xl font-semibold py-3 px-5'>
+            New Users
+          </div>
+          <div className='flex flex-row text-center'>
+            <div className='basis-1/2 text-4xl font-semibold py-0 px-5'>
+              2.352M
+            </div>
+            <div className=' basis-1/2 pull-right mt-1 mx-5'>
+              <Badge className='bg-gray-300 text-[#000000] text-md absolute right'>+11%</Badge>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className='flex flex-row mt-8 gap-8'>
+        <div className='basis-1/2 bg-white border-2 border-black-500 h-[400px] '>
+          <div className='text-xl font-bold py-3 px-5'>
+            Top Orders Client
+          </div>
+          <div className='flex flex-row text-center'>
+            <div className='basis-1/2 font-semibold text-left px-5'>
+              Dadang
+            </div>
+            <div className=' basis-1/2 text-right mx-5'>
+              4.5M
+            </div>
+          </div>
+          <div className='flex flex-row text-center mt-4'>
+            <div className='basis-1/2 font-semibold text-left px-5'>
+              Suwarno
+            </div>
+            <div className=' basis-1/2 text-right mx-5'>
+              4.5M
+            </div>
+          </div>
+          <div className='flex flex-row text-center mt-4'>
+            <div className='basis-1/2 font-semibold text-left px-5'>
+              Agus Maulana
+            </div>
+            <div className=' basis-1/2 text-right mx-5'>
+              4.5M
+            </div>
+          </div>
+          <div className='flex flex-row text-center mt-4'>
+            <div className='basis-1/2 font-semibold text-left px-5'>
+              Fikri Moch
+            </div>
+            <div className=' basis-1/2 text-right mx-5'>
+              4.5M
+            </div>
+          </div>
+        </div>
+
+        <div className='basis-1/2 bg-white border-2 border-black-500 h-[400px] '>
+          <div className='text-xl font-bold py-3 px-5'>
+            Progress Batch
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
