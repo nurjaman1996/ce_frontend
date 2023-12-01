@@ -57,7 +57,7 @@ export default function PurchaseOrder() {
       </div>
 
       <div className='flex flex-row mt-4 gap-8  text-white'>
-        <div className='basis-1/2 bg-white border-2 border-black-500 h-[125px] bg-red-400'>
+        <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-red-400'>
           <div className='text-xl font-semibold py-4 px-5'>
             Total Purchase Orders
           </div>
@@ -70,7 +70,7 @@ export default function PurchaseOrder() {
             </div>
           </div>
         </div>
-        <div className='basis-1/2 bg-white border-2 border-black-500 h-[125px] bg-red-400'>
+        <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-red-400'>
           <div className='text-xl font-semibold py-4 px-5'>
             Capital Amount
           </div>
