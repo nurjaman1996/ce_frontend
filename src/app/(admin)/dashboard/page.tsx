@@ -31,16 +31,16 @@ export default function Home() {
   return (
     <div className="w-full">
       <div className="flex flex-nowrap mt-4">
-        <div className="font-bold text-4xl">
+        <div className="font-bold text-4xl text-red-500">
           Dashboard
         </div>
         <div className="absolute right-5">
-          <Button className='bg-blue-500 shadow-md'>INI DATE RANGE</Button>
+          <Button className='bg-blue-400 font-bold shadow-md'>INI DATE RANGE</Button>
         </div>
       </div>
 
-      <div className='flex flex-row mt-4 gap-8'>
-        <div className='basis-1/4 bg-white border-2 border-black-500 h-[110px] '>
+      <div className='flex flex-row mt-4 gap-8 text-white'>
+        <div className='basis-1/4 bg-red-400 border-2 border-black-500 h-[110px] '>
           <div className='text-xl font-semibold py-3 px-5'>
             Users Total
           </div>
@@ -49,11 +49,11 @@ export default function Home() {
               11.8M
             </div>
             <div className=' basis-1/2 pull-right mt-1 mx-5'>
-              <Badge className='bg-gray-300 text-[#000000] text-md absolute right'>+2,5%</Badge>
+              <Badge className='bg-yellow-100 text-[#000000] text-md absolute right'>+2,5%</Badge>
             </div>
           </div>
         </div>
-        <div className='basis-1/4 bg-white border-2 border-black-500 h-[110px] '>
+        <div className='basis-1/4 bg-red-400 border-2 border-black-500 h-[110px] '>
           <div className='text-xl font-semibold py-3 px-5'>
             New Users
           </div>
@@ -62,11 +62,11 @@ export default function Home() {
               8.236k
             </div>
             <div className=' basis-1/2 pull-right mt-1 mx-5'>
-              <Badge className='bg-gray-400 text-white text-md absolute right'>-1,2%</Badge>
+              <Badge className='bg-red-800 text-white text-md absolute right'>-1,2%</Badge>
             </div>
           </div>
         </div>
-        <div className='basis-1/4 bg-white border-2 border-black-500 h-[110px] '>
+        <div className='basis-1/4 bg-red-400 border-2 border-black-500 h-[110px] '>
           <div className='text-xl font-semibold py-3 px-5'>
             Active Users
           </div>
@@ -75,11 +75,11 @@ export default function Home() {
               2.352M
             </div>
             <div className=' basis-1/2 pull-right mt-1 mx-5'>
-              <Badge className='bg-gray-300 text-[#000000] text-md absolute right'>+11%</Badge>
+              <Badge className='bg-yellow-100 text-[#000000] text-md absolute right'>+11%</Badge>
             </div>
           </div>
         </div>
-        <div className='basis-1/4 bg-white border-2 border-black-500 h-[110px] '>
+        <div className='basis-1/4 bg-red-400 border-2 border-black-500 h-[110px] '>
           <div className='text-xl font-semibold py-3 px-5'>
             New Users
           </div>
@@ -88,14 +88,14 @@ export default function Home() {
               2.352M
             </div>
             <div className=' basis-1/2 pull-right mt-1 mx-5'>
-              <Badge className='bg-gray-300 text-[#000000] text-md absolute right'>+11%</Badge>
+              <Badge className='bg-yellow-100 text-[#000000] text-md absolute right'>+11%</Badge>
             </div>
           </div>
         </div>
       </div>
 
-      <div className='flex flex-row mt-8 gap-8'>
-        <div className='basis-1/2 bg-white border-2 border-black-500 h-[400px] '>
+      <div className='flex flex-row mt-8 gap-8 text-white'>
+        <div className='basis-1/2 bg-red-400 border-2 border-black-500 h-[400px] '>
           <div className='text-xl font-bold py-3 px-5'>
             Top Orders Client
           </div>
@@ -133,7 +133,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='basis-1/2 bg-white border-2 border-black-500 h-[400px] '>
+        <div className='basis-1/2 bg-red-400 border-2 border-black-500 h-[400px] '>
           <div className='text-xl font-bold py-3 px-5'>
             Progress Batch
           </div>
