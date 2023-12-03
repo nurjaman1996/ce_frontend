@@ -38,7 +38,7 @@ const Sidebar = () => {
 
                 <Link href="/reseller" className={`${params === '/reseller' ? `bg-[#f87171]` : `hover:bg-[#f87171]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center font-medium text-white`}>
                     <Icon.Users size={20} />
-                    <div>Reseller</div>
+                    <div>Customer</div>
                 </Link>
 
                 <div className='font-bold text-white'>Purchasing</div>

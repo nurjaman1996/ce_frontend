@@ -45,10 +45,11 @@ const datapurchaseorder = [
   {
     no: "1",
     idproduk: "PO001",
-    produk: "celana jeans",
+    produk: "image.jpeg",
     name: "Supplier-1",
     berat: "400",
     qty: "50",
+    varian: "5",
     kurs: "2.170",
     overhead: "89.600",
     margin: "50",
@@ -60,10 +61,11 @@ const datapurchaseorder = [
   {
     no: "2",
     idproduk: "PO002",
-    produk: "Sweater Ohayo",
+    produk: "image.jpeg",
     name: "Supplier-1",
     berat: "400",
     qty: "50",
+    varian: "5",
     kurs: "2.170",
     overhead: "89.600",
     margin: "50",
@@ -173,16 +175,16 @@ export default function Products() {
           <TableHeader>
             <TableRow className='bg-red-400 font-bold'>
               <TableHead className="border  text-white w-[3%] text-center">No</TableHead>
-              <TableHead className="border  text-white w-[31.5%] text-left">Name</TableHead>
+              <TableHead className="border  text-white w-[12%] text-center">Image</TableHead>
+              <TableHead className="border  text-white w-[30%] text-left">Name</TableHead>
               <TableHead className="border  text-white w-[2.5%] text-center">Weight</TableHead>
+              <TableHead className="border  text-white w-[2.5%] text-center">Stock</TableHead>
+              <TableHead className="border  text-white w-[3%] text-center">Varian</TableHead>
               <TableHead className="border  text-white w-[6%] text-center">Kurs</TableHead>
               <TableHead className="border  text-white w-[5%] text-center">Overhead</TableHead>
               <TableHead className="border  text-white w-[6%] text-center">Margin</TableHead>
-              <TableHead className="border  text-white w-[5%] text-center">Qty</TableHead>
-              <TableHead className="border  text-white w-[10%] text-center">Selling Price</TableHead>
-              <TableHead className="border  text-white w-[10%] text-center">Cost</TableHead>
-              <TableHead className="border  text-white w-[8%] text-center">Total Cost</TableHead>
-              <TableHead className="border  text-white w-[10%] text-center">Profit</TableHead>
+              <TableHead className="border  text-white w-[6%] text-center">Cost</TableHead>
+              <TableHead className="border  text-white w-[15%] text-center">Selling Price</TableHead>
               <TableHead className="border  text-white w-[5%] text-center">ACT</TableHead>
             </TableRow>
           </TableHeader>
@@ -190,16 +192,31 @@ export default function Products() {
             {datapurchaseorder.map((dataisi) => (
               <TableRow key={dataisi.name}>
                 <TableCell className="border text-center w-[3.5%] font-bold">{dataisi.no}</TableCell>
-                <TableCell className="border text-left w-[40%]"><span className='capitalize'>{dataisi.produk}</span><br></br><span>{dataisi.idproduk}</span></TableCell>
+
+                <TableCell className="border text-center w-[12%] font-bold">
+                  <Image
+                    className='aspect-square rounded-xl'
+                    src={`/${dataisi.produk}`}
+                    width={300}
+                    height={300}
+                    alt="Picture of the author"
+                    style={{ height: 100, width: 100 }}
+                  />
+                </TableCell>
+
+                <TableCell className="border text-left w-[30%]">
+                  <span className='capitalize'>{dataisi.produk}</span><br></br>
+                  <span>{dataisi.idproduk}</span>
+                </TableCell>
+
                 <TableCell className="border w-[5.5%] text-center">{dataisi.berat}Gr</TableCell>
-                <TableCell className="border w-[3%] text-center ">Rp{dataisi.kurs}</TableCell>
-                <TableCell className="border w-[5%] text-center ">Rp{dataisi.overhead}</TableCell>
-                <TableCell className="border w-[6%] text-center font-bold text-red-600">{dataisi.margin}%</TableCell>
-                <TableCell className="border w-[4%] text-center">{dataisi.qty}</TableCell>
-                <TableCell className="border w-[10.5%] text-center ">Rp{dataisi.hargajual}</TableCell>
-                <TableCell className="border w-[10%] text-center ">Rp{dataisi.modal}</TableCell>
-                <TableCell className="border w-[10%] text-center ">Rp{dataisi.total_modal}</TableCell>
-                <TableCell className="border w-[10%] text-center ">Rp{dataisi.profit}</TableCell>
+                <TableCell className="border w-[5.5%] text-center">{dataisi.qty}</TableCell>
+                <TableCell className="border w-[3%] text-center ">{dataisi.varian}</TableCell>
+                <TableCell className="border w-[5%] text-center bg-orange-100">Rp{dataisi.kurs}</TableCell>
+                <TableCell className="border w-[5%] text-center  bg-orange-100">Rp{dataisi.overhead}</TableCell>
+                <TableCell className="border w-[6%] text-center font-bold text-red-600  bg-orange-100">{dataisi.margin}%</TableCell>
+                <TableCell className="border w-[10%] text-center  bg-orange-100">Rp{dataisi.modal}</TableCell>
+                <TableCell className="border w-[15%] text-center ">Rp{dataisi.hargajual}</TableCell>
                 <TableCell className="border w-[5%]"><Icon.FileEdit color="#00b3ff" /><Icon.X color="#ff0000" /></TableCell>
               </TableRow>
             ))}

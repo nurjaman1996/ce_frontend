@@ -17,8 +17,8 @@ import * as Icon from "lucide-react"
 const datareseller = [
   {
     no: "1",
-    idsupplier: "SUP001",
-    name: "Supplier-1",
+    idsupplier: "CUS001",
+    name: "Customer-1",
     hp: "08594646834",
     address: "Ki. Nanas No. 46, Padangpanjang 96925, Papua",
     kel: "Garuda",
@@ -76,12 +76,12 @@ export default function Reseller() {
   return (
     <div>
       <div className="font-bold text-4xl text-red-500">
-        Reseller
+        Customer
       </div>
       <div className="flex flex-nowrap mt-4">
         {/*  */}
         <div className="font-bold text-4xl">
-          <Input type="text" className='w-[400px] shadow-md' placeholder="Search Reseller.." />
+          <Input type="text" className='w-[400px] shadow-md' placeholder="Search Customer.." />
         </div>
         <div className="absolute right-5">
           <Button className='bg-blue-400 font-bold shadow-md'>Add New</Button>
