@@ -82,7 +82,7 @@ export default function Neraca() {
   return (
     <main className="">
       <div className="flex flex-nowrap mt-4">
-        <div className="font-bold text-4xl text-red-500">
+        <div className="font-bold text-4xl text-gray-500">
           Neraca
         </div>
         <div className="absolute right-5">
