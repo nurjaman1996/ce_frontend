@@ -13,6 +13,17 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import * as Icon from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
 
 const datasupplier = [
   {
@@ -62,7 +73,7 @@ const datasupplier = [
 export default function Supplier() {
   return (
     <div>
-      <div className="font-bold text-4xl text-red-500">
+      <div className="font-bold text-4xl">
         Supplier
       </div>
       <div className="flex flex-nowrap mt-4">
@@ -71,19 +82,48 @@ export default function Supplier() {
           <Input type="text" className='w-[400px] shadow-md' placeholder="Search Supplier.." />
         </div>
         <div className="absolute right-5">
-          <Button className='bg-blue-400 font-bold shadow-md'>Add New</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className=' font-bold text-white'>Add New</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[1000px]">
+              <DialogHeader>
+                <DialogTitle>Add New Supplier</DialogTitle>
+                <DialogDescription>
+                  Create new supplier here. Click save when you're done.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Name
+                  </Label>
+                  <Input id="name" value="Supplier-1" className="col-span-3" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="username" className="text-right">
+                    Address
+                  </Label>
+                  <Input id="username" value="Kpg. R.M. Said No. 568, Prabumulih 71434, Papua" className="col-span-3" />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit">Save data</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
       <div className="mt-5 shadow-md">
         <Table className='border border-black-500'>
-          <TableHeader className='bg-red-400'>
+          <TableHeader className='bg-gray-700'>
             <TableRow>
               <TableHead className="border text-center font-bold text-white w-[50px]">No</TableHead>
               <TableHead className="border text-center font-bold text-white w-[150px]">ID Supplier</TableHead>
               <TableHead className='border text-left font-bold text-white'>Name</TableHead>
               <TableHead className="border text-left font-bold text-white text-left">Address</TableHead>
-              <TableHead className="border text-center w-[50px] font-bold text-white text-left">Act</TableHead>
+              <TableHead className="border text-center w-[100px] font-bold text-white text-center">Act</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className='bg-white'>
@@ -93,12 +133,21 @@ export default function Supplier() {
                 <TableCell className="border text-center font-medium w-[150px]">{dataisi.idsupplier}</TableCell>
                 <TableCell className="border font-medium">{dataisi.name}</TableCell>
                 <TableCell className="border text-left">{dataisi.address}</TableCell>
-                <TableCell className="border text-center w-[50px]"><Icon.FileEdit color="#00b3ff" /></TableCell>
+                <TableCell className="border text-center w-[100px]">
+                  <div className='flex flex-row justify-center'>
+                    <div className='basis-1-2'>
+                      <Icon.FileEdit color="#00b3ff" />
+                    </div>
+                    <div className='basis-1-2 ml-2'>
+                      <Icon.XCircle color="#ff0000" />
+                    </div>
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }
