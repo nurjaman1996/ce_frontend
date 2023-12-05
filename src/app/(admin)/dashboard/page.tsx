@@ -95,7 +95,7 @@ export default function Home() {
       </div>
 
       <div className='flex flex-row mt-8 gap-8 text-white'>
-        <div className='basis-1/2 bg-red-400 border-2 border-black-500 h-[400px] '>
+        <div className='basis-1/2 bg-blue-400 border-2 border-black-500 h-[400px] '>
           <div className='text-xl font-bold py-3 px-5'>
             Top Orders Client
           </div>
@@ -133,7 +133,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='basis-1/2 bg-red-400 border-2 border-black-500 h-[400px] '>
+        <div className='basis-1/2 bg-blue-400 border-2 border-black-500 h-[400px] '>
           <div className='text-xl font-bold py-3 px-5'>
             Progress Batch
           </div>
