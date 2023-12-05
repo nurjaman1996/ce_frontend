@@ -123,7 +123,7 @@ export default function Order() {
 
       <div className='flex flex-row mt-2 gap-2 text-white'>
 
-        <div className='basis-4/6 flex flex-row rounded-3xl bg-white border-2 border-black-500 h-[472px] bg-white shadow-xl'>
+        <div className='basis-4/6 flex flex-row rounded-3xl border-2 border-black-500 h-[472px] bg-white shadow-xl'>
 
           {datapurchaseorder.map((dataisi) => (
             < div className='basis-1/3' >
@@ -154,12 +154,12 @@ export default function Order() {
 
 
         <div className='basis-2/6 rounded-3xl h-[475px]'>
-          <div className='flex flex-row rounded-3xl bg-white border-2 border-black-500 h-[50px] bg-white shadow-xl'>
+          <div className='flex flex-row rounded-3xl  border-2 border-black-500 h-[50px] bg-white shadow-xl'>
             <span className='basis-1/2 text-xl font-bold mt-2 ml-5 text-left text-black'>Order #CR00001</span>
             <span className='basis-1/6 text-4xl font-bold mr-5 text-center text-black'>|</span>
             <span className='basis-1/4 text-xl font-bold mt-2 mr-5 text-right text-black'>Invoiced</span>
           </div>
-          <div className='rounded-3xl bg-white border-2 border-black-500 h-[416px] bg-white text-center mt-2 shadow-xl'>
+          <div className='rounded-3xl border-2 border-black-500 h-[416px] bg-white text-center mt-2 shadow-xl'>
             <div className="py-5 px-5">
               <hr />
             </div>
@@ -191,7 +191,7 @@ export default function Order() {
               <hr />
             </div>
           </div>
-          <div className='rounded-3xl bg-white border-2 border-black-500 h-[171px] bg-white text-center mt-2 shadow-xl'>
+          <div className='rounded-3xl  border-2 border-black-500 h-[171px] bg-white text-center mt-2 shadow-xl'>
             <div className="py-5 px-5">
               <Button className='bg-red-400 font-extrabold shadow-md w-full bottom-auto mb-2 mt-5' >Cancel</Button>
               <Button className='bg-green-400 font-extrabold shadow-md w-full bottom-auto' >Pay (Rp 0)</Button>
@@ -201,7 +201,7 @@ export default function Order() {
       </div >
 
       <div className='flex flex-row mt-2 text-white mr-2'>
-        <div className='basis-4/6 rounded-3xl bg-white border-2 border-black-500 h-[170px] bg-white shadow-xl'>
+        <div className='basis-4/6 rounded-3xl  border-2 border-black-500 h-[170px] bg-white shadow-xl'>
           <div className="flex flex-row">
             <div className="basis-full text-black mt-3 ml-5 text-center text-xl">
               <span className="font-bold">Ship to :</span><br />
