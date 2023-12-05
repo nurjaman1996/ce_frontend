@@ -33,7 +33,7 @@ import axios from 'axios'
 
 export default function Supplier() {
 
-  let datasupplier: any = []
+  const [datasupplier, setdatasupplier]: any = useState([]);
 
   const [v_supplier, setv_supplier]: any = useState('');
   const [v_contact, setv_contact]: any = useState('');
@@ -50,14 +50,13 @@ export default function Supplier() {
     })
       .then(function (response) {
         // handle success
-        console.log(response.data);
-        datasupplier = [response.data]
-        console.log(datasupplier)
+        setdatasupplier(response.data.data)
       })
       .catch(function (error) {
         // handle error
         console.log(error);
       })
+    console.log(datasupplier)
   }
 
   useEffect(() => {
@@ -128,22 +127,10 @@ export default function Supplier() {
             </TableRow>
           </TableHeader>
           <TableBody className='bg-white'>
-            {datasupplier.data.map((dataisi: any) => (
-              <TableRow key={dataisi.name}>
-                <TableCell className="border text-center w-[50px] font-bold">{dataisi.no}</TableCell>
-                <TableCell className="border text-center font-medium w-[150px]">{dataisi.idsupplier}</TableCell>
-                <TableCell className="border font-medium">{dataisi.name}</TableCell>
-                <TableCell className="border text-left">{dataisi.address}</TableCell>
-                <TableCell className="border text-center w-[100px]">
-                  <div className='flex flex-row justify-center'>
-                    <div className='basis-1-2'>
-                      <Icon.FileEdit color="#00b3ff" />
-                    </div>
-                    <div className='basis-1-2 ml-2'>
-                      <Icon.XCircle color="#ff0000" />
-                    </div>
-                  </div>
-                </TableCell>
+            {datasupplier.map((dataisi: any, index: any) => (
+              <TableRow key={index}>
+                <TableCell className="border text-center w-[50px] font-bold">{index + 1}</TableCell>
+                <TableCell className="border text-center w-[50px] font-bold">{dataisi.id_sup}</TableCell>
               </TableRow>
             ))}
           </TableBody>
