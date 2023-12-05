@@ -43,6 +43,11 @@ const Sidebar = () => {
 
                 <div className='font-bold text-white'>Purchasing</div>
 
+                <Link href="/batch" className={`${params === '/batch' ? `bg-[#f87171]` : `hover:bg-[#f87171]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center font-medium text-white`}>
+                    <Icon.FileClock size={20} />
+                    <div>Batch</div>
+                </Link>
+
                 <Link href="/purchaseorder" className={`${params === '/purchaseorder' ? `bg-[#f87171]` : `hover:bg-[#f87171]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center font-medium text-white`}>
                     <Icon.ClipboardList size={20} />
                     <div>Purchase Order</div>
@@ -52,6 +57,8 @@ const Sidebar = () => {
                     <Icon.FileClock size={20} />
                     <div>Purchasing History</div>
                 </Link>
+
+
 
                 <div className='font-bold text-white'>Reporting</div>
 

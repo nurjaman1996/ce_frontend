@@ -13,6 +13,18 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import * as Icon from "lucide-react"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Textarea } from "@/components/ui/textarea"
 
 const datareseller = [
   {
@@ -84,7 +96,76 @@ export default function Reseller() {
           <Input type="text" className='w-[400px] shadow-md' placeholder="Search Customer.." />
         </div>
         <div className="absolute right-5">
-          <Button className='bg-blue-400 font-bold shadow-md'>Add New</Button>
+          <AlertDialog >
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" className='bg-black text-white font-bold hover:bg-gray-200'>Add New</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className='w-[600px]'>
+              <AlertDialogHeader className='border-b pb-4'>
+                <AlertDialogTitle >Add New Customer</AlertDialogTitle>
+              </AlertDialogHeader>
+              <div className='flex flex-row text-center mt-2 items-center'>
+                <div className='basis-1/4 font-bold text-left'>
+                  Customer :
+                </div>
+                <div className='basis-3/4'>
+                  <Input type="text" placeholder="Supplier.." />
+                </div>
+              </div>
+              <div className='flex flex-row text-center mt-2 items-center'>
+                <div className='basis-1/4 font-bold text-left'>
+                  Contact :
+                </div>
+                <div className='basis-3/4'>
+                  <Input type="text" placeholder="Contact.." />
+                </div>
+              </div>
+              <div className='flex flex-row text-center mt-2 items-top'>
+                <div className='basis-1/4 font-bold text-left'>
+                  Address :
+                </div>
+                <div className='basis-3/4'>
+                  <Textarea className='border w-full' placeholder="Address.." />
+                </div>
+              </div>
+              <div className='flex flex-row text-center mt-2 items-center'>
+                <div className='basis-1/4 font-bold text-left'>
+                  Kelurahan :
+                </div>
+                <div className='basis-3/4'>
+                  <Input type="text" placeholder="Kelurahan.." />
+                </div>
+              </div>
+              <div className='flex flex-row text-center mt-2 items-center'>
+                <div className='basis-1/4 font-bold text-left'>
+                  Kecamatan :
+                </div>
+                <div className='basis-3/4'>
+                  <Input type="text" placeholder="Kecamatan.." />
+                </div>
+              </div>
+              <div className='flex flex-row text-center mt-2 items-center'>
+                <div className='basis-1/4 font-bold text-left'>
+                  Kota :
+                </div>
+                <div className='basis-3/4'>
+                  <Input type="text" placeholder="Kota.." />
+                </div>
+              </div>
+              <div className='flex flex-row text-center mt-2 items-center'>
+                <div className='basis-1/4 font-bold text-left'>
+                  Kode Pos :
+                </div>
+                <div className='basis-3/4'>
+                  <Input type="number" placeholder="Kode Pos.." />
+                </div>
+              </div>
+              <AlertDialogFooter>
+                <AlertDialogCancel className='bg-red-400 font-bold text-white'>Cancel</AlertDialogCancel>
+                <Button>Save</Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 
@@ -101,7 +182,7 @@ export default function Reseller() {
               <TableHead className="border text-center font-bold text-white">Kec</TableHead>
               <TableHead className="border text-center font-bold text-white">Kota</TableHead>
               <TableHead className="border text-center font-bold text-white">Kode Pos</TableHead>
-              <TableHead className="border w-[50px] text-center font-bold text-white">Act</TableHead>
+              <TableHead className="border w-[100px] text-center font-bold text-white">Act</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className='bg-white'>
@@ -116,7 +197,94 @@ export default function Reseller() {
                 <TableCell className="border text-center">{dataisi.kec}</TableCell>
                 <TableCell className="border text-center">{dataisi.kota}</TableCell>
                 <TableCell className="border text-center">{dataisi.kodepos}</TableCell>
-                <TableCell className="border w-[50px]"><Icon.FileEdit color="#00b3ff" /></TableCell>
+                <TableCell className="border w-[100px]">
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#00b3ff" /></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className='w-[600px]'>
+                      <AlertDialogHeader className='border-b pb-4'>
+                        <AlertDialogTitle >Edit Customer</AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Customer :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="text" placeholder="Supplier.." />
+                        </div>
+                      </div>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Contact :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="text" placeholder="Contact.." />
+                        </div>
+                      </div>
+                      <div className='flex flex-row text-center mt-2 items-top'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Address :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Textarea className='border w-full' placeholder="Address.." />
+                        </div>
+                      </div>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Kelurahan :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="text" placeholder="Kelurahan.." />
+                        </div>
+                      </div>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Kecamatan :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="text" placeholder="Kecamatan.." />
+                        </div>
+                      </div>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Kota :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="text" placeholder="Kota.." />
+                        </div>
+                      </div>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Kode Pos :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="number" placeholder="Kode Pos.." />
+                        </div>
+                      </div>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
+                        <Button >Save</Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className='w-[600px]'>
+                      <AlertDialogHeader className='border-b pb-4'>
+                        <AlertDialogTitle >Delete Customer</AlertDialogTitle>
+                      </AlertDialogHeader>
+
+                      <AlertDialogFooter>
+                        <AlertDialogCancel >Cancel</AlertDialogCancel>
+                        <Button className='bg-red-400 font-bold'>Delete</Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

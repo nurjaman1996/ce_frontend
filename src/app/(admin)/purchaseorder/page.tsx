@@ -14,6 +14,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 const datapurchaseorder = [
   {
     no: "1",
@@ -135,7 +147,54 @@ export default function PurchaseOrder() {
               <TableRow key={dataisi.name}>
                 <TableCell className="border text-center w-[3.5%] font-bold">{dataisi.no}</TableCell>
                 <TableCell className="border text-left w-[40%]"><span className='capitalize'>{dataisi.produk}</span><br></br><span>{dataisi.idproduk}</span></TableCell>
-                <TableCell className="border w-[5%]"><Icon.FileEdit color="#00b3ff" /><Icon.X color="#ff0000" /></TableCell>
+                <TableCell className="border w-[5%]">
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#00b3ff" /></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className='w-[600px]'>
+                      <AlertDialogHeader className='border-b pb-4'>
+                        <AlertDialogTitle >Edit Purchase Order</AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Image :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="text" />
+                        </div>
+                      </div>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Product :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="text" placeholder="Product.." />
+                        </div>
+                      </div>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
+                        <Button >Save</Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className='w-[600px]'>
+                      <AlertDialogHeader className='border-b pb-4'>
+                        <AlertDialogTitle >Delete Purchase Order</AlertDialogTitle>
+                      </AlertDialogHeader>
+
+                      <AlertDialogFooter>
+                        <AlertDialogCancel >Cancel</AlertDialogCancel>
+                        <Button className='bg-red-400 font-bold'>Delete</Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
                 <TableCell className="border w-[5.5%] text-center">{dataisi.berat}Gr</TableCell>
                 <TableCell className="border w-[3%] text-center ">Rp{dataisi.kurs}</TableCell>
                 <TableCell className="border w-[5%] text-center ">Rp{dataisi.overhead}</TableCell>

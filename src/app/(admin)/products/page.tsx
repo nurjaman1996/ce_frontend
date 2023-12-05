@@ -19,6 +19,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Textarea } from "@/components/ui/textarea"
 
 const combobox = [
   {
@@ -217,7 +229,55 @@ export default function Products() {
                 <TableCell className="border w-[6%] text-center font-bold text-red-600  bg-orange-100">{dataisi.margin}%</TableCell>
                 <TableCell className="border w-[10%] text-center  bg-orange-100">Rp{dataisi.modal}</TableCell>
                 <TableCell className="border w-[15%] text-center ">Rp{dataisi.hargajual}</TableCell>
-                <TableCell className="border w-[5%]"><Icon.FileEdit color="#00b3ff" /><Icon.X color="#ff0000" /></TableCell>
+                <TableCell className="border w-[5%]">
+
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#00b3ff" /></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className='w-[600px]'>
+                      <AlertDialogHeader className='border-b pb-4'>
+                        <AlertDialogTitle >Edit Product</AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Image :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="text" />
+                        </div>
+                      </div>
+                      <div className='flex flex-row text-center mt-2 items-center'>
+                        <div className='basis-1/4 font-bold text-left'>
+                          Product :
+                        </div>
+                        <div className='basis-3/4'>
+                          <Input type="text" placeholder="Product.." />
+                        </div>
+                      </div>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
+                        <Button >Save</Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className='w-[600px]'>
+                      <AlertDialogHeader className='border-b pb-4'>
+                        <AlertDialogTitle >Delete Product</AlertDialogTitle>
+                      </AlertDialogHeader>
+
+                      <AlertDialogFooter>
+                        <AlertDialogCancel >Cancel</AlertDialogCancel>
+                        <Button className='bg-red-400 font-bold'>Delete</Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

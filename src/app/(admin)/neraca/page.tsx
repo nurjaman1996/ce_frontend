@@ -205,6 +205,19 @@ export default function Neraca() {
             </div>
           </div>
         </div>
+        <div className='basis-1/2 bg-white-50 border-2 border-black-500 h-[300px] bg-gray-200 text-black'>
+          <div className='text-xl font-semibold py-5 px-5'>
+            Pending & Paid
+          </div>
+          <div className='flex flex-row text-left px-5'>
+            <div className='basis-4/6 text-2xl font-semibold'>
+              Chart
+            </div>
+            <div className=' basis-1/3 flex justify-end'>
+              <Icon.DollarSign size={45} color="#000000" />
+            </div>
+          </div>
+        </div>
 
         <div className='basis-1/2 bg-white-50 border-2 border-black-500 h-[300px] bg-gray-200 text-black'>
           <div className='text-xl font-semibold py-5 px-5'>
