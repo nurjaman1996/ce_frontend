@@ -44,7 +44,7 @@ export default function Supplier() {
 
     await axios({
       method: 'post',
-      url: 'http://139.180.130.182:4000/supplier',
+      url: `${process.env.NEXT_PUBLIC_HOST}/supplier`,
       data: {
         supplier: v_supplier,
         contact: v_contact,
@@ -65,7 +65,7 @@ export default function Supplier() {
   async function loadatasupplier() {
     await axios({
       method: 'get',
-      url: 'http://139.180.130.182:4000/supplier',
+      url: `${process.env.NEXT_PUBLIC_HOST}/supplier`,
     })
       .then(function (response) {
         // handle success
@@ -133,7 +133,7 @@ export default function Supplier() {
           </AlertDialog>
         </div>
       </div>
-      {JSON.stringify(datasupplier)}
+      {/* {JSON.stringify(datasupplier)} */}
       <div className="mt-5 shadow-md">
         <Table className='border border-black-500'>
           <TableHeader className='bg-gray-700'>
