@@ -85,8 +85,13 @@ export default function Products() {
       url: `${process.env.NEXT_PUBLIC_HOST}/purchaseorder/getbatch`,
     })
       .then(function (response) {
-        setdataBatch(response.data.data)
-        loadProducts(valueBatch)
+        if (valueBatch === "") {
+          setdataBatch(response.data.data)
+          setValueBatch(response.data.data[0].id_batch)
+          loadProducts(response.data.data[0].id_batch)
+        } else {
+          loadProducts(valueBatch)
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -110,9 +115,9 @@ export default function Products() {
           <div className="font-bold text-4xl text-red-500">
             Products
           </div>
-          <div className="ml-auto">
+          {/* <div className="ml-auto">
             <Button className='bg-amber-200 shadow-md text-black font-bold'>STOCK OPNAME&nbsp;<Icon.RefreshCcw color="#000000" /></Button>
-          </div>
+          </div> */}
         </div>
 
         {/* {JSON.stringify(dataProducts.result)} */}
@@ -222,15 +227,34 @@ export default function Products() {
                   <TableCell className="border text-center w-[3.5%] font-bold">{Numbering.format(index + 1)}</TableCell>
 
                   <TableCell className="border text-center w-[12%]  font-bold">
-                    <Image
-                      className='aspect-square rounded-xl mx-auto'
-                      src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataisi.images}`}
-                      width={300}
-                      height={300}
-                      alt="Picture of the author"
-                      style={{ height: 100, width: 100 }}
-                      priority
-                    />
+                    {(function () {
+                      if (dataisi.images != null) {
+                        return (
+                          <Image
+                            className='aspect-square rounded-xl mx-auto'
+                            src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataisi.images}`}
+                            width={300}
+                            height={300}
+                            alt="Picture of the author"
+                            style={{ height: 100, width: 100 }}
+                            priority
+                          />
+                        );
+                      } else {
+                        return (
+                          <Image
+                            className='aspect-square rounded-xl mx-auto'
+                            src="/produk.png"
+                            alt="Photo by Drew Beamer"
+                            width={300}
+                            height={300}
+                            style={{ height: 100, width: 100 }}
+                            priority
+                          />
+                        );
+                      }
+                    })()}
+
                   </TableCell>
 
                   <TableCell className="border text-left w-[30%]">

@@ -85,8 +85,13 @@ export default function Home() {
       url: `${process.env.NEXT_PUBLIC_HOST}/purchaseorder/getbatch`,
     })
       .then(function (response) {
-        setdataBatch(response.data.data)
-        lodaDashboard(value.startDate, value.endDate, valueBatch)
+        if (valueBatch === "") {
+          setdataBatch(response.data.data)
+          setValueBatch(response.data.data[0].id_batch)
+          lodaDashboard(value.startDate, value.endDate, response.data.data[0].id_batch)
+        } else {
+          lodaDashboard(value.startDate, value.endDate, valueBatch)
+        }
       })
       .catch(function (error) {
         console.log(error);

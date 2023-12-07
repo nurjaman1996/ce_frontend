@@ -19,14 +19,14 @@ const Sidebar = () => {
                     <div>Dashboard</div>
                 </Link>
 
-                <Link href="/order" className={`${params === '/order' ? `bg-[#f87171]` : `hover:bg-[#f87171]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center font-medium text-white`}>
+                <Link href="/orderreport" className={`${params === '/orderreport' ? `bg-[#f87171]` : `hover:bg-[#f87171]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center font-medium text-white`}>
                     <Icon.ShoppingBag size={20} />
-                    <div>Sales Order</div>
+                    <div>List Orders</div>
                 </Link>
 
-                <Link href="/orderreport" className={`${params === '/orderreport' ? `bg-[#f87171]` : `hover:bg-[#f87171]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center font-medium text-white`}>
-                    <Icon.ListChecks size={20} />
-                    <div>Sales Report</div>
+                <Link href="/order" className={`${params === '/order' ? `bg-[#f87171]` : `hover:bg-[#f87171]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center font-medium text-white`}>
+                    <Icon.CopyPlus size={20} />
+                    <div>Add Order</div>
                 </Link>
 
                 <Link href="/products" className={`${params === '/products' ? `bg-[#f87171]` : `hover:bg-[#f87171]`} flex gap-2 py-2 rounded-sm px-3 cursor-pointer items-center font-medium text-white`}>

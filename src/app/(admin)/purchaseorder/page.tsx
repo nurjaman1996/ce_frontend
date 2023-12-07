@@ -85,8 +85,13 @@ export default function PurchaseOrder() {
       url: `${process.env.NEXT_PUBLIC_HOST}/purchaseorder/getbatch`,
     })
       .then(function (response) {
-        setdataBatch(response.data.data)
-        loadDatapo(valueBatch)
+        if (valueBatch === "") {
+          setdataBatch(response.data.data)
+          setValueBatch(response.data.data[0].id_batch)
+          loadDatapo(response.data.data[0].id_batch)
+        } else {
+          loadDatapo(valueBatch)
+        }
       })
       .catch(function (error) {
         console.log(error);
