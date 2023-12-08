@@ -317,9 +317,21 @@ export default function PurchaseOrder() {
 
                         <TableCell className="border w-[3%] text-center font-bold">{Numbering.format(index + 1)}</TableCell>
                         <TableCell className="border w-[21.5%] text-left">
-                          <span className='text-lg'>{details.produk}</span><br></br>
-                          <span className='text-xs text-red-700'>{details.id_produk}</span>&nbsp;/&nbsp;
-                          {details.id_batch}
+                          <div className='flex flex-row gap-3'>
+                            <Image
+                              src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${details.images}`}
+                              alt="Photo by Drew Beamer"
+                              width={500}
+                              height={500}
+                              priority={true}
+                              className="rounded-sm shadow-md w-[70px] aspect-square"
+                            />
+                            <div>
+                              <span className='text-lg'>{details.produk}</span><br></br>
+                              <span className='text-xs text-red-700'>{details.id_produk}</span>&nbsp;/&nbsp;
+                              {details.id_batch}
+                            </div>
+                          </div>
                         </TableCell>
                         <TableCell className="border w-[6%] text-center">{details.variasi}</TableCell>
                         <TableCell className="border w-[5%] text-center">{details.ukuran}</TableCell>

@@ -464,7 +464,7 @@ export default function Order() {
     // console.log(id_invoice)
     // console.log(valueCustomer)
     // console.log(valueBatch)
-    // console.log(rowsData.length)
+    // console.log(rowsData)
 
     if (valueCustomer === "" || valueBatch === "") {
       alert("Mohon Lengkapi Form")
@@ -487,7 +487,6 @@ export default function Order() {
           }
         })
           .then(function (response) {
-            console.log(response.data)
             window.location.href = "/order"
           })
           .catch(function (error) {
@@ -518,35 +517,33 @@ export default function Order() {
 
         <Dialog open={openModalAddProduk}>
           <DialogContent style={{ width: "auto", maxWidth: "none" }}>
-            <div className='h-[300px] flex items-start  rounded-sm'>
-              <div className='flex items-center h-full '>
-                <div className='p-5 aspect-square mt-14'>
-                  {(function () {
-                    if (img != null) {
-                      return (
+            <div className='h-[300px] flex items-start rounded-sm'>
+              <div className='aspect-square h-full p-5'>
+                {(function () {
+                  if (img != null) {
+                    return (
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${img}`}
+                        alt="Photo by Drew Beamer"
+                        width={500}
+                        height={500}
+                        priority={true}
+                        className="rounded-2xl shadow-md"
+                      />
+                    );
+                  } else {
+                    return (
+                      <div className="p-5">
                         <Image
-                          src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${img}`}
+                          src="/produk.png"
                           alt="Photo by Drew Beamer"
                           width={500}
                           height={500}
-                          priority={true}
-                          className=" rounded-2xl shadow-md"
                         />
-                      );
-                    } else {
-                      return (
-                        <div className="p-5">
-                          <Image
-                            src="/produk.png"
-                            alt="Photo by Drew Beamer"
-                            width={500}
-                            height={500}
-                          />
-                        </div>
-                      );
-                    }
-                  })()}
-                </div>
+                      </div>
+                    );
+                  }
+                })()}
               </div>
 
               <div className='flex flex-col'>

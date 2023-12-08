@@ -54,10 +54,70 @@ export default function Supplier() {
       .then(function (response) {
         // handle success
         loadatasupplier()
+        setv_supplier("")
+        setv_contact("")
+        setv_address("")
         setopen(false)
       })
       .catch(function (error) {
         // handle error
+        console.log(error);
+      })
+  }
+
+  const [searchSupplier, setsearchSupplier]: any = useState('');
+
+  const filterSupplier: any = datasupplier.filter((dataSupplier: any) => {
+    return (
+      dataSupplier.supplier.toLocaleLowerCase().includes(searchSupplier.toLocaleLowerCase())
+    );
+  });
+
+  const [openEdit, setopenEdit]: any = useState(false);
+  const [e_id_sup, sete_id_sup]: any = useState('');
+  const [e_supplier, sete_supplier]: any = useState('');
+  const [e_contact, sete_contact]: any = useState('');
+  const [e_address, sete_address]: any = useState('');
+
+  async function editsupplier() {
+    // console.log(e_id_sup)
+    // console.log(e_supplier)
+    // console.log(e_contact)
+    // console.log(e_address)
+
+    await axios({
+      method: 'post',
+      url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/editSupplier`,
+      data: {
+        id_sup: e_id_sup,
+        supplier: e_supplier,
+        contact: e_contact,
+        alamat: e_address
+      }
+    })
+      .then(function (response) {
+        loadatasupplier()
+        setopenEdit(false)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+
+  async function deletesupplier(id_sup: any) {
+    // console.log(id_sup)
+
+    await axios({
+      method: 'post',
+      url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/deleteSupplier`,
+      data: {
+        id_sup: id_sup
+      }
+    })
+      .then(function (response) {
+        loadatasupplier()
+      })
+      .catch(function (error) {
         console.log(error);
       })
   }
@@ -81,6 +141,8 @@ export default function Supplier() {
     loadatasupplier()
   }, [])
 
+
+
   return (
     <div>
       <div className="font-bold text-4xl">
@@ -89,7 +151,7 @@ export default function Supplier() {
       <div className="flex flex-nowrap mt-4">
         {/*  */}
         <div className="font-bold text-4xl">
-          <Input type="text" className='w-[400px] shadow-md' placeholder="Search Supplier.." />
+          <Input type="text" className='w-[400px] shadow-md' placeholder="Search Supplier.." value={searchSupplier} onChange={(e) => { setsearchSupplier(e.currentTarget.value) }} />
         </div>
 
         <div className="absolute right-5">
@@ -147,7 +209,7 @@ export default function Supplier() {
             </TableRow>
           </TableHeader>
           <TableBody className='bg-white'>
-            {datasupplier.map((dataisi: any, index: any) => (
+            {filterSupplier.map((dataisi: any, index: any) => (
               <TableRow key={index}>
                 <TableCell className="border text-center w-[2%] font-bold">{index + 1}</TableCell>
                 <TableCell className="border text-center w-[10%]">{dataisi.id_sup}</TableCell>
@@ -156,9 +218,18 @@ export default function Supplier() {
                 <TableCell className="border text-center w-[40%]">{dataisi.alamat}</TableCell>
                 <TableCell className="border text-center w-[10%]">
 
-                  <AlertDialog>
+                  <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
                     <AlertDialogTrigger asChild>
-                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#000000" /></Button>
+                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
+                        onClick={() => {
+                          setopenEdit(true)
+                          sete_id_sup(dataisi.id_sup)
+                          sete_supplier(dataisi.supplier)
+                          sete_contact(dataisi.contact)
+                          sete_address(dataisi.alamat)
+                        }}>
+                        <Icon.FileEdit color="#000000" />
+                      </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent className='w-[600px]'>
                       <AlertDialogHeader className='border-b pb-4'>
@@ -169,7 +240,7 @@ export default function Supplier() {
                           Supplier :
                         </div>
                         <div className='basis-3/4'>
-                          <Input type="text" placeholder="Supplier.." />
+                          <Input value={e_supplier} onChange={(e) => { sete_supplier(e.currentTarget.value) }} type="text" placeholder="Supplier.." />
                         </div>
                       </div>
                       <div className='flex flex-row text-center mt-2 items-center'>
@@ -177,7 +248,7 @@ export default function Supplier() {
                           Contact :
                         </div>
                         <div className='basis-3/4'>
-                          <Input type="text" placeholder="Contact.." />
+                          <Input value={e_contact} onChange={(e) => { sete_contact(e.currentTarget.value) }} type="text" placeholder="Contact.." />
                         </div>
                       </div>
                       <div className='flex flex-row text-center mt-2 items-top'>
@@ -185,12 +256,14 @@ export default function Supplier() {
                           Address :
                         </div>
                         <div className='basis-3/4'>
-                          <Textarea className='border w-full' placeholder="Address.." />
+                          <Textarea value={e_address} onChange={(e) => { sete_address(e.currentTarget.value) }} className='border w-full' placeholder="Address.." />
                         </div>
                       </div>
                       <AlertDialogFooter>
                         <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
-                        <Button >Save</Button>
+                        <Button onClick={() => {
+                          editsupplier()
+                        }}>Update</Button>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
@@ -201,12 +274,13 @@ export default function Supplier() {
                     </AlertDialogTrigger>
                     <AlertDialogContent className='w-[600px]'>
                       <AlertDialogHeader className='border-b pb-4'>
-                        <AlertDialogTitle >Delet Supplier</AlertDialogTitle>
+                        <AlertDialogTitle>Delete Supplier</AlertDialogTitle>
+                        <AlertDialogDescription>Data Supplier {dataisi.supplier} akan dihapus?</AlertDialogDescription>
                       </AlertDialogHeader>
 
                       <AlertDialogFooter>
                         <AlertDialogCancel >Cancel</AlertDialogCancel>
-                        <Button className='bg-red-400 font-bold'>Delete</Button>
+                        <Button className='bg-red-400 font-bold' onClick={() => { deletesupplier(dataisi.id_sup) }}>Delete</Button>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>

@@ -45,6 +45,7 @@ let Numbering = new Intl.NumberFormat("id-ID");
 export default function Batch() {
     const [isLoading, setisLoading]: any = useState(true)
     const [dataBatch, setdataBatch]: any = useState([])
+    const [dataDEtailsBatch, setdataDEtailsBatch]: any = useState([])
 
     const [value, setValue]: any = useState({
         startDate: "2020-01-01",
@@ -54,11 +55,11 @@ export default function Batch() {
     const handleValueChange = (newValue: any) => {
         if (newValue.startDate != null && newValue.endDate != null) {
             setValue(newValue);
-            lodaDashboard(newValue.startDate, newValue.endDate)
+            loadBatch(newValue.startDate, newValue.endDate)
         }
     }
 
-    async function lodaDashboard(start: any, end: any) {
+    async function loadBatch(start: any, end: any) {
         await axios({
             method: 'post',
             url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/getbatch`,
@@ -69,6 +70,7 @@ export default function Batch() {
         })
             .then(function (response) {
                 setdataBatch(response.data)
+                setdataDEtailsBatch(response.data.result.data_batch)
                 setisLoading(false)
             })
             .catch(function (error) {
@@ -77,8 +79,62 @@ export default function Batch() {
     }
 
     useEffect(() => {
-        lodaDashboard(value.startDate, value.endDate)
+        loadBatch(value.startDate, value.endDate)
     }, [])
+
+    const [searchBatch, setsearchBatch]: any = useState('');
+
+    const filterBatch: any = dataDEtailsBatch.filter((data: any) => {
+        return (
+            data.id_batch.toLocaleLowerCase().includes(searchBatch.toLocaleLowerCase())
+        );
+    });
+
+    const [openEdit, setopenEdit]: any = useState(false);
+    const [e_id_batch, sete_id_batch]: any = useState('');
+    const [e_country, sete_country]: any = useState('');
+    const [e_city, sete_city]: any = useState('');
+
+    async function editBatch() {
+        // console.log(e_id_batch)
+        // console.log(e_country)
+        // console.log(e_city)
+
+        await axios({
+            method: 'post',
+            url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/editbatch`,
+            data: {
+                id_batch: e_id_batch,
+                country: e_country,
+                city: e_city,
+            }
+        })
+            .then(function (response) {
+                loadBatch(value.startDate, value.endDate)
+                setopenEdit(false)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    async function deleteBatch(id_batch: any) {
+        // console.log(id_batch)
+
+        await axios({
+            method: 'post',
+            url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/deletebatch`,
+            data: {
+                id_batch: id_batch
+            }
+        })
+            .then(function (response) {
+                loadBatch(value.startDate, value.endDate)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 
     if (isLoading) {
         return (
@@ -130,7 +186,7 @@ export default function Batch() {
                 <div className="flex flex-nowrap mt-4">
                     {/*  */}
                     <div className="font-bold text-4xl">
-                        <Input type="text" className='w-[400px] shadow-md' placeholder="Search Batch.." />
+                        <Input type="text" className='w-[400px] shadow-md' placeholder="Search Batch.." value={searchBatch} onChange={(e) => { setsearchBatch(e.currentTarget.value) }} />
                     </div>
                     <div className="ml-auto basis-1/6 border font-medium">
                         <Datepicker
@@ -188,7 +244,7 @@ export default function Batch() {
                             </TableRow>
                         </TableHeader>
                         <TableBody className='bg-white'>
-                            {dataBatch.result.data_batch.map((dataisi: any, index: number) => (
+                            {filterBatch.map((dataisi: any, index: number) => (
                                 <TableRow key={dataisi.id}>
                                     <TableCell className="border text-center w-[3.5%] font-bold">{Numbering.format(index + 1)}</TableCell>
                                     <TableCell className="border text-center w-[10%]">{dataisi.tanggal_batch}</TableCell>
@@ -199,9 +255,17 @@ export default function Batch() {
                                     <TableCell className="border w-[10%] text-center  bg-orange-100">{Rupiah.format(dataisi.profit)}</TableCell>
                                     <TableCell className="border text-center w-[10%]">
 
-                                        <AlertDialog>
+                                        <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
                                             <AlertDialogTrigger asChild>
-                                                <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#000000" /></Button>
+                                                <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
+                                                    onClick={() => {
+                                                        setopenEdit(true)
+                                                        sete_id_batch(dataisi.id_batch)
+                                                        sete_country(dataisi.country)
+                                                        sete_city(dataisi.city)
+                                                    }}>
+                                                    <Icon.FileEdit color="#000000" />
+                                                </Button>
                                             </AlertDialogTrigger>
                                             <AlertDialogContent className='w-[600px]'>
                                                 <AlertDialogHeader className='border-b pb-4'>
@@ -209,23 +273,25 @@ export default function Batch() {
                                                 </AlertDialogHeader>
                                                 <div className='flex flex-row text-center mt-2 items-center'>
                                                     <div className='basis-1/4 font-bold text-left'>
-                                                        Image :
+                                                        Country :
                                                     </div>
                                                     <div className='basis-3/4'>
-                                                        <Input type="text" />
+                                                        <Input type="text" value={e_country} onChange={(e) => { sete_country(e.currentTarget.value) }} placeholder="Country.." />
                                                     </div>
                                                 </div>
                                                 <div className='flex flex-row text-center mt-2 items-center'>
                                                     <div className='basis-1/4 font-bold text-left'>
-                                                        Product :
+                                                        City :
                                                     </div>
                                                     <div className='basis-3/4'>
-                                                        <Input type="text" placeholder="Product.." />
+                                                        <Input type="text" value={e_city} onChange={(e) => { sete_city(e.currentTarget.value) }} placeholder="City.." />
                                                     </div>
                                                 </div>
                                                 <AlertDialogFooter>
                                                     <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
-                                                    <Button >Save</Button>
+                                                    <Button onClick={() => {
+                                                        editBatch()
+                                                    }}>Update</Button>
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
                                         </AlertDialog>
@@ -237,11 +303,12 @@ export default function Batch() {
                                             <AlertDialogContent className='w-[600px]'>
                                                 <AlertDialogHeader className='border-b pb-4'>
                                                     <AlertDialogTitle >Delete Batch</AlertDialogTitle>
+                                                    <AlertDialogDescription>Semua Data dari {dataisi.id_batch}, seperti Produk, History belanja dan lainnya akan dihapus?</AlertDialogDescription>
                                                 </AlertDialogHeader>
 
                                                 <AlertDialogFooter>
                                                     <AlertDialogCancel >Cancel</AlertDialogCancel>
-                                                    <Button className='bg-red-400 font-bold'>Delete</Button>
+                                                    <Button className='bg-red-400 font-bold' onClick={() => { deleteBatch(dataisi.id_batch) }}>Delete</Button>
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
                                         </AlertDialog>
