@@ -113,7 +113,7 @@ export default function PurchaseOrder() {
     return (
       <main className="">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl text-red-500">
+          <div className="font-bold text-4xl">
             Purchase Order
           </div>
         </div>
@@ -175,16 +175,16 @@ export default function PurchaseOrder() {
         <div className="mt-5 shadow-md">
           <Table className='border bg-white text-xs'>
             <TableHeader>
-              <TableRow className='bg-red-400 font-bold'>
-                <TableHead className="border w-[3%] text-center text-white">No</TableHead>
-                <TableHead className="border w-[21.5%] text-left text-white">ID PO</TableHead>
-                <TableHead className="border w-[5%] text-center text-white">BATCH</TableHead>
-                <TableHead className="border w-[6%] text-center text-white">Start Date</TableHead>
-                <TableHead className="border w-[5%] text-center text-white">End Date</TableHead>
-                <TableHead className="border w-[6%] text-center text-white">Kurs</TableHead>
-                <TableHead className="border w-[5%] text-center text-white">Overhead</TableHead>
-                <TableHead className="border w-[10%] text-center text-white">Margin</TableHead>
-                <TableHead className="border w-[10%] text-center text-white">Act</TableHead>
+              <TableRow className='bg-gray-900 font-bold'>
+                <TableHead className="bg-gray-900 border w-[3%] text-center text-white">No</TableHead>
+                <TableHead className="bg-gray-900 border w-[21.5%] text-left text-white">ID PO</TableHead>
+                <TableHead className="bg-gray-900 border w-[5%] text-center text-white">BATCH</TableHead>
+                <TableHead className="bg-gray-900 border w-[6%] text-center text-white">Start Date</TableHead>
+                <TableHead className="bg-gray-900 border w-[5%] text-center text-white">End Date</TableHead>
+                <TableHead className="bg-gray-900 border w-[6%] text-center text-white">Kurs</TableHead>
+                <TableHead className="bg-gray-900 border w-[5%] text-center text-white">Overhead</TableHead>
+                <TableHead className="bg-gray-900 border w-[10%] text-center text-white">Margin</TableHead>
+                <TableHead className="bg-gray-900 border w-[8%] text-center text-white">Act</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -203,10 +203,10 @@ export default function PurchaseOrder() {
                   <TableCell className="border w-[6%] text-center">{Rupiah.format(dataisi.kurs)}</TableCell>
                   <TableCell className="border w-[5%] text-center">{Rupiah.format(dataisi.overhead_gr)}</TableCell>
                   <TableCell className="border w-[10%] text-center">{dataisi.margin}%</TableCell>
-                  <TableCell className="border w-[10%]">
+                  <TableCell className="border text-center w-[8%]">
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#00b3ff" /></Button>
+                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#000000" /></Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent className='w-[600px]'>
                         <AlertDialogHeader className='border-b pb-4'>

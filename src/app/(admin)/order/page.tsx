@@ -209,7 +209,7 @@ export default function Order() {
           setaddmodal_qty(1);
         }}
         key={index}
-        className={`${variantSelect === datavariant[index].warna + "#" + datavariant[index].ukuran ? "bg-blue-500 text-white" : "text-blue-500"} font-medium py-2 text-center rounded-lg border border-blue-500 cursor-pointer`}>
+        className={`${variantSelect === datavariant[index].warna + "#" + datavariant[index].ukuran ? "bg-black text-white" : "text-black"} font-medium py-2 text-center rounded-lg border border-black cursor-pointer`}>
         {datavariant[index].warna} = {datavariant[index].ukuran}
       </div>
     )
@@ -384,21 +384,21 @@ export default function Order() {
                   }
                 })()}
               </CardContent>
-              <CardFooter className="flex flex-col h-24 gap-1 items-start justify-start border-t px-2 pt-2 pb-3">
-                <div className='text-xs h-auto w-full line-clamp-2 font-bold'>
+              <CardFooter className="flex flex-col h-12 gap-1 items-start justify-start border-t px-2 pt-1 pb-3">
+                <div className='text-xs text-center h-auto w-full line-clamp-2 font-bold'>
                   {data.produk}
                 </div>
-                <div className='text-xs mb-1'>
+                <div className='text-[8px] text-center mb-0 text-red-600 w-full'>
                   {data.id_produk}
                 </div>
-                <div className='flex w-full mt-auto'>
-                  <div className='text-xs'>
+                {/* <div className='flex w-full'>
+                  <div className='text-xs basis-1/2'>
                     Variant : {Numbering.format(data.total_variasi)}
                   </div>
-                  <div className='text-xs ml-auto text-blue-500 font-bold'>
+                  <div className='text-xs ml-auto font-bold basis-1/2'>
                     {Rupiah.format(data.harga_jual)}
                   </div>
-                </div>
+                </div> */}
               </CardFooter>
             </Card>
           )
@@ -508,19 +508,19 @@ export default function Order() {
   } else {
     return (
       <main className="">
-        <div className="flex flex-nowrap mt-4 mb-4">
-          <div className="font-bold text-4xl text-red-500">
-            Tambah Pesanan
+        {/* <div className="flex flex-nowrap mt-4 mb-4">
+          <div className="font-bold text-4xl">
+            Add Orders
           </div>
-        </div>
+        </div> */}
 
         {/* {JSON.stringify(rowsData)} */}
 
         <Dialog open={openModalAddProduk}>
           <DialogContent style={{ width: "auto", maxWidth: "none" }}>
-            <div className='h-[300px] flex items-start border rounded-sm'>
-              <div className='flex items-center h-full p-2 border-r'>
-                <div className='p-10 aspect-square '>
+            <div className='h-[300px] flex items-start  rounded-sm'>
+              <div className='flex items-center h-full '>
+                <div className='p-5 aspect-square mt-14'>
                   {(function () {
                     if (img != null) {
                       return (
@@ -530,6 +530,7 @@ export default function Order() {
                           width={500}
                           height={500}
                           priority={true}
+                          className=" rounded-2xl shadow-md"
                         />
                       );
                     } else {
@@ -550,8 +551,8 @@ export default function Order() {
 
               <div className='flex flex-col'>
                 <div className='border-b w-[50vh] flex flex-col gap-1 pl-3 py-2 text-sm text-start'>
-                  <span className='font-bold pr-3'>{String(produks)}</span>
-                  <span className='text-xs'>{String(idproduk)}</span>
+                  <span className='font-bold text-xl pr-3'>{String(produks)}</span>
+                  <span className='text-xs text-red-700'>{String(idproduk)}</span>
                 </div>
 
                 <div className="mt-1 px-3 pt-2 flex flex-col text-xs gap-2">
@@ -576,7 +577,7 @@ export default function Order() {
                   </div>
                 </div>
 
-                <div className="mt-1 px-3 pt-2 flex flex-col text-xs gap-2">
+                <div className="mt-1 px-3 pt-2 flex flex-col text-xs gap-2 border-b pb-3">
                   <label className='font-bold'>Amount:</label>
                   <div className='text-lg font-bold'>
                     {Rupiah.format(v_subtotal)}
@@ -598,17 +599,17 @@ export default function Order() {
                   addproduk(v_idBatch, v_idPo, idproduk, produks, variasi, ukuran, addmodal_qty, v_berat, v_totalModal, hargaJual, v_subtotal, img)
                 }}
               >
-                Add Produk
+                Add Product
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
 
         <Card>
-          <CardContent className='p-10 flex flex-col gap-5'>
+          <CardContent className='p-4 flex flex-col gap-5'>
             <div className="w-full items-center gap-2 grid grid-cols-4">
               <div className="grid gap-2">
-                <Label><span className='text-red-500'>*</span> Tanggal Pengiriman</Label>
+                <Label><span className='text-red-500'>*</span> Date Order</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -637,7 +638,7 @@ export default function Order() {
               </div>
 
               <div className="grid gap-2">
-                <Label><span className='text-red-500'>*</span> ID Invoice <span className='text-muted-foreground'>(Otomatis Terisi)</span></Label>
+                <Label><span className='text-red-500'>*</span> ID Invoice <span className='text-muted-foreground'>(Automatically Filled)</span></Label>
                 <Input type="text" placeholder="" value={id_invoice} readOnly />
               </div>
 
@@ -742,19 +743,19 @@ export default function Order() {
             </div>
 
             <div className='flex gap-2'>
-              <div className='flex flex-col gap-2 p-2 rounded-md h-[440px] w-[60%] border '>
+              <div className='flex flex-col gap-2 p-2 rounded-md h-[652px] w-[60%] border '>
                 <div className='flex items-center border rounded-md bg-white'>
                   <div className='pl-3 border-none '><Icon.Search className='h-5 w-5' /></div>
                   <Input disabled={disabled_input} onChange={(e) => { setdata_produk_search(e.currentTarget.value) }} value={data_produk_search} className='border-none' type="text" placeholder="Cari Produk..." />
                   <button onClick={() => setdata_produk_search("")} className={`${data_produk_search === "" ? "hidden" : ""} px-3 border-none bg-gray-100 h-full flex items-center`}><Icon.X className='h-5 w-5' /></button>
                 </div>
 
-                <div className='grid md:grid-cols-5 lg:grid-cols-5 gap-2 pb-10 h-full overflow-y-auto scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-sm'>
+                <div className='grid md:grid-cols-5 lg:grid-cols-5 gap-2 pb-0 h-full overflow-y-auto scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-sm'>
                   {produk}
                 </div>
               </div>
 
-              <div className='border rounded-md p-2 flex flex-col w-[40%] h-[440px]'>
+              <div className='border rounded-md p-2 flex flex-col w-[40%] h-[550px]'>
 
                 <div className='grow overflow-y-auto scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-sm'>
                   {rincian}
@@ -781,13 +782,8 @@ export default function Order() {
                     </div>
                   </div>
                 </div>
-
-              </div>
-
-            </div>
-
-            <div className='w-full flex items-center'>
-              {/* <div className='flex text-xs gap-2 items-center'>
+                <div className='w-full flex items-center mb-2 mt-4'>
+                  {/* <div className='flex text-xs gap-2 items-center'>
                 <Button onClick={() => Router.back()} variant="outline" className='h-8 w-auto pr-4 pl-1' size="icon">
                   <div className='flex gap-1 justify-center items-center'>
                     <Icon.ChevronLeft className="h-5 w-5" />
@@ -796,27 +792,32 @@ export default function Order() {
                 </Button>
               </div> */}
 
-              {(function () {
-                if (inProgress === false) {
-                  return (
-                    <Button
-                      onClick={() => {
-                        saveSales();
-                      }}
-                      variant="default" size="sm" className='ml-auto'>
-                      <Icon.Save className="mr-2 h-4 w-4" /> Checkout
-                    </Button>
-                  );
-                } else {
-                  return (
-                    <Button size="sm" className='ml-auto' disabled>
-                      <Icon.Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Please wait
-                    </Button>
-                  );
-                }
-              })()}
+                  {(function () {
+                    if (inProgress === false) {
+                      return (
+                        <Button
+                          onClick={() => {
+                            saveSales();
+                          }}
+                          variant="default" size="sm" className='ml-auto'>
+                          <Icon.ShoppingBag className="mr-2 h-4 w-4" /> Checkout
+                        </Button>
+                      );
+                    } else {
+                      return (
+                        <Button size="sm" className='ml-auto' disabled>
+                          <Icon.Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Please wait
+                        </Button>
+                      );
+                    }
+                  })()}
+                </div>
+              </div>
+
             </div>
+
+
           </CardContent>
         </Card>
 

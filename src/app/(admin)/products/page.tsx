@@ -112,7 +112,7 @@ export default function Products() {
     return (
       <main className="">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl text-red-500">
+          <div className="font-bold text-4xl">
             Products
           </div>
           {/* <div className="ml-auto">
@@ -123,7 +123,7 @@ export default function Products() {
         {/* {JSON.stringify(dataProducts.result)} */}
 
         <div className='flex flex-row mt-4 gap-8 '>
-          <div className='basis-1/2 bg-white-50 border-2 border-black-500 h-[125px]  bg-red-400 text-white'>
+          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 text-white rounded-2xl shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
               Items
             </div>
@@ -136,7 +136,7 @@ export default function Products() {
               </div>
             </div>
           </div>
-          <div className='basis-1/2 bg-white-50 border-2 border-black-500 h-[125px] bg-red-400 text-white'>
+          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 text-white rounded-2xl shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
               Qty
             </div>
@@ -206,19 +206,19 @@ export default function Products() {
         <div className="mt-5 shadow-md">
           <Table className='border text-xs'>
             <TableHeader>
-              <TableRow className='bg-red-400 font-bold'>
-                <TableHead className="border  text-white w-[3%] text-center">No</TableHead>
-                <TableHead className="border  text-white w-[12%] text-center">Image</TableHead>
-                <TableHead className="border  text-white w-[30%] text-left">Name</TableHead>
-                <TableHead className="border  text-white w-[2.5%] text-center">Weight</TableHead>
-                <TableHead className="border  text-white w-[2.5%] text-center">Stock</TableHead>
-                <TableHead className="border  text-white w-[3%] text-center">Varian</TableHead>
-                <TableHead className="border  text-white w-[6%] text-center">Kurs</TableHead>
-                <TableHead className="border  text-white w-[5%] text-center">Overhead</TableHead>
-                <TableHead className="border  text-white w-[6%] text-center">Margin</TableHead>
-                <TableHead className="border  text-white w-[6%] text-center">Cost</TableHead>
-                <TableHead className="border  text-white w-[15%] text-center">Selling Price</TableHead>
-                <TableHead className="border  text-white w-[5%] text-center">ACT</TableHead>
+              <TableRow className='bg-gray-900 font-bold '>
+                <TableHead className="border  text-white w-[3%] text-center bg-gray-900">No</TableHead>
+                <TableHead className="border  text-white w-[12%] text-center bg-gray-900">Image</TableHead>
+                <TableHead className="border  text-white w-[30%] text-left bg-gray-900">Name</TableHead>
+                <TableHead className="border  text-white w-[2.5%] text-center bg-gray-900">Weight</TableHead>
+                <TableHead className="border  text-white w-[2.5%] text-center bg-gray-900">Stock</TableHead>
+                <TableHead className="border  text-white w-[3%] text-center bg-gray-900">Varian</TableHead>
+                <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Kurs</TableHead>
+                <TableHead className="border  text-white w-[5%] text-center bg-gray-900">Overhead</TableHead>
+                <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Margin</TableHead>
+                <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Cost</TableHead>
+                <TableHead className="border  text-white w-[15%] text-center bg-gray-900">Selling Price</TableHead>
+                <TableHead className="border  text-white w-[5%] text-center bg-gray-900">ACT</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody className='bg-white'>

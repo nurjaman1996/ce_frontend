@@ -63,7 +63,7 @@ export default function Customer() {
 
     return (
       <div>
-        <div className="font-bold text-4xl text-red-500">
+        <div className="font-bold text-4xl">
           Customer
         </div>
         <div className="flex flex-nowrap mt-4">
@@ -74,7 +74,7 @@ export default function Customer() {
           <div className="absolute right-5">
             <AlertDialog >
               <AlertDialogTrigger asChild>
-                <Button variant="outline" className='bg-black text-white font-bold hover:bg-gray-200'>Add New</Button>
+                <Button variant="outline" className='bg-gray-900 text-white font-bold hover:bg-gray-200'>Add New</Button>
               </AlertDialogTrigger>
               <AlertDialogContent className='w-[600px]'>
                 <AlertDialogHeader className='border-b pb-4'>
@@ -149,18 +149,18 @@ export default function Customer() {
 
         <div className="mt-5 shadow-md">
           <Table className='border'>
-            <TableHeader className='bg-red-400 '>
+            <TableHeader className='bg-gray-900'>
               <TableRow>
-                <TableHead className="border w-[50px] text-center font-bold text-white">No</TableHead>
-                <TableHead className="border w-[120px] text-center font-bold text-white">ID Customer</TableHead>
-                <TableHead className="border w-[300px] text-left font-bold text-white">Name</TableHead>
-                <TableHead className="border text-center font-bold text-white">HP</TableHead>
-                <TableHead className="border text-center font-bold text-white">Address</TableHead>
-                <TableHead className="border text-center font-bold text-white">Kel</TableHead>
-                <TableHead className="border text-center font-bold text-white">Kec</TableHead>
-                <TableHead className="border text-center font-bold text-white">Kota</TableHead>
-                <TableHead className="border text-center font-bold text-white">Kode Pos</TableHead>
-                <TableHead className="border w-[100px] text-center font-bold text-white">Act</TableHead>
+                <TableHead className="bg-gray-900 border w-[50px] text-center font-bold text-white">No</TableHead>
+                <TableHead className="bg-gray-900 border w-[120px] text-center font-bold text-white">ID Customer</TableHead>
+                <TableHead className="bg-gray-900 border w-[300px] text-left font-bold text-white">Name</TableHead>
+                <TableHead className="bg-gray-900 border text-center font-bold text-white">HP</TableHead>
+                <TableHead className="bg-gray-900 border text-center font-bold text-white">Address</TableHead>
+                <TableHead className="bg-gray-900 border text-center font-bold text-white">Kel</TableHead>
+                <TableHead className="bg-gray-900 border text-center font-bold text-white">Kec</TableHead>
+                <TableHead className="bg-gray-900 border text-center font-bold text-white">Kota</TableHead>
+                <TableHead className="bg-gray-900 border text-center font-bold text-white">Kode Pos</TableHead>
+                <TableHead className="bg-gray-900 border w-[150px] text-center font-bold text-white">Act</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody className='bg-white'>
@@ -175,10 +175,10 @@ export default function Customer() {
                   <TableCell className="border text-center">{dataisi.kec}</TableCell>
                   <TableCell className="border text-center">{dataisi.kota}</TableCell>
                   <TableCell className="border text-center">{dataisi.kodepos}</TableCell>
-                  <TableCell className="border w-[100px]">
+                  <TableCell className="border w-[150px]">
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#00b3ff" /></Button>
+                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#000000" /></Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent className='w-[600px]'>
                         <AlertDialogHeader className='border-b pb-4'>
@@ -249,7 +249,7 @@ export default function Customer() {
 
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
+                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#000000" /></Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent className='w-[600px]'>
                         <AlertDialogHeader className='border-b pb-4'>

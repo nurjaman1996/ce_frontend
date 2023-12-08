@@ -95,7 +95,7 @@ export default function Supplier() {
         <div className="absolute right-5">
           <AlertDialog open={open} onOpenChange={setopen}>
             <AlertDialogTrigger asChild>
-              <Button variant="outline" className='bg-black text-white font-bold hover:bg-gray-200'>Add New</Button>
+              <Button variant="outline" className='bg-gray-900 text-white font-bold hover:bg-gray-400'>Add New</Button>
             </AlertDialogTrigger>
             <AlertDialogContent className='w-[600px]'>
               <AlertDialogHeader className='border-b pb-4'>
@@ -136,29 +136,29 @@ export default function Supplier() {
       {/* {JSON.stringify(datasupplier)} */}
       <div className="mt-5 shadow-md">
         <Table className='border border-black-500'>
-          <TableHeader className='bg-gray-700'>
+          <TableHeader className='bg-gray-900'>
             <TableRow>
-              <TableHead className="border text-center font-bold text-white w-[50px]">No</TableHead>
-              <TableHead className="border text-center font-bold text-white w-[150px]">ID Supplier</TableHead>
-              <TableHead className='border text-left font-bold text-white'>Name</TableHead>
-              <TableHead className='border text-left font-bold text-white'>Contact</TableHead>
-              <TableHead className="border text-left font-bold text-white">Address</TableHead>
-              <TableHead className="border  w-[100px] font-bold text-white">Act</TableHead>
+              <TableHead className="bg-gray-900 border text-center font-bold text-white w-[2%]">No</TableHead>
+              <TableHead className="bg-gray-900 border text-center font-bold text-white w-[10%]">ID Supplier</TableHead>
+              <TableHead className='bg-gray-900 border text-center font-bold text-white w-[15%]'>Name</TableHead>
+              <TableHead className='bg-gray-900 border text-center font-bold text-white w-[13%]'>Contact</TableHead>
+              <TableHead className="bg-gray-900 border text-center font-bold text-white w-[40%]">Address</TableHead>
+              <TableHead className="bg-gray-900 border text-center w-[10%] font-bold text-white">Act</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className='bg-white'>
             {datasupplier.map((dataisi: any, index: any) => (
               <TableRow key={index}>
-                <TableCell className="border text-center w-[50px] font-bold">{index + 1}</TableCell>
-                <TableCell className="border text-center w-[50px]">{dataisi.id_sup}</TableCell>
-                <TableCell className="border text-center w-[50px]">{dataisi.supplier}</TableCell>
-                <TableCell className="border text-center w-[50px]">{dataisi.contact}</TableCell>
-                <TableCell className="border text-center w-[50px]">{dataisi.alamat}</TableCell>
-                <TableCell className="border w-[50px]">
+                <TableCell className="border text-center w-[2%] font-bold">{index + 1}</TableCell>
+                <TableCell className="border text-center w-[10%]">{dataisi.id_sup}</TableCell>
+                <TableCell className="border text-center w-[15%]">{dataisi.supplier}</TableCell>
+                <TableCell className="border text-center w-[13%]">{dataisi.contact}</TableCell>
+                <TableCell className="border text-center w-[40%]">{dataisi.alamat}</TableCell>
+                <TableCell className="border text-center w-[10%]">
 
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#00b3ff" /></Button>
+                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#000000" /></Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent className='w-[600px]'>
                       <AlertDialogHeader className='border-b pb-4'>
@@ -197,7 +197,7 @@ export default function Supplier() {
 
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
+                      <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#000000" /></Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent className='w-[600px]'>
                       <AlertDialogHeader className='border-b pb-4'>

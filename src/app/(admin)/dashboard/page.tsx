@@ -112,7 +112,7 @@ export default function Home() {
     return (
       <div className="w-full">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl text-red-500">
+          <div className="font-bold text-4xl">
             Dashboard
           </div>
           <div className="ml-auto w-auto mr-4">
@@ -160,7 +160,7 @@ export default function Home() {
               </PopoverContent>
             </Popover>
           </div>
-          <div className="basis-1/6">
+          <div className="basis-1/6 border font-medium">
             <Datepicker
               value={value}
               onChange={handleValueChange}
@@ -204,9 +204,9 @@ export default function Home() {
         {/* {JSON.stringify(dataDashboard.result)} */}
 
         <div className='flex flex-row mt-4 gap-4 text-white'>
-          <div className='basis-3/6 bg-red-400 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-3/6 bg-gray-900 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
-              Ringkasan Penjualan
+              Sales Summary
             </div>
             <div className='flex flex-row text-left'>
               <div className='basis-1/2 text-xl font-semibold py-0 px-5'>
@@ -217,7 +217,7 @@ export default function Home() {
               </div> */}
             </div>
           </div>
-          <div className='basis-1/6 bg-red-400 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/6 bg-gray-900 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
               Total Product
             </div>
@@ -226,14 +226,14 @@ export default function Home() {
                 {Numbering.format(dataDashboard.result.total_product)}
               </div>
               {/* <div className=' basis-1/2 pull-right mt-1 mx-5'>
-                <Badge className='bg-red-800 text-white text-sm'>-1,2%</Badge>
+                <Badge className='bg-red-800 text-black text-sm'>-1,2%</Badge>
               </div> */}
             </div>
           </div>
 
-          <div className='basis-1/6 bg-red-400 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/6 bg-gray-900 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
-              Stok Tersedia
+              Available Stock
             </div>
             <div className='flex flex-row text-left'>
               <div className='basis-1/2 text-xl font-semibold py-0 px-5'>
@@ -244,9 +244,9 @@ export default function Home() {
               </div> */}
             </div>
           </div>
-          <div className='basis-1/6 bg-red-400 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/6 bg-gray-900 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
-              Belum Terpenuhi
+              Unfilled Stock
             </div>
             <div className='flex flex-row text-left'>
               <div className='basis-1/2 text-xl font-semibold py-0 px-5'>
@@ -260,29 +260,29 @@ export default function Home() {
         </div>
 
         <div className='flex flex-row mt-4  gap-4 text-white'>
-          <div className='basis-3/4 bg-blue-400 border-2 border-black-500 h-[448px] rounded-lg shadow-md'>
+          <div className='basis-3/4 bg-gray-500 border-2 border-black-500 h-[448px] rounded-lg shadow-md'>
             <div className='text-xl font-bold py-3 px-5 '>
               Chart Sales
             </div>
 
           </div>
           <div className='basis-1/4'>
-            <div className='text-xl font-bold py-3 px-5  bg-blue-400 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
-              Total Pesanan
+            <div className='text-xl font-bold py-3 px-5  bg-gray-500 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
+              Sales Qty
               <p>{Numbering.format(dataDashboard.result.total_pesanan)}</p>
             </div>
 
-            <div className='text-xl font-bold py-3 px-5 mt-4 bg-blue-400 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
+            <div className='text-xl font-bold py-3 px-5 mt-4 bg-gray-500 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
               Qty
               <p>{Numbering.format(dataDashboard.result.qty)}</p>
             </div>
 
-            <div className='text-xl font-bold py-3 px-5 mt-4 bg-blue-400 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
+            <div className='text-xl font-bold py-3 px-5 mt-4 bg-gray-500 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
               Estimated Weight
               <p>{Numbering.format(dataDashboard.result.weight)} GR | {Numbering.format(dataDashboard.result.weight / 1000)} KG</p>
             </div>
 
-            <div className='text-xl font-bold py-3 px-5 mt-4 bg-blue-400 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
+            <div className='text-xl font-bold py-3 px-5 mt-4 bg-gray-500 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
               Estimated Overhead
               <p>{Rupiah.format(dataDashboard.result.overhead)}</p>
             </div>

@@ -130,15 +130,15 @@ export default function PurchaseOrder() {
     return (
       <main className="">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl text-red-500">
-            Sales Report
+          <div className="font-bold text-4xl">
+            Report List Orders
           </div>
         </div>
 
         <div className="flex flex-nowrap mt-4">
           {/*  */}
           <div className="font-bold text-4xl">
-            <Input type="text" className='w-[400px] shadow-md' placeholder="Search Sales.." />
+            <Input type="text" className='w-[400px] shadow-md' placeholder="Search Orders.." />
           </div>
           <div className="ml-auto w-auto mr-4">
             <Popover open={open} onOpenChange={setOpen}>
@@ -185,7 +185,7 @@ export default function PurchaseOrder() {
               </PopoverContent>
             </Popover>
           </div>
-          <div className="basis-1/6">
+          <div className="basis-1/6 border rounded-md font-medium">
             <Datepicker
               value={value}
               onChange={handleValueChange}
@@ -231,15 +231,15 @@ export default function PurchaseOrder() {
         <div className="mt-5">
           <Table className='border bg-white text-xs'>
             <TableHeader>
-              <TableRow className='bg-red-400 font-bold'>
-                <TableHead className="border w-[3%] text-center text-white">No</TableHead>
-                <TableHead className="border w-[21.5%] text-left text-white">NAME</TableHead>
-                <TableHead className="border w-[6%] text-center text-white">VARIATION</TableHead>
-                <TableHead className="border w-[5%] text-center text-white">SIZE</TableHead>
-                <TableHead className="border w-[6%] text-center text-white">WEIGHT</TableHead>
-                <TableHead className="border w-[6%] text-center text-white">QTY</TableHead>
-                <TableHead className="border w-[5%] text-center text-white">PRICE</TableHead>
-                <TableHead className="border w-[10%] text-center text-white">SUB TOTAL</TableHead>
+              <TableRow className='bg-gray-900 font-bold'>
+                <TableHead className="bg-gray-900 border font-bold w-[3%] text-center text-white">No</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[21.5%] text-left text-white">NAME</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[3.5%] text-center text-white">VARIATION</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[5%] text-center text-white">SIZE</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[5.5%] text-center text-white">WEIGHT</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[4%] text-center text-white">QTY</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[8%] text-center text-white">PRICE</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[10%] text-center text-white">SUB TOTAL</TableHead>
               </TableRow >
             </TableHeader >
           </Table >
@@ -304,7 +304,7 @@ export default function PurchaseOrder() {
                       </TableCell>
                       <TableCell className="text-right text-md font-bold">
 
-                        <Button className='bg-green-500 mx-2 font-bold my-2 text-xs rounded-2xl'>CREATE PAYMENT LINK</Button>
+                        <Button className='bg-gray-900 mx-2 font-bold my-2 text-xs rounded-2xl'>CREATE PAYMENT LINK</Button>
                         <Button className='bg-red-600 font-bold text-xs rounded-2xl'>REFUND</Button>
                       </TableCell>
                     </TableRow>
@@ -324,8 +324,8 @@ export default function PurchaseOrder() {
                         <TableCell className="border w-[6%] text-center">{details.variasi}</TableCell>
                         <TableCell className="border w-[5%] text-center">{details.ukuran}</TableCell>
                         <TableCell className="border w-[6%] text-center">{Numbering.format(details.berat)}</TableCell>
-                        <TableCell className="border w-[6%] text-center">{Numbering.format(details.qty)}</TableCell>
-                        <TableCell className="border w-[5%] text-center">{Rupiah.format(details.harga_jual)}</TableCell>
+                        <TableCell className="border w-[4%] text-center">{Numbering.format(details.qty)}</TableCell>
+                        <TableCell className="border w-[8%] text-center">{Rupiah.format(details.harga_jual)}</TableCell>
                         <TableCell className="border w-[10%] text-center">{Rupiah.format(details.sub_total)}</TableCell>
                       </TableRow>
                     ))}
@@ -333,20 +333,20 @@ export default function PurchaseOrder() {
                   <TableFooter>
                     <TableRow>
                       <TableCell colSpan={4} className='text-right bg-white font-bold'></TableCell>
-                      <TableCell className="text-center bg-white border font-bold">{Numbering.format(dataisi.berat)}</TableCell>
-                      <TableCell className="text-center bg-white border font-bold">{Numbering.format(dataisi.qty)}</TableCell>
-                      <TableCell className="text-center bg-white border font-bold">GRAND TOTAL :</TableCell>
-                      <TableCell className="text-center bg-white border font-bold">{Rupiah.format(dataisi.sub_total)}</TableCell>
+                      <TableCell className="text-center bg-white  border font-bold">{Numbering.format(dataisi.berat)}</TableCell>
+                      <TableCell className="text-center bg-white  border font-bold">{Numbering.format(dataisi.qty)}</TableCell>
+                      <TableCell className="text-center bg-gray-100 border font-bold">GRAND TOTAL :</TableCell>
+                      <TableCell className="text-center bg-white  border font-bold">{Rupiah.format(dataisi.sub_total)}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={6} className='text-right bg-white font-bold'></TableCell>
-                      <TableCell className="text-center bg-white border font-bold">DONE PAYMENT :</TableCell>
-                      <TableCell className="text-center bg-white border font-bold">{Rupiah.format(dataisi.payment)} ( {Math.round((dataisi.payment / dataisi.sub_total) * 100)}% )</TableCell>
+                      <TableCell className="text-center bg-gray-100  border font-bold">DONE PAYMENT :</TableCell>
+                      <TableCell className="text-center bg-white  border font-bold">{Rupiah.format(dataisi.payment)} ( {Math.round((dataisi.payment / dataisi.sub_total) * 100)}% )</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={6} className='text-right bg-white font-bold'></TableCell>
-                      <TableCell className="text-center bg-white border font-bold">SISA PAYMENT :</TableCell>
-                      <TableCell className="text-center bg-white border font-bold">{Rupiah.format(dataisi.sub_total - dataisi.payment)}</TableCell>
+                      <TableCell className="text-center bg-gray-100  border font-bold">SISA PAYMENT :</TableCell>
+                      <TableCell className="text-center bg-white  text-red-800 border font-bold">{Rupiah.format(dataisi.sub_total - dataisi.payment)}</TableCell>
                     </TableRow>
                   </TableFooter>
 
@@ -366,12 +366,12 @@ export default function PurchaseOrder() {
                       <TableCell colSpan={4} className="text-right font-bold">
                         <div className='flex flex-row'>
                           <div className='basis-1/2'>
-                            <span className='text-red-600'>ORDER STATUS :</span><br></br>
+                            <span className='text-red-800'>ORDER STATUS :</span><br></br>
                             <span>NO RECEIPT :</span><br></br>
                             <span>DELIVERY SERVICE :</span>
                           </div>
                           <div className='basis-1/2'>
-                            <span className='text-red-600'>{dataisi.status_pesanan}</span><br></br>
+                            <span className='text-red-800'>{dataisi.status_pesanan}</span><br></br>
                             <span>{dataisi.resi}</span><br></br>
                             <span>{dataisi.jasa_kirim}</span>
                           </div>

@@ -28,9 +28,9 @@ const Navbar = (data: any) => {
     }
 
     return (
-        <div className='flex h-14 items-center shadow-sm bg-gray-200'>
+        <div className='flex h-14 items-center shadow-sm bg-white border-b border-slate-200'>
 
-            <div className='h-full flex items-center w-[280px] gap-3 justify-center'>
+            <div className='h-full flex items-center w-[280px] gap-3 justify-start ml-4'>
                 <Image
                     className='aspect-square h-7 w-auto'
                     src="/logo.png"
@@ -39,7 +39,7 @@ const Navbar = (data: any) => {
                     alt="Picture of the author"
                 />
 
-                <span className='font-medium text-lg text-black'>CE Corp Management App</span>
+                <span className='font-medium text-lg text-black'>CE Corp Apps</span>
             </div>
 
             <div className='h-full flex items-center grow px-5'>

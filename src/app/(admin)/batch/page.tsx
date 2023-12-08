@@ -91,7 +91,7 @@ export default function Batch() {
         return (
             <main className="">
                 <div className="flex flex-nowrap mt-4">
-                    <div className="font-bold text-4xl text-red-500">
+                    <div className="font-bold text-4xl">
                         Batch
                     </div>
                 </div>
@@ -99,7 +99,7 @@ export default function Batch() {
                 {/* {JSON.stringify(dataBatch.result)} */}
 
                 <div className='flex flex-row mt-4 gap-8  text-white'>
-                    <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-red-400'>
+                    <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900'>
                         <div className='text-xl font-semibold py-4 px-5'>
                             Total Batch
                         </div>
@@ -112,7 +112,7 @@ export default function Batch() {
                             </div>
                         </div>
                     </div>
-                    <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-red-400'>
+                    <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900'>
                         <div className='text-xl font-semibold py-4 px-5'>
                             Capital Amount Batch
                         </div>
@@ -132,7 +132,7 @@ export default function Batch() {
                     <div className="font-bold text-4xl">
                         <Input type="text" className='w-[400px] shadow-md' placeholder="Search Batch.." />
                     </div>
-                    <div className="ml-auto basis-1/6">
+                    <div className="ml-auto basis-1/6 border font-medium">
                         <Datepicker
                             value={value}
                             onChange={handleValueChange}
@@ -176,15 +176,15 @@ export default function Batch() {
                 <div className="mt-5 shadow-md">
                     <Table className='border text-xs'>
                         <TableHeader>
-                            <TableRow className='bg-red-400 font-bold'>
-                                <TableHead className="border  text-white w-[3%] text-center">No</TableHead>
-                                <TableHead className="border  text-white w-[10%] text-center">Date</TableHead>
-                                <TableHead className="border  text-white w-[15%] text-center">Batch</TableHead>
-                                <TableHead className="border  text-white w-[10%] text-center">Country</TableHead>
-                                <TableHead className="border  text-white w-[10% text-center">City</TableHead>
-                                <TableHead className="border  text-white w-[10%] text-center">Gross Sales</TableHead>
-                                <TableHead className="border  text-white w-[10%] text-center">Profit</TableHead>
-                                <TableHead className="border  text-white w-[5%] text-center">ACT</TableHead>
+                            <TableRow className='bg-gray-900 font-bold'>
+                                <TableHead className="bg-gray-900 border  text-white w-[3%] text-center">No</TableHead>
+                                <TableHead className="bg-gray-900 border  text-white w-[10%] text-center">Date</TableHead>
+                                <TableHead className="bg-gray-900 border  text-white w-[15%] text-center">Batch</TableHead>
+                                <TableHead className="bg-gray-900 border  text-white w-[10%] text-center">Country</TableHead>
+                                <TableHead className="bg-gray-900 border  text-white w-[10% text-center">City</TableHead>
+                                <TableHead className="bg-gray-900 border  text-white w-[10%] text-center">Gross Sales</TableHead>
+                                <TableHead className="bg-gray-900 border  text-white w-[10%] text-center">Profit</TableHead>
+                                <TableHead className="bg-gray-900 border  text-white w-[10%] text-center">ACT</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody className='bg-white'>
@@ -197,11 +197,11 @@ export default function Batch() {
                                     <TableCell className="border w-[10%] text-center ">{dataisi.city}</TableCell>
                                     <TableCell className="border w-[10%] text-center bg-orange-100">{Rupiah.format(dataisi.gross)}</TableCell>
                                     <TableCell className="border w-[10%] text-center  bg-orange-100">{Rupiah.format(dataisi.profit)}</TableCell>
-                                    <TableCell className="border w-[5%]">
+                                    <TableCell className="border text-center w-[10%]">
 
                                         <AlertDialog>
                                             <AlertDialogTrigger asChild>
-                                                <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#00b3ff" /></Button>
+                                                <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#000000" /></Button>
                                             </AlertDialogTrigger>
                                             <AlertDialogContent className='w-[600px]'>
                                                 <AlertDialogHeader className='border-b pb-4'>

@@ -130,13 +130,13 @@ export default function PurchasingHistory() {
     return (
       <main className="">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl text-red-500">
+          <div className="font-bold text-4xl">
             Purchasing History
           </div>
         </div>
 
         <div className='flex flex-row mt-4 gap-8  text-white'>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-red-400'>
+          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 rounded-xl'>
             <div className='text-xl font-semibold py-5 px-5'>
               Total Transaction History
             </div>
@@ -149,7 +149,7 @@ export default function PurchasingHistory() {
               </div>
             </div>
           </div>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-red-400'>
+          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 rounded-xl'>
             <div className='text-xl font-semibold py-5 px-5'>
               Article
             </div>
@@ -158,11 +158,11 @@ export default function PurchasingHistory() {
                 {Numbering.format(dataPurchasing.result.total_artikel)}
               </div>
               <div className=' basis-1/2 flex justify-end'>
-                <Icon.DollarSign size={45} color="#ffffff" />
+                <Icon.BoxIcon size={45} color="#ffffff" />
               </div>
             </div>
           </div>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-red-400'>
+          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 rounded-xl'>
             <div className='text-xl font-semibold py-5 px-5'>
               Total Qty
             </div>
@@ -171,11 +171,11 @@ export default function PurchasingHistory() {
                 {Numbering.format(dataPurchasing.result.total_qty)}
               </div>
               <div className=' basis-1/2 flex justify-end'>
-                <Icon.DollarSign size={45} color="#ffffff" />
+                <Icon.Boxes size={45} color="#ffffff" />
               </div>
             </div>
           </div>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-red-400'>
+          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 rounded-xl'>
             <div className='text-xl font-semibold py-5 px-5'>
               Capital Amount
             </div>
@@ -242,7 +242,7 @@ export default function PurchasingHistory() {
               </PopoverContent>
             </Popover>
           </div>
-          <div className="basis-1/6">
+          <div className="basis-1/6 border font-medium">
             <Datepicker
               value={value}
               onChange={handleValueChange}
@@ -286,40 +286,40 @@ export default function PurchasingHistory() {
         <div className="mt-5 shadow-md">
           <Table className='border text-xs'>
             <TableHeader>
-              <TableRow className='bg-red-400 font-bold'>
-                <TableHead className="border  text-white w-[3%] text-center">No</TableHead>
-                <TableHead className="border  text-white w-[10%] text-center">Date Purchasing</TableHead>
-                <TableHead className="border  text-white w-[10%] text-center">Batch</TableHead>
-                <TableHead className="border  text-white w-[10%] text-center">ID PO</TableHead>
-                <TableHead className="border  text-white w-[10% text-center">ID Product</TableHead>
-                <TableHead className="border  text-white w-[10% text-center">Product</TableHead>
-                <TableHead className="border  text-white w-[10%] text-center">ID Supplier</TableHead>
-                <TableHead className="border  text-white w-[10%] text-center">Warna</TableHead>
-                <TableHead className="border  text-white w-[10%] text-center">Ukuran</TableHead>
-                <TableHead className="border  text-white w-[10%] text-center">Qty</TableHead>
-                <TableHead className="border  text-white w-[10%] text-center">Sub Total</TableHead>
-                <TableHead className="border  text-white w-[5%] text-center">ACT</TableHead>
+              <TableRow className='bg-gray-900 font-bold'>
+                <TableHead className="bg-gray-900 border text-white w-[3%] text-center">No</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[9%] text-center">Date Purchasing</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[9%] text-center">Batch</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[7%] text-center">ID PO</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[10% text-center">ID Product</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[10% text-center">Product</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[10%] text-center">ID Supplier</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[10%] text-center">Warna</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[10%] text-center">Ukuran</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[3%] text-center">Qty</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[10%] text-center">Sub Total</TableHead>
+                <TableHead className="bg-gray-900 border text-white w-[10%] text-center">ACT</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody className='bg-white'>
               {dataPurchasing.result.data_purchasing.map((dataisi: any, index: number) => (
                 <TableRow key={dataisi.id}>
                   <TableCell className="border text-center w-[3%] font-bold">{Numbering.format(index + 1)}</TableCell>
-                  <TableCell className="border text-center w-[10%]">{dataisi.tanggal_purchasing}</TableCell>
-                  <TableCell className="border w-[10%] text-center">{dataisi.id_batch}</TableCell>
-                  <TableCell className="border w-[10%] text-center">{dataisi.id_po}</TableCell>
+                  <TableCell className="border text-center w-[9%]">{dataisi.tanggal_purchasing}</TableCell>
+                  <TableCell className="border w-[9%] text-center">{dataisi.id_batch}</TableCell>
+                  <TableCell className="border w-[7%] text-center">{dataisi.id_po}</TableCell>
                   <TableCell className="border w-[10%] text-center ">{dataisi.id_produk}</TableCell>
                   <TableCell className="border w-[10%] text-center ">{dataisi.produk}</TableCell>
                   <TableCell className="border w-[10%] text-center">{dataisi.id_sup}</TableCell>
                   <TableCell className="border w-[10%] text-center">{dataisi.warna}</TableCell>
                   <TableCell className="border w-[10%] text-center">{dataisi.ukuran}</TableCell>
-                  <TableCell className="border w-[10%] text-center">{Numbering.format(dataisi.qty)}</TableCell>
+                  <TableCell className="border w-[3%] text-center">{Numbering.format(dataisi.qty)}</TableCell>
                   <TableCell className="border w-[10%] text-center">{Rupiah.format(dataisi.sub_total)}</TableCell>
-                  <TableCell className="border w-[5%]">
+                  <TableCell className="border text-center w-[10%]">
 
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#00b3ff" /></Button>
+                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#000000" /></Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent className='w-[600px]'>
                         <AlertDialogHeader className='border-b pb-4'>
