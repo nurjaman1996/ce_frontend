@@ -60,6 +60,7 @@ export default function Products() {
 
   const [isLoading, setisLoading]: any = useState(true)
   const [dataProducts, setdataProducts]: any = useState([])
+  const [detailsProduks, setdetailsProduks]: any = useState([])
 
   async function loadProducts(batch: any) {
     setisLoading(true)
@@ -72,6 +73,7 @@ export default function Products() {
     })
       .then(function (response) {
         setdataProducts(response.data)
+        setdetailsProduks(response.data.result.data_iventory_details)
         setisLoading(false)
       })
       .catch(function (error) {
@@ -101,6 +103,156 @@ export default function Products() {
   useEffect(() => {
     loadDataBatch()
   }, [])
+
+  const [searchProduks, setsearchProduks]: any = useState('');
+
+  const filterProduks: any = detailsProduks.filter((data: any) => {
+    return (
+      data.produk.toLocaleLowerCase().includes(searchProduks.toLocaleLowerCase())
+    );
+  });
+
+
+  const [selectedCover, setselectedCover]: any = useState([])
+  const [selectedImages, setselectedImages]: any = useState([])
+
+  const [openEditImage, setopenEditImage]: any = useState("")
+  const [openEditImageDetails, setopenEditImageDetails]: any = useState([])
+
+  const [e_imageCover, sete_imageCover]: any = useState([])
+  const [e_imageDetails, sete_imageDetails]: any = useState([])
+
+  const onSelectCover = (event: any) => {
+    const selectedFile = event.target.files
+    const selectedFileArray = Array.from(selectedFile)
+    sete_imageCover(selectedFile[0])
+    const imagesArray = selectedFileArray.map((file: any) => {
+      return URL.createObjectURL(file)
+    })
+
+    setselectedCover(imagesArray)
+  }
+
+  const onSelectFile = (event: any) => {
+    const selectedFile = event.target.files
+    const selectedFileArray = Array.from(selectedFile)
+
+    const valImage = selectedImages.length
+
+    const imagesArray: any = []
+    const dataImages: any = []
+
+    selectedFileArray.map((file: any, index: number) => {
+      const jumlahImg = valImage + index
+      if (jumlahImg < 5) {
+        dataImages.push(file)
+        imagesArray.push({
+          img: URL.createObjectURL(file),
+          name: null
+        })
+      }
+    })
+
+    sete_imageDetails(dataImages)
+    setselectedImages((previousImage: any) => previousImage.concat(imagesArray))
+
+    if (selectedFileArray.length > 5) {
+      alert("Maksimal 5 Image")
+    }
+  }
+
+  const [e_deleteImages, sete_deleteImages]: any = useState([])
+
+  const deleteDetailsImg = (index: number, name: any) => {
+    const rows = [...selectedImages];
+    rows.splice(index, 1);
+    setselectedImages(rows);
+
+    if (name != null) {
+      sete_deleteImages([...e_deleteImages, name])
+    }
+  }
+
+  const [openEdit, setopenEdit]: any = useState(false);
+
+  const [e_produk, sete_produk]: any = useState("")
+  const [e_berat_produk, sete_berat_produk]: any = useState("")
+  const [e_modal_asing, sete_modal_asing]: any = useState("")
+  const [e_margin, sete_margin]: any = useState("")
+  const [e_overhead, sete_overhead]: any = useState("")
+  const [e_kurs, sete_kurs]: any = useState("")
+  const [e_id_po, sete_id_po]: any = useState("")
+  const [e_id_batch, sete_id_batch]: any = useState("")
+  const [e_id_produk, sete_id_produk]: any = useState("")
+
+  async function editProduk() {
+    // console.log(e_produk)
+    // console.log(e_berat_produk)
+    // console.log(e_modal_asing)
+    // console.log(e_margin)
+    // console.log(e_overhead)
+    // console.log(e_kurs)
+    // console.log(e_id_po)
+    // console.log(e_id_batch)
+    // console.log(e_id_produk)
+    // console.log(e_imageCover)
+    // console.log(e_imageDetails)
+
+    let formData: any = new FormData();
+    formData.append("id_produk", e_id_produk);
+    formData.append("id_batch", e_id_batch);
+    formData.append("id_po", e_id_po);
+    formData.append("kurs", e_kurs);
+    formData.append("overhead", e_overhead);
+    formData.append("margin", e_margin);
+    formData.append("modal_asing", e_modal_asing);
+    formData.append("berat_produk", e_berat_produk);
+    formData.append("produk", e_produk);
+    formData.append("deleteimage", e_deleteImages);
+    formData.append("file", e_imageCover);
+
+    for (let index = 0; index < e_imageDetails.length; index++) {
+      formData.append("fileDetails", e_imageDetails[index]);
+    }
+
+    await axios({
+      method: 'post',
+      url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/editproduk`,
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+      data: formData
+    })
+      .then(function (response) {
+        loadProducts(valueBatch)
+        setopenEdit(false)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+
+  async function deleteProduk(id_produk: any, id_po: any, id_batch: any) {
+    // console.log(id_produk)
+    // console.log(id_po)
+    // console.log(id_batch)
+
+    await axios({
+      method: 'post',
+      url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/deleteproduk`,
+      data: {
+        id_produk: id_produk,
+        id_po: id_po,
+        id_batch: id_batch
+      }
+    })
+      .then(function (response) {
+        loadProducts(valueBatch)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
 
   if (isLoading) {
     return (
@@ -154,7 +306,7 @@ export default function Products() {
         <div className="flex flex-nowrap mt-4">
           {/*  */}
           <div className="font-bold text-4xl">
-            <Input type="text" className='w-[400px] shadow-md text-black' placeholder="Search Products.." />
+            <Input type="text" className='w-[400px] shadow-md text-black' placeholder="Search Products.." value={searchProduks} onChange={(e) => { setsearchProduks(e.currentTarget.value) }} />
           </div>
           <div className="ml-auto">
             <Popover open={open} onOpenChange={setOpen}>
@@ -222,7 +374,7 @@ export default function Products() {
               </TableRow>
             </TableHeader>
             <TableBody className='bg-white'>
-              {dataProducts.result.data_iventory_details.map((dataisi: any, index: number) => (
+              {filterProduks.map((dataisi: any, index: number) => (
                 <TableRow key={dataisi.id}>
                   <TableCell className="border text-center w-[3.5%] font-bold">{Numbering.format(index + 1)}</TableCell>
 
@@ -255,6 +407,8 @@ export default function Products() {
                       }
                     })()}
 
+                    <button className='mt-2 text-xs font-normal hover:text-blue-500'>View Details Image</button>
+
                   </TableCell>
 
                   <TableCell className="border text-left w-[30%]">
@@ -263,7 +417,23 @@ export default function Products() {
                   </TableCell>
 
                   <TableCell className="border w-[5.5%] text-center">{Numbering.format(dataisi.berat_produk)} gr</TableCell>
-                  <TableCell className="border w-[5.5%] text-center">{Numbering.format(dataisi.total_stok)}</TableCell>
+
+
+                  <TableCell className="border w-[10%] text-center">
+                    <div className='flex flex-col gap-1 '>
+                      {dataisi.variasi.map((data_var: any, indexes: number) => (
+                        <div key={indexes} className="border rounded-sm py-1">
+                          {data_var.warna} : {data_var.stok_ready} Pcs
+                        </div>
+                      ))}
+
+                      <div className='mt-2'>
+                        Total Stok : {Numbering.format(dataisi.total_stok)} Pcs
+                      </div>
+                    </div>
+                  </TableCell>
+
+
                   <TableCell className="border w-[3%] text-center ">{Numbering.format(dataisi.total_variasi)}</TableCell>
                   <TableCell className="border w-[5%] text-center bg-orange-100">{Rupiah.format(dataisi.kurs)}</TableCell>
                   <TableCell className="border w-[5%] text-center  bg-orange-100">{Rupiah.format(dataisi.overhead)}</TableCell>
@@ -272,33 +442,219 @@ export default function Products() {
                   <TableCell className="border w-[15%] text-center ">{Rupiah.format(dataisi.harga_jual)}</TableCell>
                   <TableCell className="border w-[5%]">
 
-                    <AlertDialog>
+                    <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
                       <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.FileEdit color="#00b3ff" /></Button>
+                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
+                          onClick={() => {
+                            setopenEdit(true)
+                            setselectedCover([])
+                            sete_imageCover([])
+                            sete_imageDetails([])
+                            sete_deleteImages([])
+                            setopenEditImage(dataisi.images)
+
+                            sete_produk(dataisi.produk)
+                            sete_berat_produk(dataisi.berat_produk)
+                            sete_modal_asing(dataisi.modal_asing)
+                            sete_margin(dataisi.margin)
+                            sete_overhead(dataisi.overhead)
+                            sete_kurs(dataisi.kurs)
+                            sete_id_po(dataisi.id_po)
+                            sete_id_batch(dataisi.id_batch)
+                            sete_id_produk(dataisi.id_produk)
+
+                            const imageDetails: any = []
+                            dataisi.details_img.map((datas: any, index: number) => {
+                              imageDetails.push({
+                                img: `${process.env.NEXT_PUBLIC_HOST}/assets/img/${datas.images}`,
+                                name: datas.images
+                              })
+                            }
+                            )
+
+                            setselectedImages(imageDetails)
+                          }}>
+                          <Icon.FileEdit color="#000000" />
+                        </Button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className='w-[600px]'>
+                      <AlertDialogContent className='w-[90vh]'>
                         <AlertDialogHeader className='border-b pb-4'>
                           <AlertDialogTitle >Edit Product</AlertDialogTitle>
                         </AlertDialogHeader>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Image :
+                        <div className='flex flex-row gap-4 w-full'>
+                          <div className='basis-1/2'>
+                            <div className='text-xs'>Cover Image</div>
+                            <div className='grid grid-cols-5 items-start gap-2 mt-2 h-[auto] mb-2'>
+                              {selectedCover.length < 1 ?
+                                <div className="border h-[140px] pb-2 rounded-md text-center ">
+                                  <Image
+                                    className='aspect-square rounded-md mx-auto mb-1'
+                                    src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${openEditImage}`}
+                                    width={300}
+                                    height={300}
+                                    alt="Picture of the author"
+                                    style={{ height: 100, width: 100 }}
+                                    priority
+                                  />
+                                  <label className='cursor-pointer text-xs bg-red-500 text-white p-1 rounded-md'>
+                                    Change Cover
+                                    <Input
+                                      className='hidden'
+                                      type="file"
+                                      onChange={onSelectCover}
+                                      accept='image/png, image/jpeg'
+                                    />
+                                  </label>
+                                </div>
+                                :
+                                selectedCover &&
+                                selectedCover.map((image: any, index: number) => {
+                                  return (
+                                    <div key={index} className="border h-[140px] pb-2 rounded-md text-center ">
+                                      <Image
+                                        className='aspect-square rounded-md mx-auto mb-1'
+                                        // src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataisi.images}`}
+                                        src={image}
+                                        width={300}
+                                        height={300}
+                                        alt="Picture of the author"
+                                        style={{ height: "auto", width: "100%" }}
+                                        priority
+                                      />
+                                      <label className='cursor-pointer text-xs bg-red-500 text-white p-1 rounded-md'>
+                                        Change Cover
+                                        <Input
+                                          className='hidden'
+                                          type="file"
+                                          onChange={onSelectCover}
+                                          accept='image/png, image/jpeg'
+                                        />
+                                      </label>
+                                    </div>
+                                  )
+                                })
+                              }
+
+
+                            </div>
+
+                            <div className='text-xs'>Details Image</div>
+                            <div className='grid grid-cols-5 items-start gap-2 mt-2 h-[auto]'>
+                              {selectedImages.length < 1 ?
+                                <div className="border rounded-md">
+                                  <label className='cursor-pointer text-xs border rounded-md h-[140px] flex justify-center items-center'>
+                                    <Icon.Plus />
+                                    <Input
+                                      className='hidden'
+                                      type="file"
+                                      onChange={onSelectFile}
+                                      multiple
+                                      accept='image/png, image/jpeg'
+                                    />
+                                  </label>
+                                </div>
+                                :
+                                selectedImages &&
+                                selectedImages.map((image: any, index: number) => {
+                                  return (
+                                    <div key={index} className="border h-[140px] pb-2 rounded-md text-center ">
+                                      <Image
+                                        className='aspect-square rounded-md mx-auto'
+                                        // src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataisi.images}`}
+                                        src={image.img}
+                                        width={300}
+                                        height={300}
+                                        alt="Picture of the author"
+                                        style={{ height: "auto", width: "100%" }}
+                                        priority
+                                      />
+                                      <button className='w-[90%] mt-2 text-xs py-1 bg-red-500 rounded-md text-white'
+                                        onClick={() => { deleteDetailsImg(index, image.name) }}
+                                      >
+                                        Delete Image
+                                      </button>
+                                    </div>
+                                  )
+                                })
+                              }
+
+                              {selectedImages.length > 0 && selectedImages.length < 5 ?
+                                <label className='cursor-pointer h-[140px] text-xs border rounded-md flex justify-center items-center'>
+                                  <Icon.Plus />
+                                  <Input
+                                    className='hidden'
+                                    type="file"
+                                    onChange={onSelectFile}
+                                    multiple
+                                    accept='image/png, image/jpeg'
+                                  />
+                                </label>
+                                : null}
+                            </div>
+
                           </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Product :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" placeholder="Product.." />
+
+                          <div className='basis-1/2 flex flex-col gap-2'>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-2/4 font-bold text-left'>
+                                Nama Produk :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" placeholder="Product.." value={e_produk} onChange={(e) => { sete_produk(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-2/4 font-bold text-left'>
+                                Berat Produk :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" placeholder="Product.." value={e_berat_produk} onChange={(e) => { sete_berat_produk(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-2/4 font-bold text-left'>
+                                Modal Produk (Asing) :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" placeholder="Product.." value={e_modal_asing} onChange={(e) => { sete_modal_asing(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-2/4 font-bold text-left'>
+                                Kurs :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" placeholder="Product.." value={e_kurs} onChange={(e) => { sete_kurs(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-2/4 font-bold text-left'>
+                                Overhead :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" placeholder="Product.." value={e_overhead} onChange={(e) => { sete_overhead(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-2/4 font-bold text-left'>
+                                Margin :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" placeholder="Product.." value={e_margin} onChange={(e) => { sete_margin(e.currentTarget.value) }} />
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <AlertDialogFooter>
                           <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
-                          <Button >Save</Button>
+                          <Button onClick={() => {
+                            editProduk()
+                          }}>Update</Button>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
@@ -310,11 +666,12 @@ export default function Products() {
                       <AlertDialogContent className='w-[600px]'>
                         <AlertDialogHeader className='border-b pb-4'>
                           <AlertDialogTitle >Delete Product</AlertDialogTitle>
+                          <AlertDialogDescription>Data Supplier {dataisi.supplier} akan dihapus?</AlertDialogDescription>
                         </AlertDialogHeader>
 
                         <AlertDialogFooter>
                           <AlertDialogCancel >Cancel</AlertDialogCancel>
-                          <Button className='bg-red-400 font-bold'>Delete</Button>
+                          <Button className='bg-red-400 font-bold' onClick={() => { deleteProduk(dataisi.id_produk, dataisi.id_po, dataisi.id_batch) }}>Delete</Button>
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>

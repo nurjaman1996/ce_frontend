@@ -76,6 +76,7 @@ export default function PurchaseOrder() {
 
   const [isLoading, setisLoading]: any = useState(true)
   const [dataOrders, setdataOrders]: any = useState([])
+  const [dataOrdersdetails, setdataOrdersdetails]: any = useState([])
 
   async function loaddataOrders(start: any, end: any, batch: any) {
     setisLoading(true)
@@ -90,6 +91,7 @@ export default function PurchaseOrder() {
     })
       .then(function (response) {
         setdataOrders(response.data)
+        setdataOrdersdetails(response.data.result)
         setisLoading(false)
       })
       .catch(function (error) {
@@ -120,6 +122,8 @@ export default function PurchaseOrder() {
     loadDataBatch()
   }, [])
 
+  const [searchInvoices, setsearchInvoices]: any = useState('');
+
   if (isLoading) {
     return (
       <div>
@@ -138,7 +142,7 @@ export default function PurchaseOrder() {
         <div className="flex flex-nowrap mt-4">
           {/*  */}
           <div className="font-bold text-4xl">
-            <Input type="text" className='w-[400px] shadow-md' placeholder="Search Orders.." />
+            <Input type="text" className='w-[400px] shadow-md' placeholder="Search Orders.." value={searchInvoices} onChange={(e) => { setsearchInvoices(e.currentTarget.value) }} />
           </div>
           <div className="ml-auto w-auto mr-4">
             <Popover open={open} onOpenChange={setOpen}>
@@ -244,7 +248,7 @@ export default function PurchaseOrder() {
             </TableHeader >
           </Table >
           {
-            dataOrders.result.map((dataisi: any, index: number) => (
+            dataOrdersdetails.map((dataisi: any, index: number) => (
               <div className='border mb-5' key={dataisi.id_invoice + dataisi.id_batch}>
                 <Table className='text-xs bg-white'>
                   <TableHeader>

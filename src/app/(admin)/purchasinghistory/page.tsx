@@ -126,7 +126,7 @@ export default function PurchasingHistory() {
 
   const filterPurchasing: any = dataDEtailsPurchasing.filter((data: any) => {
     return (
-      data.produk.toLocaleLowerCase().includes(searchPurchasing.toLocaleLowerCase())
+      data.produk != null ? data.produk.toLocaleLowerCase().includes(searchPurchasing.toLocaleLowerCase()) : data
     );
   });
 

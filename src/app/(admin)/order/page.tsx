@@ -554,8 +554,8 @@ export default function Order() {
 
                 <div className="mt-1 px-3 pt-2 flex flex-col text-xs gap-2">
                   <label className='font-bold'>Size:</label>
-                  <div className='grid grid-cols-5 gap-2 text-xs content-start '>
-                    {list_variant}
+                  <div className={`${list_variant.length < 1 ? "" : "grid grid-cols-5 gap-2"} text-xs content-start`}>
+                    {list_variant.length < 1 ? "Belum ada Variasi, Silahkan tambah Variant" : list_variant}
                   </div>
                 </div>
 
