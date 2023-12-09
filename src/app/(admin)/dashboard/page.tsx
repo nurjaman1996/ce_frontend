@@ -204,7 +204,7 @@ export default function Home() {
         {/* {JSON.stringify(dataDashboard.result)} */}
 
         <div className='flex flex-row mt-4 gap-4 text-white'>
-          <div className='basis-3/6 bg-gray-900 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
               Sales Summary
             </div>
@@ -217,7 +217,7 @@ export default function Home() {
               </div> */}
             </div>
           </div>
-          <div className='basis-1/6 bg-gray-900 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
               Total Product
             </div>
@@ -231,7 +231,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className='basis-1/6 bg-gray-900 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
               Available Stock
             </div>
@@ -244,7 +244,7 @@ export default function Home() {
               </div> */}
             </div>
           </div>
-          <div className='basis-1/6 bg-gray-900 border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
             <div className='text-xl font-semibold py-4 px-5'>
               Unfilled Stock
             </div>
@@ -260,29 +260,29 @@ export default function Home() {
         </div>
 
         <div className='flex flex-row mt-4  gap-4 text-white'>
-          <div className='basis-3/4 bg-gray-500 border-2 border-black-500 h-[448px] rounded-lg shadow-md'>
+          <div className='basis-3/4 bg-black border-2 border-black-500 h-[448px] rounded-lg shadow-md'>
             <div className='text-xl font-bold py-3 px-5 '>
               Chart Sales
             </div>
 
           </div>
-          <div className='basis-1/4'>
-            <div className='text-xl font-bold py-3 px-5  bg-gray-500 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
+          <div className='grow'>
+            <div className='text-xl font-bold py-3 px-5  bg-black border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
               Sales Qty
               <p>{Numbering.format(dataDashboard.result.total_pesanan)}</p>
             </div>
 
-            <div className='text-xl font-bold py-3 px-5 mt-4 bg-gray-500 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
+            <div className='text-xl font-bold py-3 px-5 mt-4 bg-black border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
               Qty
               <p>{Numbering.format(dataDashboard.result.qty)}</p>
             </div>
 
-            <div className='text-xl font-bold py-3 px-5 mt-4 bg-gray-500 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
+            <div className='text-xl font-bold py-3 px-5 mt-4 bg-black border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
               Estimated Weight
               <p>{Numbering.format(dataDashboard.result.weight)} GR | {Numbering.format(dataDashboard.result.weight / 1000)} KG</p>
             </div>
 
-            <div className='text-xl font-bold py-3 px-5 mt-4 bg-gray-500 border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
+            <div className='text-xl font-bold py-3 px-5 mt-4 bg-black border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
               Estimated Overhead
               <p>{Rupiah.format(dataDashboard.result.overhead)}</p>
             </div>

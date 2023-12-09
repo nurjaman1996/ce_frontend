@@ -1,4 +1,5 @@
 "use client";
+import * as React from "react"
 import Image from 'next/image'
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -7,7 +8,13 @@ import { Badge } from "@/components/ui/badge"
 import * as Icon from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Check, ChevronsUpDown } from "lucide-react"
+import { Plus, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import {
   Command,
   CommandEmpty,
@@ -61,6 +68,8 @@ export default function Products() {
   const [isLoading, setisLoading]: any = useState(true)
   const [dataProducts, setdataProducts]: any = useState([])
   const [detailsProduks, setdetailsProduks]: any = useState([])
+
+  const [isOpen, setIsOpen] = React.useState(false)
 
   async function loadProducts(batch: any) {
     setisLoading(true)
@@ -362,8 +371,7 @@ export default function Products() {
                 <TableHead className="border  text-white w-[3%] text-center bg-gray-900">No</TableHead>
                 <TableHead className="border  text-white w-[12%] text-center bg-gray-900">Image</TableHead>
                 <TableHead className="border  text-white w-[30%] text-left bg-gray-900">Name</TableHead>
-                <TableHead className="border  text-white w-[2.5%] text-center bg-gray-900">Weight</TableHead>
-                <TableHead className="border  text-white w-[2.5%] text-center bg-gray-900">Stock</TableHead>
+                <TableHead className="border  text-white w-[10%] text-center bg-gray-900">Stock</TableHead>
                 <TableHead className="border  text-white w-[3%] text-center bg-gray-900">Varian</TableHead>
                 <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Kurs</TableHead>
                 <TableHead className="border  text-white w-[5%] text-center bg-gray-900">Overhead</TableHead>
@@ -407,28 +415,60 @@ export default function Products() {
                       }
                     })()}
 
-                    <button className='mt-2 text-xs font-normal hover:text-blue-500'>View Details Image</button>
+                    {/* <button className='mt-2 text-xs font-normal hover:text-blue-500'>View Details Image</button> */}
 
                   </TableCell>
 
                   <TableCell className="border text-left w-[30%]">
-                    <span className='capitalize'>{dataisi.produk}</span><br></br>
-                    <span>{dataisi.id_produk}</span>
+                    <span className='capitalize text-base'>{dataisi.produk}</span><br></br>
+                    <span className='text-red-600 text-[11px]'>{dataisi.id_produk}</span><br></br>
+                    <span>{Numbering.format(dataisi.berat_produk)} gr</span>
                   </TableCell>
 
-                  <TableCell className="border w-[5.5%] text-center">{Numbering.format(dataisi.berat_produk)} gr</TableCell>
-
-
-                  <TableCell className="border w-[10%] text-center">
-                    <div className='flex flex-col gap-1 '>
-                      {dataisi.variasi.map((data_var: any, indexes: number) => (
+                  <TableCell className="border w-[10%] text-center p-2">
+                    <div className='flex flex-col'>
+                      {/* {dataisi.variasi.map((data_var: any, indexes: number) => (
                         <div key={indexes} className="border rounded-sm py-1">
                           {data_var.warna} : {data_var.stok_ready} Pcs
                         </div>
-                      ))}
+                      ))} */}
 
-                      <div className='mt-2'>
-                        Total Stok : {Numbering.format(dataisi.total_stok)} Pcs
+                      <div>
+                        <Collapsible
+                          open={isOpen}
+                          onOpenChange={setIsOpen}
+                          className="w-[200px] space-y-2"
+                        >
+                          <div className="flex items-center justify-between space-x-4 px-4">
+                            <CollapsibleTrigger asChild>
+                              <Button variant="ghost" size="sm" className="w-full p-0  font-bold text-green-700">
+                                <ChevronsUpDown className="h-4 w-4" />
+                                {Numbering.format(dataisi.total_stok)}
+                              </Button>
+                            </CollapsibleTrigger>
+                          </div>
+                          <CollapsibleContent className="space-y-2">
+                            <div className="rounded-xl bg-gray-100 ">
+                              <Table className="">
+                                <TableHeader>
+                                  <TableRow >
+                                    <TableHead className="text-center text-xs font-bold">Variant</TableHead>
+                                    <TableHead className="text-center text-xs  font-bold">Stock</TableHead>
+                                  </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                  {dataisi.variasi.map((data_var: any, indexes: number) => (
+                                    <TableRow>
+                                      <TableCell className="text-xs table-sm"> {data_var.warna}</TableCell>
+                                      <TableCell className="text-xs"> {data_var.stok_ready}</TableCell>
+                                    </TableRow>
+                                  ))}
+                                </TableBody>
+                              </Table>
+                            </div>
+                          </CollapsibleContent>
+                        </Collapsible>
+
                       </div>
                     </div>
                   </TableCell>
@@ -477,29 +517,28 @@ export default function Products() {
                           <Icon.FileEdit color="#000000" />
                         </Button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className='w-[90vh]'>
+                      <AlertDialogContent className='w-[60%]'>
                         <AlertDialogHeader className='border-b pb-4'>
                           <AlertDialogTitle >Edit Product</AlertDialogTitle>
                         </AlertDialogHeader>
-                        <div className='flex flex-row gap-4 w-full'>
-                          <div className='basis-1/2'>
-                            <div className='text-xs'>Cover Image</div>
-                            <div className='grid grid-cols-5 items-start gap-2 mt-2 h-[auto] mb-2'>
+                        <div className='flex flex-row'>
+                          <div className='basis-1/3'>
+                            {/* <div className='text-base font-medium text-center'>Cover Image</div> */}
+                            <div className='items-start gap-2  h-[auto]  mb-2'>
                               {selectedCover.length < 1 ?
-                                <div className="border h-[140px] pb-2 rounded-md text-center ">
+                                <div className=" h-auto pb-2 rounded-md text-center">
                                   <Image
-                                    className='aspect-square rounded-md mx-auto mb-1'
+                                    className='aspect-square rounded-md -mb-6'
                                     src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${openEditImage}`}
                                     width={300}
                                     height={300}
                                     alt="Picture of the author"
-                                    style={{ height: 100, width: 100 }}
+                                    // style={{ height: 300, width: 300 }}
                                     priority
                                   />
-                                  <label className='cursor-pointer text-xs bg-red-500 text-white p-1 rounded-md'>
-                                    Change Cover
+                                  <label className='cursor-pointer text-xs text-black p-1 rounded-md'>
                                     <Input
-                                      className='hidden'
+                                      className=' -mb-10 w-[95%]'
                                       type="file"
                                       onChange={onSelectCover}
                                       accept='image/png, image/jpeg'
@@ -510,21 +549,20 @@ export default function Products() {
                                 selectedCover &&
                                 selectedCover.map((image: any, index: number) => {
                                   return (
-                                    <div key={index} className="border h-[140px] pb-2 rounded-md text-center ">
+                                    <div key={index} className=" pb-2 rounded-md text-center ">
                                       <Image
-                                        className='aspect-square rounded-md mx-auto mb-1'
+                                        className='aspect-square rounded-md -mb-6'
                                         // src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataisi.images}`}
                                         src={image}
                                         width={300}
                                         height={300}
                                         alt="Picture of the author"
-                                        style={{ height: "auto", width: "100%" }}
+                                        // style={{ height: "auto", width: "100%" }}
                                         priority
                                       />
-                                      <label className='cursor-pointer text-xs bg-red-500 text-white p-1 rounded-md'>
-                                        Change Cover
+                                      <label className='cursor-pointer text-xs text-black p-1 rounded-md'>
                                         <Input
-                                          className='hidden'
+                                          className=' -mb-10 w-[95%]'
                                           type="file"
                                           onChange={onSelectCover}
                                           accept='image/png, image/jpeg'
@@ -538,11 +576,11 @@ export default function Products() {
 
                             </div>
 
-                            <div className='text-xs'>Details Image</div>
-                            <div className='grid grid-cols-5 items-start gap-2 mt-2 h-[auto]'>
+                            {/* <div className='text-base font-medium mt-4 text-center'>Details Image</div>
+                            <div className='items-start gap-2 mt-2 h-[auto]'>
                               {selectedImages.length < 1 ?
                                 <div className="border rounded-md">
-                                  <label className='cursor-pointer text-xs border rounded-md h-[140px] flex justify-center items-center'>
+                                  <label className='cursor-pointer text-xs border rounded-md h-[50px] flex justify-center items-center'>
                                     <Icon.Plus />
                                     <Input
                                       className='hidden'
@@ -590,61 +628,61 @@ export default function Products() {
                                   />
                                 </label>
                                 : null}
-                            </div>
+                            </div> */}
 
                           </div>
 
-                          <div className='basis-1/2 flex flex-col gap-2'>
+                          <div className='grow flex flex-col gap-2'>
                             <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-2/4 font-bold text-left'>
+                              <div className='basis-1/3 font-bold text-left'>
                                 Nama Produk :
                               </div>
-                              <div className='basis-3/4'>
+                              <div className='grow'>
                                 <Input type="text" placeholder="Product.." value={e_produk} onChange={(e) => { sete_produk(e.currentTarget.value) }} />
                               </div>
                             </div>
 
                             <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-2/4 font-bold text-left'>
+                              <div className='basis-1/3 font-bold text-left'>
                                 Berat Produk :
                               </div>
-                              <div className='basis-3/4'>
+                              <div className='grow'>
                                 <Input type="text" placeholder="Product.." value={e_berat_produk} onChange={(e) => { sete_berat_produk(e.currentTarget.value) }} />
                               </div>
                             </div>
 
                             <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-2/4 font-bold text-left'>
+                              <div className='basis-1/3 font-bold text-left'>
                                 Modal Produk (Asing) :
                               </div>
-                              <div className='basis-3/4'>
+                              <div className='grow'>
                                 <Input type="text" placeholder="Product.." value={e_modal_asing} onChange={(e) => { sete_modal_asing(e.currentTarget.value) }} />
                               </div>
                             </div>
 
                             <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-2/4 font-bold text-left'>
+                              <div className='basis-1/3 font-bold text-left'>
                                 Kurs :
                               </div>
-                              <div className='basis-3/4'>
+                              <div className='grow'>
                                 <Input type="text" placeholder="Product.." value={e_kurs} onChange={(e) => { sete_kurs(e.currentTarget.value) }} />
                               </div>
                             </div>
 
                             <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-2/4 font-bold text-left'>
+                              <div className='basis-1/3 font-bold text-left'>
                                 Overhead :
                               </div>
-                              <div className='basis-3/4'>
+                              <div className='grow'>
                                 <Input type="text" placeholder="Product.." value={e_overhead} onChange={(e) => { sete_overhead(e.currentTarget.value) }} />
                               </div>
                             </div>
 
                             <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-2/4 font-bold text-left'>
+                              <div className='basis-1/3 font-bold text-left'>
                                 Margin :
                               </div>
-                              <div className='basis-3/4'>
+                              <div className='grow'>
                                 <Input type="text" placeholder="Product.." value={e_margin} onChange={(e) => { sete_margin(e.currentTarget.value) }} />
                               </div>
                             </div>
@@ -675,6 +713,7 @@ export default function Products() {
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
+
                   </TableCell>
                 </TableRow>
               ))}

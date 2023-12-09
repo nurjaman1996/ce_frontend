@@ -27,6 +27,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
 
 import Datepicker from "react-tailwindcss-datepicker";
 import { Check, ChevronsUpDown } from "lucide-react"
@@ -233,7 +244,7 @@ export default function PurchaseOrder() {
         {/* {JSON.stringify(dataOrders.result)} */}
 
         <div className="mt-5">
-          <Table className='border bg-white text-xs'>
+          <Table className='border bg-white text-xs '>
             <TableHeader>
               <TableRow className='bg-gray-900 font-bold'>
                 <TableHead className="bg-gray-900 border font-bold w-[3%] text-center text-white">No</TableHead>
@@ -262,16 +273,8 @@ export default function PurchaseOrder() {
                             </AlertDialogTrigger>
                             <AlertDialogContent className='w-[600px]'>
                               <AlertDialogHeader className='border-b pb-4'>
-                                <AlertDialogTitle >Edit Purchase Order</AlertDialogTitle>
+                                <AlertDialogTitle >Print Resi</AlertDialogTitle>
                               </AlertDialogHeader>
-                              <div className='flex flex-row text-center mt-2 items-center'>
-                                <div className='basis-1/4 font-bold text-left'>
-                                  Image :
-                                </div>
-                                <div className='basis-3/4'>
-                                  <Input type="text" />
-                                </div>
-                              </div>
                               <div className='flex flex-row text-center mt-2 items-center'>
                                 <div className='basis-1/4 font-bold text-left'>
                                   Product :
@@ -289,11 +292,11 @@ export default function PurchaseOrder() {
 
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle size={18} color="#ff0000" /></Button>
+                              <Button variant="link" className=' text-white font-bold hover:bg-gray-200 -ml-3'> <Icon.XCircle size={18} color="#ff0000" /></Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent className='w-[600px]'>
                               <AlertDialogHeader className='border-b pb-4'>
-                                <AlertDialogTitle >Delete Sales</AlertDialogTitle>
+                                <AlertDialogTitle >Delete This Orders</AlertDialogTitle>
                               </AlertDialogHeader>
 
                               <AlertDialogFooter>
@@ -308,13 +311,154 @@ export default function PurchaseOrder() {
                       </TableCell>
                       <TableCell className="text-right text-md font-bold">
 
-                        <Button className='bg-gray-900 mx-2 font-bold my-2 text-xs rounded-2xl'>CREATE PAYMENT LINK</Button>
-                        <Button className='bg-red-600 font-bold text-xs rounded-2xl'>REFUND</Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button className='bg-green-700 mx-2 font-bold text-[10px] rounded-2xl'>CREATE PAYMENT LINK <Icon.BadgeDollarSign className='ml-1' size={18} color="#ffffff" /></Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className='w-[20%]'>
+                            <AlertDialogHeader className='border-b pb-4'>
+                              <AlertDialogTitle>Create Payment</AlertDialogTitle>
+                            </AlertDialogHeader>
+                            <RadioGroup defaultValue="50">
+                              <div className="flex space-x-2">
+                                <Label className='text-center font-medium text-xl'>Total Payment</Label>
+                              </div>
+                              <div className="flex space-x-2">
+                                <Label className='text-center font-bold text-2xl text-green-800 -mt-2'>Rp 2.531.656</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="25" id="25" />
+                                <Label>25%</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="50" id="50" />
+                                <Label>50%</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="75" id="75" />
+                                <Label>75%</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="100" id="100" />
+                                <Label>100%</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="custom" id="custom" />
+                                <Label>Custom Amount..</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <Input type='number' className='mt-1 shadow-sm' placeholder='0' />
+                              </div>
+                            </RadioGroup>
+                            <AlertDialogFooter className='flex flex-row  mt-2 border-t pt-4'>
+                              <AlertDialogCancel className='bg-red-400 font-bold'>Cancel</AlertDialogCancel>
+                              <Button className='bg-green-700 font-bold'> Pay Now</Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button className='bg-gray-600 mx-2 font-bold text-[10px] rounded-2xl'>DELIVERY STATUS <Icon.Truck className='ml-1' size={18} color="#ffffff" /></Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className='w-[600px]'>
+                            <AlertDialogHeader className='border-b pb-4'>
+                              <AlertDialogTitle >Update Delivery Status</AlertDialogTitle>
+                            </AlertDialogHeader>
+                            <RadioGroup defaultValue="international_shipping">
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="international_shipping" id="r1" />
+                                <Label htmlFor="r1">International Shipping</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <RadioGroupItem value="local_shipping" id="r2" />
+                                <Label htmlFor="r2">Local Shippping</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <Label className='w-[375px] mt-2 text-md'>International Shipping Status</Label>
+                                <Select defaultValue="china_to_indonesia">
+                                  <SelectTrigger className="w-full mt-2">
+                                    <SelectValue placeholder="International Shipping" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectGroup>
+                                      <SelectItem value="china_to_indonesia">China To Indonesia</SelectItem>
+                                    </SelectGroup>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <Label className='w-[375px] mt-2 text-md text-right'>Local Shipping Status</Label>
+                                <Select defaultValue="not_available">
+                                  <SelectTrigger className="w-full mt-2">
+                                    <SelectValue placeholder="Local Shipping" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectGroup>
+                                      <SelectItem value="not_available">Not Available Now..</SelectItem>
+                                      <SelectItem value="JNE_REG">JNE REG</SelectItem>
+                                      <SelectItem value="JNE_YES">JNE YES</SelectItem>
+                                      <SelectItem value="J&T_REG">J&T REG</SelectItem>
+                                      <SelectItem value="SICEPAT_REG">SICEPAT REG</SelectItem>
+                                      <SelectItem value="SICEPAT_BEST">SICEPAT BEST</SelectItem>
+                                    </SelectGroup>
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            </RadioGroup>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
+                              <Button > Update</Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button className='bg-red-600 font-bold text-[10px] rounded-2xl'>REFUND <Icon.RotateCcw className='ml-1' size={18} color="#ffffff" /></Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className='w-[50%]'>
+                            <AlertDialogHeader className='border-b pb-4'>
+                              <AlertDialogTitle >Refund This Order</AlertDialogTitle>
+                            </AlertDialogHeader>
+                            <RadioGroup defaultValue="international_shipping">
+                              <div className='flex flex-row'>
+                                <div className='grow'>
+                                  <Label className='text-md font-medium p-4 -ml-3'>Product</Label>
+                                  {/* <Input className='h-8 mt-2' /> */}
+                                </div>
+                                <div className='basis-1/5 text-center'>
+                                  <Label className='text-md font-medium p-4'>Qty</Label>
+                                </div>
+                                <div className='basis-1/8 text-center'>
+                                  <Label className='text-md font-medium p-4 -mr-1'>Act</Label>
+                                </div>
+                              </div>
+                              <div className='flex flex-row'>
+                                <div className='grow'>
+                                  <Input className='mt-1 shadow-sm' />
+                                </div>
+                                <div className='basis-1/5 text-center flex flex-row mt-1 ml-2 mr-2'>
+                                  <Button className='basis-full p-0 '><Icon.Minus className='ml-1' size={18} color="#ffffff" /></Button>
+                                  <Input className='grow ml-2 mr-2 shadow-sm text-center text-base' placeholder='0' />
+                                  <Button className='basis-full p-0'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
+                                </div>
+                                <div className='basis-1/8 text-center bg-cyan-200 mt-1 mb-4'>
+                                  <Button className='p-3 bg-red-500'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
+                                </div>
+                              </div>
+                            </RadioGroup>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className='bg-red-400 font-bold'>Cancel</AlertDialogCancel>
+                              <Button className='font-bold'> Save</Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </TableCell>
                     </TableRow>
                   </TableHeader>
                 </Table>
-                <Table className='bg-white text-xs'>
+                <Table className='bg-white text-xs '>
                   <TableBody>
                     {dataisi.details.map((details: any, index: number) => (
                       <TableRow key={details.id}>
@@ -367,7 +511,7 @@ export default function PurchaseOrder() {
                   </TableFooter>
 
                 </Table>
-                <Table className='bg-white'>
+                <Table className='bg-white '>
                   <TableFooter className=' bg-white'>
                     <TableRow>
                       <TableCell className="text-left font-bold">

@@ -19,15 +19,16 @@ const Sidebar = () => {
                     <div>Dashboard</div>
                 </Link>
 
+                <Link href="/order" className={`${params === '/order' ? `bg-gray-100` : `hover:bg-gray-100`} flex gap-2 py-2 rounded-xl px-3 cursor-pointer items-center font-medium text-[#2A3647]`}>
+                    <Icon.CopyPlus size={20} />
+                    <div>Add Order</div>
+                </Link>
+
                 <Link href="/orderreport" className={`${params === '/orderreport' ? `bg-gray-100` : `hover:bg-gray-100`} flex gap-2 py-2 rounded-xl px-3 cursor-pointer items-center font-medium text-[#2A3647]`}>
                     <Icon.ShoppingBag size={20} />
                     <div>List Orders</div>
                 </Link>
 
-                <Link href="/order" className={`${params === '/order' ? `bg-gray-100` : `hover:bg-gray-100`} flex gap-2 py-2 rounded-xl px-3 cursor-pointer items-center font-medium text-[#2A3647]`}>
-                    <Icon.CopyPlus size={20} />
-                    <div>Add Order</div>
-                </Link>
 
                 <Link href="/products" className={`${params === '/products' ? `bg-gray-100` : `hover:bg-gray-100`} flex gap-2 py-2 rounded-xl px-3 cursor-pointer items-center font-medium text-[#2A3647]`}>
                     <Icon.Archive size={20} />
