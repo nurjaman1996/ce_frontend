@@ -268,7 +268,7 @@ export default function Home() {
           </div>
           <div className='grow'>
             <div className='text-xl font-bold py-3 px-5  bg-black border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
-              Sales Qty
+              Invoices
               <p>{Numbering.format(dataDashboard.result.total_pesanan)}</p>
             </div>
 

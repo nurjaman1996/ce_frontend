@@ -13,6 +13,30 @@ let Rupiah = new Intl.NumberFormat("id-ID", {
 
 let Numbering = new Intl.NumberFormat("id-ID");
 
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+
+import { Label } from "@/components/ui/label"
+
 export default function InvoicesPage() {
     const params: any = useParams()
     const id_invoice = params.data[0]
@@ -31,6 +55,7 @@ export default function InvoicesPage() {
         })
             .then(function (response) {
                 setdataInvoice(response.data.result)
+                setnominalPayment(response.data.result.sub_total / 2)
                 setisLoading(false)
             })
             .catch(function (error) {
@@ -55,7 +80,6 @@ export default function InvoicesPage() {
         };
     }, [])
 
-
     async function payment(ammount: any, typepayment: any) {
         await axios({
             method: 'POST',
@@ -76,9 +100,27 @@ export default function InvoicesPage() {
             })
     }
 
+    const [e_payment, sete_payment]: any = useState("dp")
+    const [nominalPayment, setnominalPayment]: any = useState(0)
+    const [descPayment, setdescPayment]: any = useState("")
+    const [openPayment, setopenPayment]: any = useState(false)
+
+    function NominalPayment(e: any, subtotal: any, id_invoice: any) {
+        sete_payment(e)
+
+        if (e === "dp") {
+            setnominalPayment(subtotal / 2)
+            setdescPayment(`DP 50% INV:${id_invoice}`)
+            setdescPayment()
+        } else {
+            setnominalPayment(subtotal)
+            setdescPayment(`Pelunasan INV:${id_invoice}`)
+        }
+    }
+
     if (isLoading) {
         return (
-            <div className='max-w-[700px] w-full border h-full flex justify-center items-center'>
+            <div className='max-w-[700px] w-screen h-screen flex justify-center items-center'>
                 <Icon.Loader2 className="mr-2 h-5 w-5 animate-spin" />
                 <span>Loading Data...</span>
             </div>
@@ -86,7 +128,7 @@ export default function InvoicesPage() {
     } else {
         return (
             <>
-                <div className='max-w-[700px] w-full border h-full p-5 '>
+                <div className='max-w-[700px] w-full h-full p-5'>
                     <div className='flex flex-row'>
                         <div className='basis-full text-left'>
                             <span className='font-bold text-4xl'>Invoice</span><br></br>
@@ -104,22 +146,16 @@ export default function InvoicesPage() {
                         </div>
                     </div>
 
-                    <div className='flex flex-row mt-2'>
-                        <div className='basis-1/6 text-left border-t border-b p-1'>
+                    <div className='grid grid-cols-2 mt-2'>
+                        <div className='grow text-left border-t border border-r-0 p-2'>
                             <span className='font-bold text-base'>Issued</span><br></br>
                             <span className='font-medium text-xs'>11 Dec 2023</span><br></br>
                             <span className='font-bold text-base '>Due</span><br></br>
                             <span className='font-medium text-xs'>12 Dec 2023</span><br></br>
                         </div>
-                        <div className='grow text-left border p-1'>
+                        <div className='grow text-left border p-2'>
                             <span className='font-bold text-base'>Billed to</span><br></br>
                             <span className='font-medium text-base'>{dataInvoice.customer[0].customer}</span><br></br>
-                            <span className='font-normal text-xs'>{dataInvoice.customer[0].hp}</span><br></br>
-                            <span className='font-normal text-xs'>{dataInvoice.customer[0].alamat}, {dataInvoice.customer[0].kota}, {dataInvoice.customer[0].kel}, {dataInvoice.customer[0].kec}, {dataInvoice.customer[0].kodepos}</span><br></br>
-                        </div>
-                        <div className='grow text-left border-t border-b p-1'>
-                            <span className='font-bold text-base'>From</span><br></br>
-                            <span className='font-medium text-base'>Ce Corp</span><br></br>
                             <span className='font-normal text-xs'>{dataInvoice.customer[0].hp}</span><br></br>
                             <span className='font-normal text-xs'>{dataInvoice.customer[0].alamat}, {dataInvoice.customer[0].kota}, {dataInvoice.customer[0].kel}, {dataInvoice.customer[0].kec}, {dataInvoice.customer[0].kodepos}</span><br></br>
                         </div>
@@ -128,97 +164,93 @@ export default function InvoicesPage() {
 
                     <br />
 
-                    <div className='px-2 mt-2'>
+                    <div className='mt-2'>
                         <div className='flex flex-row text-center '>
                             <div className='grow text-left font-medium'>Product</div>
-                            {/* <div className=''>Details</div> */}
                             <div className='basis-1/5 font-medium'>Price</div>
                             <div className='basis-1/5 font-medium'>Subtotal</div>
                         </div>
                         {dataInvoice.details.map((dataDetails: any, index: number) => {
                             return (
-                                <div key={index} className='flex flex-row'>
+                                <div key={index} className='grid grid-cols-4'>
                                     <div className='border-b flex flex-row grow items-center'>
-                                        <div className='basis-1/5'>
+                                        <div className=''>
                                             <Image
                                                 src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataDetails.images}`}
                                                 alt="Photo by Drew Beamer"
                                                 width={300}
                                                 height={300}
                                                 priority={true}
-                                                className="rounded-sm  aspect-square  p-2"
-                                                style={{ height: 75, width: 75 }}
+                                                className="rounded-sm aspect-square p-2"
+                                                style={{ height: "auto", width: "100%" }}
                                             />
                                         </div>
-                                        <div className='grow text-left'>
+                                    </div>
+
+                                    <div className='flex flex-col justify-center border-b'>
+                                        <div>
                                             <div className='text-[14px]'>{dataDetails.produk}</div>
                                             <div className='text-[9px]'>Variant : {dataDetails.variasi}</div>
                                             <div className='text-[9px]'>Ukuran : {dataDetails.ukuran}</div>
                                         </div>
                                     </div>
 
-                                    <div className='flex items-center border-b justify-center basis-1/5 text-xs'>
+                                    <div className='flex items-center border-b justify-center text-xs'>
                                         {Rupiah.format(dataDetails.harga_jual)} <span className='font-medium'>&nbsp;(x{Numbering.format(dataDetails.qty)})</span>
                                     </div>
 
-                                    <div className='flex items-center border-b justify-center basis-1/5 text-xs'>
+                                    <div className='flex items-center border-b justify-center text-xs'>
                                         {Rupiah.format(dataDetails.sub_total)}
                                     </div>
                                 </div>
                             )
                         })}
 
-                        <div className='flex flex-row my-4'>
-                            <div className='flex flex-row basis-full'>
-                            </div>
-                            <div className='flex flex-row basis-1/2 justify-end font-medium text-[14px]  mr-10'>
+                        <div className='flex flex-row my-1'>
+                            <div className='flex flex-row justify-end font-medium text-[14px]  mr-10 ml-auto'>
                                 Total Qty :
                             </div>
-                            <div className='flex items-center justify-end basis-1/3 font-medium '>
-                                <div className=' mr-6 text-[14px]'>
+                            <div className='flex items-center justify-end font-medium basis-1/5 '>
+                                <div className='text-[14px]'>
                                     {Numbering.format(dataInvoice.qty)}
                                 </div>
                             </div>
                         </div>
 
-                        <div className='flex flex-row my-4'>
-                            <div className='flex flex-row basis-full'>
-                            </div>
-                            <div className='flex flex-row basis-1/2 justify-end font-medium text-[14px] mr-10'>
+                        <div className='flex flex-row my-1'>
+                            <div className='flex flex-row justify-end font-medium text-[14px] mr-10 ml-auto'>
                                 Subtotal :
                             </div>
-                            <div className='flex items-center justify-end basis-1/3 font-medium'>
-                                <div className=' mr-6 text-[14px]'>
+                            <div className='flex items-center justify-end font-medium basis-1/5'>
+                                <div className='text-[14px]'>
                                     {Rupiah.format(dataInvoice.sub_total)}
                                 </div>
                             </div>
                         </div>
 
-                        <div className='flex flex-row my-4'>
-                            <div className='flex flex-row basis-full'>
-                            </div>
-                            <div className='flex flex-row basis-1/2 justify-end font-medium text-[14px] mr-10'>
+                        <div className='flex flex-row my-1'>
+                            <div className='flex flex-row justify-end font-medium text-[14px] mr-10 ml-auto'>
                                 Payment Received :
                             </div>
-                            <div className='flex items-center justify-end basis-1/3 font-medium'>
-                                <div className='mr-6  text-[14px]'>
+                            <div className='flex items-center justify-end font-medium basis-1/5'>
+                                <div className='text-[14px]'>
                                     {Rupiah.format(dataInvoice.payment)}
                                 </div>
                             </div>
                         </div>
 
-                        <div className='flex flex-row my-4'>
-                            <div className='flex flex-row basis-full'>
-                            </div>
-                            <div className='flex flex-row basis-1/2 justify-end font-medium text-[14px] mr-10  text-red-700'>
-                                Reimaining Payment :
-                            </div>
-                            <div className='flex items-center justify-end basis-1/4 font-medium'>
-                                <div className='mr-6  text-[14px] text-red-700'>
-                                    {Rupiah.format(dataInvoice.sub_total - dataInvoice.payment)}
+                        {dataInvoice.sub_total != dataInvoice.payment ?
+                            <div className='flex flex-row my-1'>
+                                <div className='flex flex-row justify-end font-medium text-[14px] mr-10 ml-auto'>
+                                    Reimaining Payment :
+                                </div>
+                                <div className='flex items-center justify-end font-medium basis-1/5'>
+                                    <div className='text-[14px]'>
+                                        {Rupiah.format(dataInvoice.sub_total - dataInvoice.payment)}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            : null}
 
                         {/* <div className='grid grid-cols-5 text-center'>
                             <div className='border col-span-3'>Total</div>
@@ -236,25 +268,91 @@ export default function InvoicesPage() {
                     </div >
 
                     <br />
+                    <hr />
+                    <br />
 
-                    <div className='flex flex-col gap-1'>
-                        <div>Order Status : {dataInvoice.status_pesanan}</div>
-                        <div>Delivery Service : {dataInvoice.jasa_kirim}</div>
-                        <div>Delivery Receipt : {dataInvoice.resi}</div>
-                        <div className='font-medium text-red-700'>{dataInvoice.payment === 0 ? `Minimum Pembayaran 50% senilai ${Rupiah.format(dataInvoice.sub_total / 2)}` : `Pembayaran Pelunasan senilai ${Rupiah.format(dataInvoice.sub_total - dataInvoice.payment)}`}</div>
-                    </div>
+                    {dataInvoice.sub_total === dataInvoice.payment ?
+                        <div className='flex flex-col gap-1 text-sm text-center'>
+                            <div>Order Status : {dataInvoice.status_pesanan}</div>
+                            <div>Delivery Service : {dataInvoice.jasa_kirim}</div>
+                            <div>Delivery Receipt : {dataInvoice.resi}</div>
+                            <div className='font-medium text-green-700'>Status Pembayaran : LUNAS</div>
+                        </div>
+                        :
+                        <>
+                            <div className='flex flex-col gap-1 text-sm text-center'>
+                                <div>Order Status : {dataInvoice.status_pesanan}</div>
+                                <div>Delivery Service : {dataInvoice.jasa_kirim}</div>
+                                <div>Delivery Receipt : {dataInvoice.resi}</div>
+                                <div className='font-medium text-red-700'>{dataInvoice.payment === 0 ? `Minimum Pembayaran 50% senilai ${Rupiah.format(dataInvoice.sub_total / 2)}` : `Pembayaran Pelunasan senilai ${Rupiah.format(dataInvoice.sub_total - dataInvoice.payment)}`}</div>
+                            </div>
 
-                    <div className='mt-5'>
-                        <Button variant="default" size="sm" className="font-bold w-full"
-                            onClick={() => {
-                                const typePayment = dataInvoice.payment === 0 ? `DP 50% INV:${dataInvoice.id_invoice}` : `Pelunasan INV:${dataInvoice.id_invoice}`
-                                const amount = dataInvoice.payment === 0 ? dataInvoice.sub_total / 2 : dataInvoice.sub_total - dataInvoice.payment
-                                payment(amount, typePayment)
-                            }}
-                        >
-                            Lakukan Pembayaran
-                        </Button>
-                    </div>
+                            <div className='mt-5'>
+                                {dataInvoice.payment === 0 ?
+                                    <AlertDialog open={openPayment} onOpenChange={setopenPayment}>
+                                        <AlertDialogTrigger asChild>
+                                            <Button variant="default" size="sm" className="font-bold w-full"
+                                                onClick={() => {
+                                                    setopenPayment(true)
+                                                }}
+                                            >
+                                                Lakukan Pembayaran
+                                            </Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent className='w-[80%] max-w-[700px]'>
+                                            <AlertDialogHeader className='border-b pb-4'>
+                                                <AlertDialogTitle className='text-base'>Pilih Nominal Pembayaran</AlertDialogTitle>
+                                            </AlertDialogHeader>
+                                            <div className=''>
+                                                <Select value={e_payment} onValueChange={(e) => { NominalPayment(e, dataInvoice.sub_total, dataInvoice.id_invoice) }}>
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue placeholder="Pilih Nominal..." />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectItem value="dp">Down Payment 50%</SelectItem>
+                                                            <SelectItem value="lunas">Pembayaran 100% (Lunas)</SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+
+                                            <div className='flex justify-center mb-5 mt-2'>
+                                                Total Pembayaran : {Rupiah.format(nominalPayment)}
+                                            </div>
+
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel className='bg-red-400 font-bold'>Cancel</AlertDialogCancel>
+                                                <Button className='font-bold'
+                                                    onClick={() => {
+                                                        setopenPayment(false)
+                                                        payment(nominalPayment, descPayment)
+                                                    }}
+                                                >
+                                                    Pay
+                                                </Button>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                    :
+                                    <Button variant="default" size="sm" className="font-bold w-full"
+                                        onClick={() => {
+                                            const typePayment = `Pelunasan INV:${dataInvoice.id_invoice}`
+                                            const amount = dataInvoice.sub_total - dataInvoice.payment
+                                            payment(amount, typePayment)
+                                        }}
+                                    >
+                                        Lakukan Pembayaran
+                                    </Button>
+                                }
+
+
+
+                            </div>
+                        </>
+                    }
+
+
                 </div >
 
 

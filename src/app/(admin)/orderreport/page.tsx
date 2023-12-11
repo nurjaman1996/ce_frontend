@@ -384,7 +384,7 @@ export default function PurchaseOrder() {
                       </TableCell>
                       <TableCell className="text-right text-md font-bold">
 
-                        <Button disabled={dataisi.payment >= dataisi.sub_total ? true : false} className='bg-green-700 mx-2 font-bold text-[10px] rounded-2xl'
+                        <Button className='bg-green-700 mx-2 font-bold text-[10px] rounded-2xl'
                           onClick={() => {
                             window.open(`/invoice/${dataisi.id_invoice}`)
                           }}

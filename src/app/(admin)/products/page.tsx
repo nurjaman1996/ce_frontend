@@ -425,7 +425,7 @@ export default function Products() {
                     <span>{Numbering.format(dataisi.berat_produk)} gr</span>
                   </TableCell>
 
-                  <TableCell className="border w-[10%] text-center p-2">
+                  <TableCell className="border w-[15%] text-center p-2">
                     <div className='flex flex-col'>
                       {/* {dataisi.variasi.map((data_var: any, indexes: number) => (
                         <div key={indexes} className="border rounded-sm py-1">
@@ -435,7 +435,7 @@ export default function Products() {
 
                       <div>
                         <Collapsible
-                          className="w-[200px] space-y-2"
+                          className="w-[100%] space-y-2"
                         >
                           <div className="flex items-center justify-between space-x-4 px-4">
                             <CollapsibleTrigger asChild>
@@ -452,6 +452,7 @@ export default function Products() {
                                   <TableRow >
                                     <TableHead className="text-center text-xs font-bold">Variant</TableHead>
                                     <TableHead className="text-center text-xs  font-bold">Stock</TableHead>
+                                    <TableHead className="text-center text-xs  font-bold">Permintaan</TableHead>
                                   </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -459,6 +460,7 @@ export default function Products() {
                                     <TableRow key={indexes}>
                                       <TableCell className="text-xs table-sm"> {data_var.warna}</TableCell>
                                       <TableCell className="text-xs"> {data_var.stok_ready}</TableCell>
+                                      <TableCell className="text-xs"> {data_var.stok_dipesan}</TableCell>
                                     </TableRow>
                                   ))}
                                 </TableBody>
