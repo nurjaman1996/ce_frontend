@@ -451,6 +451,7 @@ export default function Products() {
                                 <TableHeader>
                                   <TableRow >
                                     <TableHead className="text-center text-xs font-bold">Variant</TableHead>
+                                    <TableHead className="text-center text-xs font-bold">Ukuran</TableHead>
                                     <TableHead className="text-center text-xs  font-bold">Stock</TableHead>
                                     <TableHead className="text-center text-xs  font-bold">Permintaan</TableHead>
                                   </TableRow>
@@ -458,7 +459,8 @@ export default function Products() {
                                 <TableBody>
                                   {dataisi.variasi.map((data_var: any, indexes: number) => (
                                     <TableRow key={indexes}>
-                                      <TableCell className="text-xs table-sm"> {data_var.warna}</TableCell>
+                                      <TableCell className="text-xs"> {data_var.warna}</TableCell>
+                                      <TableCell className="text-xs"> {data_var.ukuran}</TableCell>
                                       <TableCell className="text-xs"> {data_var.stok_ready}</TableCell>
                                       <TableCell className="text-xs"> {data_var.stok_dipesan}</TableCell>
                                     </TableRow>

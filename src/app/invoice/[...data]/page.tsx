@@ -80,15 +80,15 @@ export default function InvoicesPage() {
         };
     }, [])
 
-    async function payment(ammount: any, typepayment: any) {
+    async function payment(ammount: any, typepayment: any, customer: any, hp: any) {
         await axios({
             method: 'POST',
             url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/createpayment`,
             data: {
                 id_invoice: id_invoice,
                 amount: parseInt(ammount),
-                customer: "Nama Cust",
-                hp: "08212151",
+                customer: customer,
+                hp: hp,
                 typepayment: typepayment,
             }
         })
@@ -111,7 +111,6 @@ export default function InvoicesPage() {
         if (e === "dp") {
             setnominalPayment(subtotal / 2)
             setdescPayment(`DP 50% INV:${id_invoice}`)
-            setdescPayment()
         } else {
             setnominalPayment(subtotal)
             setdescPayment(`Pelunasan INV:${id_invoice}`)
@@ -293,6 +292,7 @@ export default function InvoicesPage() {
                                         <AlertDialogTrigger asChild>
                                             <Button variant="default" size="sm" className="font-bold w-full"
                                                 onClick={() => {
+                                                    setdescPayment(`DP 50% INV:${dataInvoice.id_invoice}`)
                                                     setopenPayment(true)
                                                 }}
                                             >
@@ -326,7 +326,7 @@ export default function InvoicesPage() {
                                                 <Button className='font-bold'
                                                     onClick={() => {
                                                         setopenPayment(false)
-                                                        payment(nominalPayment, descPayment)
+                                                        payment(nominalPayment, descPayment, dataInvoice.customer[0].customer, dataInvoice.customer[0].hp)
                                                     }}
                                                 >
                                                     Pay
@@ -339,7 +339,7 @@ export default function InvoicesPage() {
                                         onClick={() => {
                                             const typePayment = `Pelunasan INV:${dataInvoice.id_invoice}`
                                             const amount = dataInvoice.sub_total - dataInvoice.payment
-                                            payment(amount, typePayment)
+                                            payment(amount, typePayment, dataInvoice.customer[0].customer, dataInvoice.customer[0].hp)
                                         }}
                                     >
                                         Lakukan Pembayaran
