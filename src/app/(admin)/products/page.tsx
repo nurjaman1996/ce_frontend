@@ -435,8 +435,6 @@ export default function Products() {
 
                       <div>
                         <Collapsible
-                          open={isOpen}
-                          onOpenChange={setIsOpen}
                           className="w-[200px] space-y-2"
                         >
                           <div className="flex items-center justify-between space-x-4 px-4">
@@ -458,7 +456,7 @@ export default function Products() {
                                 </TableHeader>
                                 <TableBody>
                                   {dataisi.variasi.map((data_var: any, indexes: number) => (
-                                    <TableRow>
+                                    <TableRow key={indexes}>
                                       <TableCell className="text-xs table-sm"> {data_var.warna}</TableCell>
                                       <TableCell className="text-xs"> {data_var.stok_ready}</TableCell>
                                     </TableRow>

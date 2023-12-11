@@ -81,7 +81,7 @@ export default function PurchaseOrder() {
   const handleValueChange = (newValue: any) => {
     if (newValue.startDate != null && newValue.endDate != null) {
       setValue(newValue);
-      loaddataOrders(newValue.startDate, newValue.endDate, valueBatch)
+      loaddataOrders(newValue.startDate, newValue.endDate, valueBatch, searchInvoices)
     }
   }
 
@@ -89,7 +89,7 @@ export default function PurchaseOrder() {
   const [dataOrders, setdataOrders]: any = useState([])
   const [dataOrdersdetails, setdataOrdersdetails]: any = useState([])
 
-  async function loaddataOrders(start: any, end: any, batch: any) {
+  async function loaddataOrders(start: any, end: any, batch: any, query: any) {
     setisLoading(true)
     await axios({
       method: 'post',
@@ -97,7 +97,8 @@ export default function PurchaseOrder() {
       data: {
         id_batch: batch,
         start: format(new Date(start), "yyyy-MM-dd"),
-        end: format(new Date(end), "yyyy-MM-dd")
+        end: format(new Date(end), "yyyy-MM-dd"),
+        search_query: query
       }
     })
       .then(function (response) {
@@ -119,9 +120,9 @@ export default function PurchaseOrder() {
         if (valueBatch === "") {
           setdataBatch(response.data.data)
           setValueBatch(response.data.data[0].id_batch)
-          loaddataOrders(value.startDate, value.endDate, response.data.data[0].id_batch)
+          loaddataOrders(value.startDate, value.endDate, response.data.data[0].id_batch, searchInvoices)
         } else {
-          loaddataOrders(value.startDate, value.endDate, valueBatch)
+          loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices)
         }
       })
       .catch(function (error) {
@@ -134,6 +135,53 @@ export default function PurchaseOrder() {
   }, [])
 
   const [searchInvoices, setsearchInvoices]: any = useState('');
+  const [openEditKurir, setopenEditKurir]: any = useState(false);
+  const [openCancelOrder, setopenCancelOrder]: any = useState(false);
+
+  const [e_resi, sete_resi]: any = useState('');
+  const [e_kurir, sete_kurir]: any = useState('');
+  const [e_id_invoice, sete_id_invoice]: any = useState('');
+
+  async function updateKurir() {
+    // console.log(e_resi)
+    // console.log(e_kurir)
+    // console.log(e_id_invoice)
+
+    await axios({
+      method: 'post',
+      url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/editOrder`,
+      data: {
+        id_invoice: e_id_invoice,
+        resi: e_resi,
+        jasa_kirim: e_kurir
+      }
+    })
+      .then(function (response) {
+        loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices)
+        setopenEditKurir(false)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+
+  async function deleteOrder(id_invoice: any) {
+    // console.log(id_invoice)
+
+    await axios({
+      method: 'post',
+      url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/deleteorder`,
+      data: {
+        id_invoice: id_invoice
+      }
+    })
+      .then(function (response) {
+        loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
 
   if (isLoading) {
     return (
@@ -152,8 +200,26 @@ export default function PurchaseOrder() {
 
         <div className="flex flex-nowrap mt-4">
           {/*  */}
-          <div className="font-bold text-4xl">
-            <Input type="text" className='w-[400px] shadow-md' placeholder="Search Orders.." value={searchInvoices} onChange={(e) => { setsearchInvoices(e.currentTarget.value) }} />
+          <div className="font-bold text-4xl flex flex-row">
+            <Input type="text" className='w-[400px] shadow-md rounded-r-none' placeholder="Search Orders.." value={searchInvoices}
+              onChange={(e) => {
+                setsearchInvoices(e.currentTarget.value)
+                if (e.currentTarget.value === "") {
+                  loaddataOrders(value.startDate, value.endDate, valueBatch, "")
+                }
+              }}
+            />
+            <Button
+              variant="default"
+              role="combobox"
+              className="w-[auto] rounded-l-none shadow-md"
+              onClick={() => {
+                loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices)
+
+              }}
+            >
+              <Icon.Search />
+            </Button>
           </div>
           <div className="ml-auto w-auto mr-4">
             <Popover open={open} onOpenChange={setOpen}>
@@ -181,7 +247,7 @@ export default function PurchaseOrder() {
                         key={batch.id}
                         value={batch.id_batch}
                         onSelect={(currentValue) => {
-                          loaddataOrders(value.startDate, value.endDate, currentValue.toUpperCase())
+                          loaddataOrders(value.startDate, value.endDate, currentValue.toUpperCase(), searchInvoices)
                           setValueBatch(currentValue.toUpperCase() === valueBatch ? "" : currentValue.toUpperCase())
                           setOpen(false)
                         }}
@@ -255,10 +321,15 @@ export default function PurchaseOrder() {
                 <TableHead className="bg-gray-900 border font-bold w-[4%] text-center text-white">QTY</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[8%] text-center text-white">PRICE</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[10%] text-center text-white">SUB TOTAL</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[10%] text-center text-white">ACT</TableHead>
               </TableRow >
             </TableHeader >
           </Table >
-          {
+          {dataOrdersdetails.length < 1 ?
+            <div className='border mb-5 bg-white flex justify-center items-center h-[300px]'>
+              Tidak Ada Data ditemukan
+            </div>
+            :
             dataOrdersdetails.map((dataisi: any, index: number) => (
               <div className='border mb-5' key={dataisi.id_invoice + dataisi.id_batch}>
                 <Table className='text-xs bg-white'>
@@ -292,16 +363,18 @@ export default function PurchaseOrder() {
 
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="link" className=' text-white font-bold hover:bg-gray-200 -ml-3'> <Icon.XCircle size={18} color="#ff0000" /></Button>
+
+                              <Button variant="link" disabled={dataisi.status_pesanan === "UNPAID" ? false : true} className='text-white font-bold hover:bg-gray-200 -ml-3'><Icon.XCircle size={18} color="#ff0000" /></Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent className='w-[600px]'>
                               <AlertDialogHeader className='border-b pb-4'>
                                 <AlertDialogTitle >Delete This Orders</AlertDialogTitle>
+                                <AlertDialogDescription>Data Order dengan ID {dataisi.id_invoice} akan dihapus?</AlertDialogDescription>
                               </AlertDialogHeader>
 
                               <AlertDialogFooter>
                                 <AlertDialogCancel >Cancel</AlertDialogCancel>
-                                <Button className='bg-red-400 font-bold'>Delete</Button>
+                                <Button className='bg-red-400 font-bold' onClick={() => { deleteOrder(dataisi.id_invoice) }}>Delete</Button>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -311,9 +384,17 @@ export default function PurchaseOrder() {
                       </TableCell>
                       <TableCell className="text-right text-md font-bold">
 
-                        <AlertDialog>
+                        <Button disabled={dataisi.payment >= dataisi.sub_total ? true : false} className='bg-green-700 mx-2 font-bold text-[10px] rounded-2xl'
+                          onClick={() => {
+                            window.open(`/invoice/${dataisi.id_invoice}`)
+                          }}
+                        >
+                          OPEN INVOICE PAGE <Icon.BadgeDollarSign className='ml-1' size={18} color="#ffffff" />
+                        </Button>
+
+                        {/* <AlertDialog>
                           <AlertDialogTrigger asChild>
-                            <Button className='bg-green-700 mx-2 font-bold text-[10px] rounded-2xl'>CREATE PAYMENT LINK <Icon.BadgeDollarSign className='ml-1' size={18} color="#ffffff" /></Button>
+                            <Button disabled={dataisi.payment >= dataisi.sub_total ? true : false} className='bg-green-700 mx-2 font-bold text-[10px] rounded-2xl'>CREATE PAYMENT LINK <Icon.BadgeDollarSign className='ml-1' size={18} color="#ffffff" /></Button>
                           </AlertDialogTrigger>
                           <AlertDialogContent className='w-[20%]'>
                             <AlertDialogHeader className='border-b pb-4'>
@@ -355,17 +436,25 @@ export default function PurchaseOrder() {
                               <Button className='bg-green-700 font-bold'> Pay Now</Button>
                             </AlertDialogFooter>
                           </AlertDialogContent>
-                        </AlertDialog>
+                        </AlertDialog> */}
 
-                        <AlertDialog>
+                        <AlertDialog open={openEditKurir} onOpenChange={setopenEditKurir}>
                           <AlertDialogTrigger asChild>
-                            <Button className='bg-gray-600 mx-2 font-bold text-[10px] rounded-2xl'>DELIVERY STATUS <Icon.Truck className='ml-1' size={18} color="#ffffff" /></Button>
+
+                            <Button disabled={dataisi.status_pesanan === "PROGRESS" ? false : true} className='bg-gray-600 mx-2 font-bold text-[10px] rounded-2xl'
+                              onClick={() => {
+                                setopenEditKurir(true)
+                                sete_id_invoice(dataisi.id_invoice)
+                                sete_kurir("")
+                                sete_resi("")
+                              }}>DELIVERY STATUS <Icon.Truck className='ml-1' size={18} color="#ffffff" /></Button>
+
                           </AlertDialogTrigger>
                           <AlertDialogContent className='w-[600px]'>
                             <AlertDialogHeader className='border-b pb-4'>
                               <AlertDialogTitle >Update Delivery Status</AlertDialogTitle>
                             </AlertDialogHeader>
-                            <RadioGroup defaultValue="international_shipping">
+                            {/* <RadioGroup defaultValue="international_shipping">
                               <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="international_shipping" id="r1" />
                                 <Label htmlFor="r1">International Shipping</Label>
@@ -387,15 +476,19 @@ export default function PurchaseOrder() {
                                   </SelectContent>
                                 </Select>
                               </div>
-                              <div className="flex items-center space-x-2">
-                                <Label className='w-[375px] mt-2 text-md text-right'>Local Shipping Status</Label>
-                                <Select defaultValue="not_available">
-                                  <SelectTrigger className="w-full mt-2">
+                             
+                            </RadioGroup> */}
+
+                            <div className="flex flex-row items-center space-x-2">
+                              <Label className='basis-1/3 text-md text-left'>Lokal Kurir</Label>
+                              <div className='grow'>
+                                <Select defaultValue="null" value={e_kurir} onValueChange={(e) => { sete_kurir(e) }}>
+                                  <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Local Shipping" />
                                   </SelectTrigger>
                                   <SelectContent>
                                     <SelectGroup>
-                                      <SelectItem value="not_available">Not Available Now..</SelectItem>
+                                      <SelectItem value="null">Pilih Kurir...</SelectItem>
                                       <SelectItem value="JNE_REG">JNE REG</SelectItem>
                                       <SelectItem value="JNE_YES">JNE YES</SelectItem>
                                       <SelectItem value="J&T_REG">J&T REG</SelectItem>
@@ -405,55 +498,22 @@ export default function PurchaseOrder() {
                                   </SelectContent>
                                 </Select>
                               </div>
-                            </RadioGroup>
+                            </div>
+                            <div className="flex flex-row items-center space-x-2">
+                              <Label className='basis-1/3 text-md text-left'>No Resi</Label>
+                              <div className='grow'>
+                                <Input type="text" placeholder="No Resi.." value={e_resi} onChange={(e) => { sete_resi(e.currentTarget.value) }} />
+                              </div>
+                            </div>
                             <AlertDialogFooter>
                               <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
-                              <Button > Update</Button>
+                              <Button onClick={() => {
+                                updateKurir()
+                              }}>Update</Button>
                             </AlertDialogFooter>
                           </AlertDialogContent>
                         </AlertDialog>
 
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button className='bg-red-600 font-bold text-[10px] rounded-2xl'>REFUND <Icon.RotateCcw className='ml-1' size={18} color="#ffffff" /></Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent className='w-[50%]'>
-                            <AlertDialogHeader className='border-b pb-4'>
-                              <AlertDialogTitle >Refund This Order</AlertDialogTitle>
-                            </AlertDialogHeader>
-                            <RadioGroup defaultValue="international_shipping">
-                              <div className='flex flex-row'>
-                                <div className='grow'>
-                                  <Label className='text-md font-medium p-4 -ml-3'>Product</Label>
-                                  {/* <Input className='h-8 mt-2' /> */}
-                                </div>
-                                <div className='basis-1/5 text-center'>
-                                  <Label className='text-md font-medium p-4'>Qty</Label>
-                                </div>
-                                <div className='basis-1/8 text-center'>
-                                  <Label className='text-md font-medium p-4 -mr-1'>Act</Label>
-                                </div>
-                              </div>
-                              <div className='flex flex-row'>
-                                <div className='grow'>
-                                  <Input className='mt-1 shadow-sm' />
-                                </div>
-                                <div className='basis-1/5 text-center flex flex-row mt-1 ml-2 mr-2'>
-                                  <Button className='basis-full p-0 '><Icon.Minus className='ml-1' size={18} color="#ffffff" /></Button>
-                                  <Input className='grow ml-2 mr-2 shadow-sm text-center text-base' placeholder='0' />
-                                  <Button className='basis-full p-0'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
-                                </div>
-                                <div className='basis-1/8 text-center bg-cyan-200 mt-1 mb-4'>
-                                  <Button className='p-3 bg-red-500'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
-                                </div>
-                              </div>
-                            </RadioGroup>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel className='bg-red-400 font-bold'>Cancel</AlertDialogCancel>
-                              <Button className='font-bold'> Save</Button>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
                       </TableCell>
                     </TableRow>
                   </TableHeader>
@@ -487,6 +547,49 @@ export default function PurchaseOrder() {
                         <TableCell className="border w-[4%] text-center">{Numbering.format(details.qty)}</TableCell>
                         <TableCell className="border w-[8%] text-center">{Rupiah.format(details.harga_jual)}</TableCell>
                         <TableCell className="border w-[10%] text-center">{Rupiah.format(details.sub_total)}</TableCell>
+                        <TableCell className="border w-[10%] text-center">
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button className='bg-red-600 font-bold text-[10px] rounded-2xl'>REFUND <Icon.RotateCcw className='ml-1' size={18} color="#ffffff" /></Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className='w-[50%]'>
+                              <AlertDialogHeader className='border-b pb-4'>
+                                <AlertDialogTitle >Refund This Order</AlertDialogTitle>
+                              </AlertDialogHeader>
+                              <RadioGroup defaultValue="international_shipping">
+                                <div className='flex flex-row'>
+                                  <div className='grow'>
+                                    <Label className='text-md font-medium p-4 -ml-3'>Product</Label>
+                                    {/* <Input className='h-8 mt-2' /> */}
+                                  </div>
+                                  <div className='basis-1/5 text-center'>
+                                    <Label className='text-md font-medium p-4'>Qty</Label>
+                                  </div>
+                                  <div className='basis-1/8 text-center'>
+                                    <Label className='text-md font-medium p-4 -mr-1'>Act</Label>
+                                  </div>
+                                </div>
+                                <div className='flex flex-row'>
+                                  <div className='grow'>
+                                    <Input className='mt-1 shadow-sm' />
+                                  </div>
+                                  <div className='basis-1/5 text-center flex flex-row mt-1 ml-2 mr-2'>
+                                    <Button className='basis-full p-0 '><Icon.Minus className='ml-1' size={18} color="#ffffff" /></Button>
+                                    <Input className='grow ml-2 mr-2 shadow-sm text-center text-base' placeholder='0' />
+                                    <Button className='basis-full p-0'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
+                                  </div>
+                                  <div className='basis-1/8 text-center bg-cyan-200 mt-1 mb-4'>
+                                    <Button className='p-3 bg-red-500'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
+                                  </div>
+                                </div>
+                              </RadioGroup>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel className='bg-red-400 font-bold'>Cancel</AlertDialogCancel>
+                                <Button className='font-bold'> Save</Button>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
