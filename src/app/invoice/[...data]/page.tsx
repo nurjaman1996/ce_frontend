@@ -78,7 +78,7 @@ export default function InvoicesPage() {
 
     if (isLoading) {
         return (
-            <div className='max-w-[600px] w-full border h-full flex justify-center items-center'>
+            <div className='max-w-[700px] w-full border h-full flex justify-center items-center'>
                 <Icon.Loader2 className="mr-2 h-5 w-5 animate-spin" />
                 <span>Loading Data...</span>
             </div>
@@ -86,82 +86,141 @@ export default function InvoicesPage() {
     } else {
         return (
             <>
-                <div className='max-w-[600px] w-full border h-full p-5'>
-                    <span className='font-bold text-lg'>Details Invoice</span>
-
-                    <div className='py-3 mb-2 text-sm'>
-                        <div className='flex flex-row gap-2'>
-                            <div>Invoice</div>
-                            <div>:</div>
-                            <div>{dataInvoice.id_invoice}</div>
+                <div className='max-w-[700px] w-full border h-full p-5 '>
+                    <div className='flex flex-row'>
+                        <div className='basis-full text-left'>
+                            <span className='font-bold text-4xl'>Invoice</span><br></br>
+                            <span className='font-normal text-xs'>#{dataInvoice.id_invoice}</span>
                         </div>
-
-                        <div className='flex flex-row gap-2'>
-                            <div>Customer</div>
-                            <div>:</div>
-                            <div>{dataInvoice.customer[0].customer}</div>
-                        </div>
-
-                        <div className='flex flex-row gap-2'>
-                            <div>No HP</div>
-                            <div>:</div>
-                            <div>{dataInvoice.customer[0].hp}</div>
-                        </div>
-
-                        <div className='flex flex-row gap-2'>
-                            <div>Alamat</div>
-                            <div>:</div>
-                            <div>{dataInvoice.customer[0].alamat}, {dataInvoice.customer[0].kota}, {dataInvoice.customer[0].kel}, {dataInvoice.customer[0].kec}, {dataInvoice.customer[0].kodepos}</div>
+                        <div className='grow'>
+                            <Image
+                                className='aspect-square h-7 w-auto -mt-2'
+                                src="/logo.png"
+                                width={350}
+                                height={350}
+                                alt="Picture of the author"
+                                style={{ height: 75, width: 75 }}
+                            />
                         </div>
                     </div>
 
-                    <hr />
+                    <div className='flex flex-row mt-2'>
+                        <div className='basis-1/6 text-left border-t border-b p-1'>
+                            <span className='font-bold text-base'>Issued</span><br></br>
+                            <span className='font-medium text-xs'>11 Dec 2023</span><br></br>
+                            <span className='font-bold text-base '>Due</span><br></br>
+                            <span className='font-medium text-xs'>12 Dec 2023</span><br></br>
+                        </div>
+                        <div className='grow text-left border p-1'>
+                            <span className='font-bold text-base'>Billed to</span><br></br>
+                            <span className='font-medium text-base'>{dataInvoice.customer[0].customer}</span><br></br>
+                            <span className='font-normal text-xs'>{dataInvoice.customer[0].hp}</span><br></br>
+                            <span className='font-normal text-xs'>{dataInvoice.customer[0].alamat}, {dataInvoice.customer[0].kota}, {dataInvoice.customer[0].kel}, {dataInvoice.customer[0].kec}, {dataInvoice.customer[0].kodepos}</span><br></br>
+                        </div>
+                        <div className='grow text-left border-t border-b p-1'>
+                            <span className='font-bold text-base'>From</span><br></br>
+                            <span className='font-medium text-base'>Ce Corp</span><br></br>
+                            <span className='font-normal text-xs'>{dataInvoice.customer[0].hp}</span><br></br>
+                            <span className='font-normal text-xs'>{dataInvoice.customer[0].alamat}, {dataInvoice.customer[0].kota}, {dataInvoice.customer[0].kel}, {dataInvoice.customer[0].kec}, {dataInvoice.customer[0].kodepos}</span><br></br>
+                        </div>
+                    </div>
+
+
                     <br />
 
-                    <div className='flex flex-col px-2'>
-                        <div className='grid grid-cols-5 text-center'>
-                            <div className='border'>Image</div>
-                            <div className='border'>Details</div>
-                            <div className='border'>Harga</div>
-                            <div className='border'>Quantity</div>
-                            <div className='border'>Subtotal</div>
+                    <div className='px-2 mt-2'>
+                        <div className='flex flex-row text-center '>
+                            <div className='grow text-left font-medium'>Product</div>
+                            {/* <div className=''>Details</div> */}
+                            <div className='basis-1/5 font-medium'>Price</div>
+                            <div className='basis-1/5 font-medium'>Subtotal</div>
                         </div>
                         {dataInvoice.details.map((dataDetails: any, index: number) => {
                             return (
-                                <div key={index} className='grid grid-cols-5'>
-                                    <div className='border'>
-                                        <Image
-                                            src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataDetails.images}`}
-                                            alt="Photo by Drew Beamer"
-                                            width={500}
-                                            height={500}
-                                            priority={true}
-                                            className="rounded-sm w-[100%] aspect-square mx-auto p-2"
-                                        />
+                                <div key={index} className='flex flex-row'>
+                                    <div className='border-b flex flex-row grow items-center'>
+                                        <div className='basis-1/5'>
+                                            <Image
+                                                src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataDetails.images}`}
+                                                alt="Photo by Drew Beamer"
+                                                width={300}
+                                                height={300}
+                                                priority={true}
+                                                className="rounded-sm  aspect-square  p-2"
+                                                style={{ height: 75, width: 75 }}
+                                            />
+                                        </div>
+                                        <div className='grow text-left'>
+                                            <div className='text-[14px]'>{dataDetails.produk}</div>
+                                            <div className='text-[9px]'>Variant : {dataDetails.variasi}</div>
+                                            <div className='text-[9px]'>Ukuran : {dataDetails.ukuran}</div>
+                                        </div>
                                     </div>
 
-                                    <div className='flex flex-col gap-1 border px-2 justify-center'>
-                                        <div>{dataDetails.produk}</div>
-                                        <div className='text-xs'>Variant : {dataDetails.variasi}</div>
-                                        <div className='text-xs'>Ukuran : {dataDetails.ukuran}</div>
+                                    <div className='flex items-center border-b justify-center basis-1/5 text-xs'>
+                                        {Rupiah.format(dataDetails.harga_jual)} <span className='font-medium'>&nbsp;(x{Numbering.format(dataDetails.qty)})</span>
                                     </div>
 
-                                    <div className='flex items-center border justify-center'>
-                                        {Rupiah.format(dataDetails.harga_jual)}
-                                    </div>
-
-                                    <div className='flex items-center border justify-center'>
-                                        {Numbering.format(dataDetails.qty)}
-                                    </div>
-
-                                    <div className='flex items-center border justify-center'>
+                                    <div className='flex items-center border-b justify-center basis-1/5 text-xs'>
                                         {Rupiah.format(dataDetails.sub_total)}
                                     </div>
-
                                 </div>
                             )
                         })}
-                        <div className='grid grid-cols-5 text-center'>
+
+                        <div className='flex flex-row my-4'>
+                            <div className='flex flex-row basis-full'>
+                            </div>
+                            <div className='flex flex-row basis-1/2 justify-end font-medium text-[14px]  mr-10'>
+                                Total Qty :
+                            </div>
+                            <div className='flex items-center justify-end basis-1/3 font-medium '>
+                                <div className=' mr-6 text-[14px]'>
+                                    {Numbering.format(dataInvoice.qty)}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='flex flex-row my-4'>
+                            <div className='flex flex-row basis-full'>
+                            </div>
+                            <div className='flex flex-row basis-1/2 justify-end font-medium text-[14px] mr-10'>
+                                Subtotal :
+                            </div>
+                            <div className='flex items-center justify-end basis-1/3 font-medium'>
+                                <div className=' mr-6 text-[14px]'>
+                                    {Rupiah.format(dataInvoice.sub_total)}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='flex flex-row my-4'>
+                            <div className='flex flex-row basis-full'>
+                            </div>
+                            <div className='flex flex-row basis-1/2 justify-end font-medium text-[14px] mr-10'>
+                                Payment Received :
+                            </div>
+                            <div className='flex items-center justify-end basis-1/3 font-medium'>
+                                <div className='mr-6  text-[14px]'>
+                                    {Rupiah.format(dataInvoice.payment)}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='flex flex-row my-4'>
+                            <div className='flex flex-row basis-full'>
+                            </div>
+                            <div className='flex flex-row basis-1/2 justify-end font-medium text-[14px] mr-10  text-red-700'>
+                                Reimaining Payment :
+                            </div>
+                            <div className='flex items-center justify-end basis-1/4 font-medium'>
+                                <div className='mr-6  text-[14px] text-red-700'>
+                                    {Rupiah.format(dataInvoice.sub_total - dataInvoice.payment)}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* <div className='grid grid-cols-5 text-center'>
                             <div className='border col-span-3'>Total</div>
                             <div className='border'>{Numbering.format(dataInvoice.qty)}</div>
                             <div className='border'>{Rupiah.format(dataInvoice.sub_total)}</div>
@@ -173,18 +232,16 @@ export default function InvoicesPage() {
                         <div className='grid grid-cols-5 text-center'>
                             <div className='border col-span-4'>Sisa Payment</div>
                             <div className='border'>{Rupiah.format(dataInvoice.sub_total - dataInvoice.payment)}</div>
-                        </div>
-                    </div>
+                        </div> */}
+                    </div >
 
-                    <br />
-                    <hr />
                     <br />
 
                     <div className='flex flex-col gap-1'>
-                        <div>Status Pesanan : {dataInvoice.status_pesanan}</div>
-                        <div>Kurir : {dataInvoice.jasa_kirim}</div>
-                        <div>Resi : {dataInvoice.resi}</div>
-                        {dataInvoice.payment === 0 ? `Minimum Pembayaran 50% senilai ${Rupiah.format(dataInvoice.sub_total / 2)}` : `Pembayaran Pelunasan senilai ${Rupiah.format(dataInvoice.sub_total - dataInvoice.payment)}`}
+                        <div>Order Status : {dataInvoice.status_pesanan}</div>
+                        <div>Delivery Service : {dataInvoice.jasa_kirim}</div>
+                        <div>Delivery Receipt : {dataInvoice.resi}</div>
+                        <div className='font-medium text-red-700'>{dataInvoice.payment === 0 ? `Minimum Pembayaran 50% senilai ${Rupiah.format(dataInvoice.sub_total / 2)}` : `Pembayaran Pelunasan senilai ${Rupiah.format(dataInvoice.sub_total - dataInvoice.payment)}`}</div>
                     </div>
 
                     <div className='mt-5'>
@@ -198,7 +255,7 @@ export default function InvoicesPage() {
                             Lakukan Pembayaran
                         </Button>
                     </div>
-                </div>
+                </div >
 
 
             </>
