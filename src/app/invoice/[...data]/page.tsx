@@ -152,7 +152,7 @@ export default function InvoicesPage() {
                             <span className='font-bold text-base '>Due</span><br></br>
                             <span className='font-medium text-xs'>12 Dec 2023</span><br></br>
                         </div>
-                        <div className='grow text-left border p-2'>
+                        <div className='grow text-right border p-2'>
                             <span className='font-bold text-base'>Billed to</span><br></br>
                             <span className='font-medium text-base'>{dataInvoice.customer[0].customer}</span><br></br>
                             <span className='font-normal text-xs'>{dataInvoice.customer[0].hp}</span><br></br>

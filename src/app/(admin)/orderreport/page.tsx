@@ -315,13 +315,13 @@ export default function PurchaseOrder() {
               <TableRow className='bg-gray-900 font-bold'>
                 <TableHead className="bg-gray-900 border font-bold w-[3%] text-center text-white">No</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[21.5%] text-left text-white">NAME</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[5%] text-center text-white">ACT</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[3.5%] text-center text-white">VARIATION</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[5%] text-center text-white">SIZE</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[5.5%] text-center text-white">WEIGHT</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[4%] text-center text-white">QTY</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[8%] text-center text-white">PRICE</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[10%] text-center text-white">SUB TOTAL</TableHead>
-                <TableHead className="bg-gray-900 border font-bold w-[10%] text-center text-white">ACT</TableHead>
               </TableRow >
             </TableHeader >
           </Table >
@@ -541,16 +541,10 @@ export default function PurchaseOrder() {
                             </div>
                           </div>
                         </TableCell>
-                        <TableCell className="border w-[6%] text-center">{details.variasi}</TableCell>
-                        <TableCell className="border w-[5%] text-center">{details.ukuran}</TableCell>
-                        <TableCell className="border w-[6%] text-center">{Numbering.format(details.berat)}</TableCell>
-                        <TableCell className="border w-[4%] text-center">{Numbering.format(details.qty)}</TableCell>
-                        <TableCell className="border w-[8%] text-center">{Rupiah.format(details.harga_jual)}</TableCell>
-                        <TableCell className="border w-[10%] text-center">{Rupiah.format(details.sub_total)}</TableCell>
-                        <TableCell className="border w-[10%] text-center">
+                        <TableCell className="border w-[5%] text-center">
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button className='bg-red-600 font-bold text-[10px] rounded-2xl'>REFUND <Icon.RotateCcw className='ml-1' size={18} color="#ffffff" /></Button>
+                              <Button className='bg-red-600 font-bold text-[8px] p-2 rounded-2xl'><Icon.RotateCcw className='' size={18} color="#ffffff" /></Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent className='w-[50%]'>
                               <AlertDialogHeader className='border-b pb-4'>
@@ -590,24 +584,31 @@ export default function PurchaseOrder() {
                             </AlertDialogContent>
                           </AlertDialog>
                         </TableCell>
+                        <TableCell className="border w-[6%] text-center">{details.variasi}</TableCell>
+                        <TableCell className="border w-[5%] text-center">{details.ukuran}</TableCell>
+                        <TableCell className="border w-[6%] text-center">{Numbering.format(details.berat)}</TableCell>
+                        <TableCell className="border w-[4%] text-center">{Numbering.format(details.qty)}</TableCell>
+                        <TableCell className="border w-[8%] text-center">{Rupiah.format(details.harga_jual)}</TableCell>
+                        <TableCell className="border w-[10%] text-center">{Rupiah.format(details.sub_total)}</TableCell>
+
                       </TableRow>
                     ))}
                   </TableBody>
                   <TableFooter>
                     <TableRow>
-                      <TableCell colSpan={4} className='text-right bg-white font-bold'></TableCell>
+                      <TableCell colSpan={5} className='text-right bg-white font-bold'></TableCell>
                       <TableCell className="text-center bg-white  border font-bold">{Numbering.format(dataisi.berat)}</TableCell>
                       <TableCell className="text-center bg-white  border font-bold">{Numbering.format(dataisi.qty)}</TableCell>
                       <TableCell className="text-center bg-gray-100 border font-bold">GRAND TOTAL :</TableCell>
                       <TableCell className="text-center bg-white  border font-bold">{Rupiah.format(dataisi.sub_total)}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell colSpan={6} className='text-right bg-white font-bold'></TableCell>
+                      <TableCell colSpan={7} className='text-right bg-white font-bold'></TableCell>
                       <TableCell className="text-center bg-gray-100  border font-bold">DONE PAYMENT :</TableCell>
                       <TableCell className="text-center bg-white  border font-bold">{Rupiah.format(dataisi.payment)} ( {Math.round((dataisi.payment / dataisi.sub_total) * 100)}% )</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell colSpan={6} className='text-right bg-white font-bold'></TableCell>
+                      <TableCell colSpan={7} className='text-right bg-white font-bold'></TableCell>
                       <TableCell className="text-center bg-gray-100  border font-bold">SISA PAYMENT :</TableCell>
                       <TableCell className="text-center bg-white  text-red-800 border font-bold">{Rupiah.format(dataisi.sub_total - dataisi.payment)}</TableCell>
                     </TableRow>
