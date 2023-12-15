@@ -198,6 +198,50 @@ export default function PurchaseOrder() {
           </div>
         </div>
 
+        <div className='flex flex-row mt-4 gap-4 text-white'>
+          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-sm'>
+            <div className='text-xl font-semibold py-4 px-5'>
+              Total Sales
+            </div>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-xl font-semibold py-0 px-5'>
+                12 (Dummy Data)
+              </div>
+            </div>
+          </div>
+          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-sm'>
+            <div className='text-xl font-semibold py-4 px-5'>
+              Gross Sales
+            </div>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-xl font-semibold py-0 px-5'>
+                Rp 15.323.115 (Dummy Data)
+              </div>
+            </div>
+          </div>
+
+          <div className='basis-1/4 bg-lime-600 border-2 border-black-500 h-[110px] rounded-lg shadow-sm'>
+            <div className='text-xl font-semibold py-4 px-5'>
+              Amount Paid
+            </div>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-xl font-semibold py-0 px-5'>
+                Rp 9.542.645 (Dummy Data)
+              </div>
+            </div>
+          </div>
+          <div className='basis-1/4 bg-red-500 border-2 border-black-500 h-[110px] rounded-lg shadow-sm'>
+            <div className='text-xl font-semibold py-4 px-5'>
+              Amount Unpaid
+            </div>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-xl  font-semibold py-0 px-5'>
+                5.413.434 (Dummy Data)
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="flex flex-nowrap mt-4">
           {/*  */}
           <div className="font-bold text-4xl flex flex-row">
@@ -306,6 +350,107 @@ export default function PurchaseOrder() {
             />
           </div>
         </div>
+
+        <div className='flex flex-row mt-4'>
+          <div className='basis-1/2 text-right'>
+
+          </div>
+          <div className='basis-1/2 text-right'>
+            <Button className='bg-lime-700 font-bold mr-2'>Mass Update Payment <Icon.DollarSign className='ml-2' size={18} color="#ffffff" /></Button>
+
+            <AlertDialog open={openEditKurir} onOpenChange={setopenEditKurir}>
+              <AlertDialogTrigger asChild>
+
+                <Button className='bg-gray-600 font-bold'>Mass Update Delivery <Icon.PackageCheck className='ml-2' size={18} color="#ffffff" /></Button>
+
+
+              </AlertDialogTrigger>
+              <AlertDialogContent className='w-[600px]'>
+                <AlertDialogHeader className='border-b pb-4'>
+                  <AlertDialogTitle >Mass Update Delivery Status</AlertDialogTitle>
+                </AlertDialogHeader>
+
+                <div className="flex flex-row items-center space-x-2">
+                  <Label className='basis-1/3 text-md text-left'>Batch</Label>
+                  <div className='grow'>
+                    <Select defaultValue="null">
+                      {/* <Select defaultValue="null" value={e_kurir} onValueChange={(e) => { sete_kurir(e) }}> */}
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Local Shipping" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="null">Select Batch...</SelectItem>
+                          <SelectItem value="BATCH-0003">BATCH-0003</SelectItem>
+                          <SelectItem value="BATCH-0002">BATCH-0002</SelectItem>
+                          <SelectItem value="BATCH-0001">BATCH-0001</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="flex flex-row items-center space-x-2">
+                  <Label className='basis-1/3 text-md text-left'>Customer</Label>
+                  <div className='grow'>
+                    <Select defaultValue="null">
+                      {/* <Select defaultValue="null" value={e_kurir} onValueChange={(e) => { sete_kurir(e) }}> */}
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Local Shipping" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="null">Select Customer...</SelectItem>
+                          <SelectItem value="CUST-0001">RICO</SelectItem>
+                          <SelectItem value="CUST-0002">FERNANDO</SelectItem>
+                          <SelectItem value="CUST-0003">NURJAMAN</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="flex flex-row items-center space-x-2">
+                  <Label className='basis-1/3 text-md text-left'>Local Delivery</Label>
+                  <div className='grow'>
+                    <Select defaultValue="null">
+                      {/* <Select defaultValue="null" value={e_kurir} onValueChange={(e) => { sete_kurir(e) }}> */}
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Local Shipping" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="null">Select Delivery Service...</SelectItem>
+                          <SelectItem value="JNE_REG">JNE REG</SelectItem>
+                          <SelectItem value="JNE_YES">JNE YES</SelectItem>
+                          <SelectItem value="J&T_REG">J&T REG</SelectItem>
+                          <SelectItem value="SICEPAT_REG">SICEPAT REG</SelectItem>
+                          <SelectItem value="SICEPAT_BEST">SICEPAT BEST</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="flex flex-row items-center space-x-2">
+                  <Label className='basis-1/3 text-md text-left'>No Resi</Label>
+                  <div className='grow'>
+                    <Input type="text" placeholder="No Resi.." />
+                    {/* <Input type="text" placeholder="No Resi.." value={e_resi} onChange={(e) => { sete_resi(e.currentTarget.value) }} /> */}
+                  </div>
+                </div>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
+                  <Button onClick={() => {
+                    updateKurir()
+                  }}>Update</Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        </div>
+
+
+
 
         {/* {JSON.stringify(dataOrders.result)} */}
 
@@ -454,30 +599,6 @@ export default function PurchaseOrder() {
                             <AlertDialogHeader className='border-b pb-4'>
                               <AlertDialogTitle >Update Delivery Status</AlertDialogTitle>
                             </AlertDialogHeader>
-                            {/* <RadioGroup defaultValue="international_shipping">
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="international_shipping" id="r1" />
-                                <Label htmlFor="r1">International Shipping</Label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="local_shipping" id="r2" />
-                                <Label htmlFor="r2">Local Shippping</Label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <Label className='w-[375px] mt-2 text-md'>International Shipping Status</Label>
-                                <Select defaultValue="china_to_indonesia">
-                                  <SelectTrigger className="w-full mt-2">
-                                    <SelectValue placeholder="International Shipping" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    <SelectGroup>
-                                      <SelectItem value="china_to_indonesia">China To Indonesia</SelectItem>
-                                    </SelectGroup>
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                             
-                            </RadioGroup> */}
 
                             <div className="flex flex-row items-center space-x-2">
                               <Label className='basis-1/3 text-md text-left'>Lokal Kurir</Label>
