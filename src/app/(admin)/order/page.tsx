@@ -11,6 +11,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
 import { Check, ChevronsUpDown } from "lucide-react"
 import * as Icon from "lucide-react"
 
@@ -54,6 +56,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 
 import { uid } from 'uid';
+import { getOngkirApi } from "./getOngkir";
 
 export default function Order() {
   const [isLoading, setisLoading]: any = useState(true)
@@ -221,6 +224,8 @@ export default function Order() {
     setRowsData(rows);
     settotalQty(totalQty - qty);
     settotalAmount(totalAmount - amount);
+    setdataOngkir([])
+    setSelectongkir("")
   }
 
   function setQty(type: any) {
@@ -243,6 +248,8 @@ export default function Order() {
       setRowsData(rowsInput);
       settotalQty(totalQty + 1);
       settotalAmount(totalAmount + rowsData[index].harga_jual);
+      setdataOngkir([])
+      setSelectongkir("")
     } else if (type === "min") {
       if (rowsData[index].qty > 1) {
         const rowsInput = [...rowsData];
@@ -251,6 +258,8 @@ export default function Order() {
         setRowsData(rowsInput);
         settotalQty(totalQty - 1);
         settotalAmount(totalAmount - rowsData[index].harga_jual);
+        setdataOngkir([])
+        setSelectongkir("")
       }
     }
   }
@@ -300,7 +309,25 @@ export default function Order() {
               <Icon.Minus className="h-3 w-3" />
             </Button>
 
-            <span className='font-bold'>{Numbering.format(rowsData[index].qty)}</span>
+            {/* <span className='font-bold'>{Numbering.format(rowsData[index].qty)}</span> */}
+            <input
+              type="text"
+              className="h-7 outline-none text-center border rounded-md"
+              min={0}
+              pattern="[0-9]*"
+              value={rowsData[index].qty}
+              autoFocus={false}
+              onChange={(e) => {
+                const val = isNaN(parseInt(e.currentTarget.value)) ? 1 : parseInt(e.currentTarget.value)
+                settotalQty((totalQty - rowsData[index].qty) + val);
+                settotalAmount((totalAmount - rowsData[index].sub_total) + (rowsData[index].harga_jual * val));
+                setdataOngkir([])
+                setSelectongkir("")
+
+                rowsData[index].sub_total = rowsData[index].harga_jual * val;
+                rowsData[index].qty = val;
+              }}
+            />
 
             <Button variant="outline" className='h-7 w-7' size="icon" onClick={() => { setQttable("plus", index) }}>
               <Icon.Plus className="h-3 w-3" />
@@ -440,6 +467,8 @@ export default function Order() {
       settotalQty(totalQty + qty);
       settotalAmount(totalAmount + sub_total);
       setopenModalAddProduk(false);
+      setdataOngkir([])
+      setSelectongkir("")
       // alert("Produk Berhasil ditambahkan");
     } else {
       const edit_array = rowsData.findIndex((item: { id_batch: any, id_po: any, id_produk: any, produk: any, variasi: any, ukuran: any, qty: any, berat: any, total_modal: any, harga_jual: any, sub_total: any, img: any }) => item.id_produk === id_produk && item.id_batch === id_batch && item.variasi === variasi && item.ukuran === ukuran)
@@ -451,11 +480,32 @@ export default function Order() {
       settotalQty(totalQty + qty);
       settotalAmount(totalAmount + sub_total);
       setopenModalAddProduk(false);
+      setdataOngkir([])
+      setSelectongkir("")
       // alert("Quantity Produk dengan size yang sama telah diupdate");
+    }
+
+  }
+
+  const [dataOngkir, setdataOngkir]: any = useState([]);
+  const [loadingOngkir, setloadingOngkir]: any = useState(false);
+  const [AlamatCustomer, setAlamatCustomer]: any = useState("");
+
+  async function getOngkir() {
+    if (AlamatCustomer === "" || weight === 0) {
+      alert("Mohon Pilih Customer dan Isi Keranjang belanja")
+    } else {
+      setloadingOngkir(true)
+      const data_ongkir = await getOngkirApi("344", AlamatCustomer.subdistrict_id, weight)
+      setdataOngkir(data_ongkir)
+      if (data_ongkir) {
+        setloadingOngkir(false)
+      }
     }
   }
 
   const [inProgress, setinProgress]: any = useState(false);
+  const [Selectongkir, setSelectongkir]: any = useState("");
 
   const [tanggal, settanggal] = useState(format(new Date(), "yyyy-MM-dd"))
 
@@ -484,6 +534,7 @@ export default function Order() {
             id_batch: valueBatch,
             user: "ADMIN",
             cart: rowsData,
+            ongkir: Selectongkir
           }
         })
           .then(function (response) {
@@ -497,6 +548,7 @@ export default function Order() {
     }
   }
 
+  const weight = rowsData.reduce((total: any, currentItem: any) => total = total + (currentItem.berat * currentItem.qty), 0)
 
   if (isLoading) {
     return (
@@ -566,7 +618,21 @@ export default function Order() {
                       <Icon.Minus className="h-3 w-3" />
                     </Button>
 
-                    <span className='font-bold'>{addmodal_qty}</span>
+                    {/* <span className='font-bold'>{addmodal_qty}</span> */}
+                    <input
+                      type="text"
+                      className="h-7 outline-none text-center border rounded-md"
+                      min={0}
+                      pattern="[0-9]*"
+                      value={addmodal_qty}
+                      autoFocus={false}
+                      readOnly={addmodal_submit}
+                      onChange={(e) => {
+                        const val = isNaN(parseInt(e.currentTarget.value)) ? 1 : parseInt(e.currentTarget.value)
+                        setaddmodal_qty(val)
+                        setv_subtotal(hargaJual * val)
+                      }}
+                    />
 
                     <Button variant="outline" disabled={addmodal_submit} className='h-7 w-7' size="icon" onClick={() => { setQty("plus") }}>
                       <Icon.Plus className="h-3 w-3" />
@@ -665,6 +731,7 @@ export default function Order() {
                             key={dataCustomer.id_cust}
                             onSelect={() => {
                               setvalueCustomer(dataCustomer.id_cust === valueCustomer ? "" : dataCustomer.id_cust)
+                              setAlamatCustomer(dataCustomer.id_cust === valueCustomer ? "" : dataCustomer)
                               setopenCustomer(false)
                             }}
                           >
@@ -752,7 +819,7 @@ export default function Order() {
                 </div>
               </div>
 
-              <div className='border rounded-md p-2 flex flex-col w-[40%] h-[550px]'>
+              <div className='border rounded-md p-2 flex flex-col w-[40%] h-[652px]'>
 
                 <div className='grow overflow-y-auto scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-sm'>
                   {rincian}
@@ -773,44 +840,109 @@ export default function Order() {
                     </div>
 
                     <div className='flex border py-1 px-2'>
+                      <div className='w-24'>Berat Produk</div>
+                      <div className='ml-5'>:</div>
+                      <div className='ml-auto font-bold'>{Numbering.format(weight)} Gr / {weight / 1000} Kg</div>
+                    </div>
+
+                    <div className='flex border py-1 px-2'>
                       <div className='w-24'>Total Amount</div>
                       <div className='ml-5'>:</div>
                       <div className='ml-auto font-bold'>{Rupiah.format(totalAmount)}</div>
                     </div>
+
+                    <div className='flex border py-1 px-2'>
+                      <div className='w-24'>Biaya Ongkir</div>
+                      <div className='ml-5'>:</div>
+                      <div className='ml-auto font-bold'>{Rupiah.format(Selectongkir.split("#")[0])}</div>
+                    </div>
+
+                    <div className='flex border py-1 px-2'>
+                      <div className='w-24'>Grand Total</div>
+                      <div className='ml-5'>:</div>
+                      <div className='ml-auto font-bold'>{Rupiah.format(totalAmount + parseInt(Selectongkir.split("#")[0] === "" ? 0 : Selectongkir.split("#")[0]))}</div>
+                    </div>
                   </div>
                 </div>
-                <div className='w-full flex items-center mb-2 mt-4'>
-                  {/* <div className='flex text-xs gap-2 items-center'>
-                <Button onClick={() => Router.back()} variant="outline" className='h-8 w-auto pr-4 pl-1' size="icon">
-                  <div className='flex gap-1 justify-center items-center'>
-                    <Icon.ChevronLeft className="h-5 w-5" />
-                    <b className=''>Kembali</b>
-                  </div>
-                </Button>
-              </div> */}
 
+                {dataOngkir.length > 0 ?
+                  <RadioGroup className="grid grid-cols-4 text-center mt-2"
+                    onValueChange={(e) => {
+                      setSelectongkir(e)
+                    }}
+                  >
+                    {dataOngkir.map((data: any, index: number) => {
+                      return (
+                        <div key={index} className="p-2 rounded-md border">
+                          <div className="border-b pb-2 text-xs ">
+                            {data.name}
+                          </div>
+                          {data.costs.map((data_cost: any, indexs: number) => {
+                            return (
+                              <div key={indexs}>
+                                <RadioGroupItem className="hidden" value={`${data_cost.cost[0].value}#${data.name}`} id={`${data.name}${data_cost.service}`} />
+                                <Label
+                                  className={`${Selectongkir === data_cost.cost[0].value + "#" + data.name ? "border-blue-500" : ""} flex items-center space-x-2 my-2 p-2 border rounded-md cursor-pointer`} htmlFor={`${data.name}${data_cost.service}`}>{data_cost.service} : {Rupiah.format(data_cost.cost[0].value)}</Label>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )
+                    })}
+                  </RadioGroup>
+                  :
+                  null
+                }
+
+                <div className="mt-2 text-right">
                   {(function () {
-                    if (inProgress === false) {
-                      return (
-                        <Button
-                          onClick={() => {
-                            saveSales();
-                          }}
-                          variant="default" size="sm" className='ml-auto'>
-                          <Icon.ShoppingBag className="mr-2 h-4 w-4" /> Checkout
-                        </Button>
-                      );
+                    if (dataOngkir.length === 0) {
+                      if (loadingOngkir === true) {
+                        return (
+                          <Button size="sm" className='ml-auto' disabled>
+                            <Icon.Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Please wait
+                          </Button>
+                        )
+                      } else {
+                        return (
+                          <Button
+                            onClick={() => {
+                              getOngkir();
+                            }}
+                            variant="default" size="sm" className='ml-auto'>
+                            <Icon.Truck className="mr-2 h-4 w-4" /> Get Ongkir
+                          </Button>
+                        )
+                      }
+
                     } else {
-                      return (
-                        <Button size="sm" className='ml-auto' disabled>
-                          <Icon.Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Please wait
-                        </Button>
-                      );
+                      if (inProgress === false) {
+                        return (
+                          <Button
+                            disabled={Selectongkir === "" ? true : false}
+                            onClick={() => {
+                              saveSales();
+                            }}
+                            variant="default" size="sm" className='ml-auto'>
+                            <Icon.ShoppingBag className="mr-2 h-4 w-4" /> Checkout
+                          </Button>
+                        );
+                      } else {
+                        return (
+                          <Button size="sm" className='ml-auto' disabled>
+                            <Icon.Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Please wait
+                          </Button>
+                        );
+                      }
                     }
                   })()}
                 </div>
+
               </div>
+
+
 
             </div>
 

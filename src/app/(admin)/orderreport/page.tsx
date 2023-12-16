@@ -136,6 +136,7 @@ export default function PurchaseOrder() {
 
   const [searchInvoices, setsearchInvoices]: any = useState('');
   const [openEditKurir, setopenEditKurir]: any = useState(false);
+  const [openMassEditKurir, setopenMassEditKurir]: any = useState(false);
   const [openCancelOrder, setopenCancelOrder]: any = useState(false);
 
   const [e_resi, sete_resi]: any = useState('');
@@ -358,7 +359,7 @@ export default function PurchaseOrder() {
           <div className='basis-1/2 text-right'>
             <Button className='bg-lime-700 font-bold mr-2'>Mass Update Payment <Icon.DollarSign className='ml-2' size={18} color="#ffffff" /></Button>
 
-            <AlertDialog open={openEditKurir} onOpenChange={setopenEditKurir}>
+            <AlertDialog open={openMassEditKurir} onOpenChange={setopenMassEditKurir}>
               <AlertDialogTrigger asChild>
 
                 <Button className='bg-gray-600 font-bold'>Mass Update Delivery <Icon.PackageCheck className='ml-2' size={18} color="#ffffff" /></Button>
@@ -531,7 +532,7 @@ export default function PurchaseOrder() {
 
                         <Button className='bg-green-700 mx-2 font-bold text-[10px] rounded-2xl'
                           onClick={() => {
-                            window.open(`/invoice/${dataisi.id_invoice}`)
+                            window.open(`/gpinvoices/${dataisi.customer[0].id_cust}/${dataisi.id_batch}`)
                           }}
                         >
                           OPEN INVOICE PAGE <Icon.BadgeDollarSign className='ml-1' size={18} color="#ffffff" />
@@ -720,18 +721,28 @@ export default function PurchaseOrder() {
                       <TableCell colSpan={5} className='text-right bg-white font-bold'></TableCell>
                       <TableCell className="text-center bg-white  border font-bold">{Numbering.format(dataisi.berat)}</TableCell>
                       <TableCell className="text-center bg-white  border font-bold">{Numbering.format(dataisi.qty)}</TableCell>
-                      <TableCell className="text-center bg-gray-100 border font-bold">GRAND TOTAL :</TableCell>
+                      <TableCell className="text-center bg-gray-100 border font-bold">SUB TOTAL :</TableCell>
                       <TableCell className="text-center bg-white  border font-bold">{Rupiah.format(dataisi.sub_total)}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={7} className='text-right bg-white font-bold'></TableCell>
+                      <TableCell className="text-center bg-gray-100  border font-bold">ONGKIR :</TableCell>
+                      <TableCell className="text-center bg-white  border font-bold">{Rupiah.format(dataisi.ongkir)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell colSpan={7} className='text-right bg-white font-bold'></TableCell>
+                      <TableCell className="text-center bg-gray-100  border font-bold">GRAND TOTAL :</TableCell>
+                      <TableCell className="text-center bg-white  border font-bold">{Rupiah.format(dataisi.sub_total + dataisi.ongkir)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell colSpan={7} className='text-right bg-white font-bold'></TableCell>
                       <TableCell className="text-center bg-gray-100  border font-bold">DONE PAYMENT :</TableCell>
-                      <TableCell className="text-center bg-white  border font-bold">{Rupiah.format(dataisi.payment)} ( {Math.round((dataisi.payment / dataisi.sub_total) * 100)}% )</TableCell>
+                      <TableCell className="text-center bg-white  border font-bold">{Rupiah.format(dataisi.payment)} ( {Math.round((dataisi.payment / (dataisi.sub_total + dataisi.ongkir)) * 100)}% )</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={7} className='text-right bg-white font-bold'></TableCell>
                       <TableCell className="text-center bg-gray-100  border font-bold">SISA PAYMENT :</TableCell>
-                      <TableCell className="text-center bg-white  text-red-800 border font-bold">{Rupiah.format(dataisi.sub_total - dataisi.payment)}</TableCell>
+                      <TableCell className="text-center bg-white  text-red-800 border font-bold">{Rupiah.format((dataisi.sub_total + dataisi.ongkir) - dataisi.payment)}</TableCell>
                     </TableRow>
                   </TableFooter>
 

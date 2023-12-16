@@ -65,13 +65,13 @@ export default function Customer() {
   const [v_customer, setv_customer]: any = useState('');
   const [v_hp, setv_hp]: any = useState('');
   const [v_alamat, setv_alamat]: any = useState('');
-  const [v_kel, setv_kel]: any = useState('');
-  const [v_kec, setv_kec]: any = useState('');
+  const [v_provinsi, setv_provinsi]: any = useState('');
   const [v_kota, setv_kota]: any = useState('');
+  const [v_kecamatan, setv_kecamatan]: any = useState('');
   const [v_kodepos, setv_kodepos]: any = useState('');
 
   async function saveCustomer() {
-    if (v_customer === "" || v_hp === "" || v_alamat === "" || v_kel === "" || v_kec === "" || v_kota === "" || v_kodepos === "") {
+    if (v_customer === "" || v_hp === "" || v_alamat === "" || v_provinsi === "" || v_kecamatan === "" || v_kota === "" || v_kodepos === "") {
       alert("Mohon lengkapi Formulir")
     } else {
       // console.log(v_customer)
@@ -89,9 +89,9 @@ export default function Customer() {
           customer: v_customer,
           hp: v_hp,
           alamat: v_alamat,
-          kel: v_kel,
-          kec: v_kec,
+          provinsi: v_provinsi,
           kota: v_kota,
+          kecamatan: v_kecamatan,
           kodepos: v_kodepos,
         }
       })
@@ -100,9 +100,9 @@ export default function Customer() {
           setv_customer("")
           setv_hp("")
           setv_alamat("")
-          setv_kel("")
-          setv_kec("")
+          setv_provinsi("")
           setv_kota("")
+          setv_kecamatan("")
           setv_kodepos("")
           setopen(false)
         })
@@ -235,18 +235,10 @@ export default function Customer() {
                 </div>
                 <div className='flex flex-row text-center mt-2 items-center'>
                   <div className='basis-1/4 font-bold text-left'>
-                    Kelurahan :
+                    Provinsi :
                   </div>
                   <div className='basis-3/4'>
-                    <Input type="text" placeholder="Kelurahan.." value={v_kel} onChange={(e) => { setv_kel(e.currentTarget.value) }} />
-                  </div>
-                </div>
-                <div className='flex flex-row text-center mt-2 items-center'>
-                  <div className='basis-1/4 font-bold text-left'>
-                    Kecamatan :
-                  </div>
-                  <div className='basis-3/4'>
-                    <Input type="text" placeholder="Kecamatan.." value={v_kec} onChange={(e) => { setv_kec(e.currentTarget.value) }} />
+                    <Input type="text" placeholder="Provinsi.." value={v_provinsi} onChange={(e) => { setv_provinsi(e.currentTarget.value) }} />
                   </div>
                 </div>
                 <div className='flex flex-row text-center mt-2 items-center'>
@@ -255,6 +247,14 @@ export default function Customer() {
                   </div>
                   <div className='basis-3/4'>
                     <Input type="text" placeholder="Kota.." value={v_kota} onChange={(e) => { setv_kota(e.currentTarget.value) }} />
+                  </div>
+                </div>
+                <div className='flex flex-row text-center mt-2 items-center'>
+                  <div className='basis-1/4 font-bold text-left'>
+                    Kecamatan :
+                  </div>
+                  <div className='basis-3/4'>
+                    <Input type="text" placeholder="Kecamatan.." value={v_kecamatan} onChange={(e) => { setv_kecamatan(e.currentTarget.value) }} />
                   </div>
                 </div>
                 <div className='flex flex-row text-center mt-2 items-center'>
@@ -285,9 +285,9 @@ export default function Customer() {
                 <TableHead className="bg-gray-900 border w-[300px] text-left font-bold text-white">Name</TableHead>
                 <TableHead className="bg-gray-900 border text-center font-bold text-white">HP</TableHead>
                 <TableHead className="bg-gray-900 border text-center font-bold text-white">Address</TableHead>
-                <TableHead className="bg-gray-900 border text-center font-bold text-white">Kel</TableHead>
-                <TableHead className="bg-gray-900 border text-center font-bold text-white">Kec</TableHead>
+                <TableHead className="bg-gray-900 border text-center font-bold text-white">Provinsi</TableHead>
                 <TableHead className="bg-gray-900 border text-center font-bold text-white">Kota</TableHead>
+                <TableHead className="bg-gray-900 border text-center font-bold text-white">Kecamatan</TableHead>
                 <TableHead className="bg-gray-900 border text-center font-bold text-white">Kode Pos</TableHead>
                 <TableHead className="bg-gray-900 border w-[150px] text-center font-bold text-white">Act</TableHead>
               </TableRow>
@@ -300,9 +300,9 @@ export default function Customer() {
                   <TableCell className="border font-medium text-left">{dataisi.customer}</TableCell>
                   <TableCell className="border text-center">{dataisi.hp}</TableCell>
                   <TableCell className="border text-center">{dataisi.alamat}</TableCell>
-                  <TableCell className="border text-center">{dataisi.kel}</TableCell>
-                  <TableCell className="border text-center">{dataisi.kec}</TableCell>
-                  <TableCell className="border text-center">{dataisi.kota}</TableCell>
+                  <TableCell className="border text-center">{dataisi.province}</TableCell>
+                  <TableCell className="border text-center">{dataisi.city_name}</TableCell>
+                  <TableCell className="border text-center">{dataisi.subdistrict_name}</TableCell>
                   <TableCell className="border text-center">{dataisi.kodepos}</TableCell>
                   <TableCell className="border w-[150px]">
                     <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
