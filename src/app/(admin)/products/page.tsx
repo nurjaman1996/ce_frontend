@@ -273,7 +273,7 @@ export default function Products() {
     return (
       <main className="">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl">
+          <div className="font-bold text-2xl">
             Products
           </div>
           {/* <div className="ml-auto">
@@ -284,29 +284,29 @@ export default function Products() {
         {/* {JSON.stringify(dataProducts.result)} */}
 
         <div className='flex flex-row mt-4 gap-8 '>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 text-white rounded-2xl shadow-md'>
-            <div className='text-xl font-semibold py-4 px-5'>
+          <div className='basis-1/2 bg-white border border-gray-300 h-[110px] text-black rounded-2xl shadow-md'>
+            <div className='text-lg font-semibold py-4 px-5'>
               Items
             </div>
             <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-4xl font-semibold'>
+              <div className='basis-1/2 text-2xl font-semibold'>
                 {Numbering.format(dataProducts.result.items)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.ShoppingCart size={45} color="#ffffff" />
+              <div className=' basis-1/2 flex justify-end -mt-3'>
+                <Icon.ShoppingCart size={45} color="#000000" />
               </div>
             </div>
           </div>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 text-white rounded-2xl shadow-md'>
-            <div className='text-xl font-semibold py-4 px-5'>
+          <div className='basis-1/2  bg-white border border-gray-300 h-[110px] text-black rounded-2xl shadow-md'>
+            <div className='text-lg font-semibold py-4 px-5'>
               Qty
             </div>
             <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-4xl font-semibold'>
+              <div className='basis-1/2 text-2xl font-semibold'>
                 {Numbering.format(dataProducts.result.qty)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.DollarSign size={45} color="#ffffff" />
+              <div className=' basis-1/2 flex justify-end -mt-3'>
+                <Icon.DollarSign size={45} color="#000000" />
               </div>
             </div>
           </div>

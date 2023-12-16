@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Badge } from "@/components/ui/badge"
 import * as Icon from "lucide-react"
 import { Input } from "@/components/ui/input"
+import { BeakerIcon, ClipboardDocumentIcon } from '@heroicons/react/24/solid'
 import {
   Table,
   TableBody,
@@ -194,50 +195,62 @@ export default function PurchaseOrder() {
     return (
       <main className="">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl">
+          <div className="font-bold text-2xl">
             Report List Orders
           </div>
         </div>
 
-        <div className='flex flex-row mt-4 gap-4 text-white'>
-          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-sm'>
-            <div className='text-xl font-semibold py-4 px-5'>
-              Total Sales
+        <div className='flex flex-row mt-4 gap-4 text-black'>
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
+              Sales Summary
             </div>
             <div className='flex flex-row text-left'>
-              <div className='basis-full text-xl font-semibold py-0 px-5'>
-                12 (Dummy Data)
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
+                Rp 15.232.000
+              </div>
+              <div className=' basis-auto mt-1 mx-5'>
+                <ClipboardDocumentIcon className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
-          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-sm'>
-            <div className='text-xl font-semibold py-4 px-5'>
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Gross Sales
             </div>
             <div className='flex flex-row text-left'>
-              <div className='basis-full text-xl font-semibold py-0 px-5'>
-                Rp 15.323.115 (Dummy Data)
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
+                Rp 15.232.000
+              </div>
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.PercentSquare className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
 
-          <div className='basis-1/4 bg-lime-600 border-2 border-black-500 h-[110px] rounded-lg shadow-sm'>
-            <div className='text-xl font-semibold py-4 px-5'>
+          <div className='basis-1/4 bg-lime-300 border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Amount Paid
             </div>
             <div className='flex flex-row text-left'>
-              <div className='basis-full text-xl font-semibold py-0 px-5'>
-                Rp 9.542.645 (Dummy Data)
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
+                Rp 15.232.000
+              </div>
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.DollarSign className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
-          <div className='basis-1/4 bg-red-500 border-2 border-black-500 h-[110px] rounded-lg shadow-sm'>
-            <div className='text-xl font-semibold py-4 px-5'>
+          <div className='basis-1/4 bg-red-300 border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Amount Unpaid
             </div>
             <div className='flex flex-row text-left'>
-              <div className='basis-full text-xl  font-semibold py-0 px-5'>
-                5.413.434 (Dummy Data)
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
+                Rp 15.232.000
+              </div>
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.DollarSign className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
@@ -353,16 +366,13 @@ export default function PurchaseOrder() {
         </div>
 
         <div className='flex flex-row mt-4'>
-          <div className='basis-1/2 text-right'>
-
-          </div>
-          <div className='basis-1/2 text-right'>
-            <Button className='bg-lime-700 font-bold mr-2'>Mass Update Payment <Icon.DollarSign className='ml-2' size={18} color="#ffffff" /></Button>
+          <div className='basis-full text-left'>
+            <Button className='bg-lime-300 text-black font-semibold mr-2'>Mass Update Payment <Icon.DollarSign className='ml-2' size={18} color="#000000" /></Button>
 
             <AlertDialog open={openMassEditKurir} onOpenChange={setopenMassEditKurir}>
               <AlertDialogTrigger asChild>
 
-                <Button className='bg-gray-600 font-bold'>Mass Update Delivery <Icon.PackageCheck className='ml-2' size={18} color="#ffffff" /></Button>
+                <Button className='bg-gray-300 text-black font-semibold'>Mass Update Delivery <Icon.PackageCheck className='ml-2' size={18} color="#000000" /></Button>
 
 
               </AlertDialogTrigger>
@@ -460,8 +470,8 @@ export default function PurchaseOrder() {
             <TableHeader>
               <TableRow className='bg-gray-900 font-bold'>
                 <TableHead className="bg-gray-900 border font-bold w-[3%] text-center text-white">No</TableHead>
-                <TableHead className="bg-gray-900 border font-bold w-[21.5%] text-left text-white">NAME</TableHead>
-                <TableHead className="bg-gray-900 border font-bold w-[5%] text-center text-white">ACT</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[21%] text-left text-white">NAME</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[2%] text-center text-white">ACT</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[3.5%] text-center text-white">VARIATION</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[5%] text-center text-white">SIZE</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[5.5%] text-center text-white">WEIGHT</TableHead>
@@ -530,12 +540,12 @@ export default function PurchaseOrder() {
                       </TableCell>
                       <TableCell className="text-right text-md font-bold">
 
-                        <Button className='bg-green-700 mx-2 font-bold text-[10px] rounded-2xl'
+                        <Button className='bg-lime-300 text-black mx-2 font-bold text-[10px] rounded-lg'
                           onClick={() => {
                             window.open(`/gpinvoices/${dataisi.customer[0].id_cust}/${dataisi.id_batch}`)
                           }}
                         >
-                          OPEN INVOICE PAGE <Icon.BadgeDollarSign className='ml-1' size={18} color="#ffffff" />
+                          OPEN INVOICE PAGE <Icon.BadgeDollarSign className='ml-1' size={18} color="#000000" />
                         </Button>
 
                         {/* <AlertDialog>
@@ -587,7 +597,7 @@ export default function PurchaseOrder() {
                         <AlertDialog open={openEditKurir} onOpenChange={setopenEditKurir}>
                           <AlertDialogTrigger asChild>
 
-                            <Button disabled={dataisi.status_pesanan === "PROGRESS" ? false : true} className='bg-gray-600 mx-2 font-bold text-[10px] rounded-2xl'
+                            <Button disabled={dataisi.status_pesanan === "PROGRESS" ? false : true} className='bg-gray-600 mx-2 font-bold text-[10px] rounded-lg'
                               onClick={() => {
                                 setopenEditKurir(true)
                                 sete_id_invoice(dataisi.id_invoice)
@@ -663,10 +673,10 @@ export default function PurchaseOrder() {
                             </div>
                           </div>
                         </TableCell>
-                        <TableCell className="border w-[5%] text-center">
+                        <TableCell className="border w-[1%] text-center">
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button className='bg-red-600 font-bold text-[8px] p-2 rounded-2xl'><Icon.RotateCcw className='' size={18} color="#ffffff" /></Button>
+                              <Button className='bg-red-500 font-bold text-[8px] p-2 rounded-lg'><Icon.RotateCcw className='' size={16} color="#ffffff" /></Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent className='w-[50%]'>
                               <AlertDialogHeader className='border-b pb-4'>

@@ -181,7 +181,7 @@ export default function PurchaseOrder() {
     return (
       <main className="">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl">
+          <div className="font-bold text-2xl">
             Purchase Order
           </div>
         </div>

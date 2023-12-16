@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react'
 // import { jwtDecode } from "jwt-decode";
 
 import Datepicker from "react-tailwindcss-datepicker";
-import { Check, ChevronsUpDown } from "lucide-react"
+import { BarChart4, Boxes, Check, ChevronsUpDown, Coffee, Coins, Container, DollarSign, Dumbbell, FileStack, Package } from "lucide-react"
+import { BeakerIcon, ClipboardDocumentIcon } from '@heroicons/react/24/solid'
+
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -112,7 +114,7 @@ export default function Home() {
     return (
       <div className="w-full">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl">
+          <div className="font-bold text-2xl">
             Dashboard
           </div>
           <div className="ml-auto w-auto mr-4">
@@ -203,88 +205,128 @@ export default function Home() {
 
         {/* {JSON.stringify(dataDashboard.result)} */}
 
-        <div className='flex flex-row mt-4 gap-4 text-white'>
-          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
-            <div className='text-xl font-semibold py-4 px-5'>
+        <div className='flex flex-row mt-4 gap-4 text-black'>
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Sales Summary
             </div>
             <div className='flex flex-row text-left'>
-              <div className='basis-1/2 text-xl font-semibold py-0 px-5'>
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
                 {Rupiah.format(dataDashboard.result.ringkasan)}
               </div>
-              {/* <div className=' basis-1/2 pull-right mt-1 mx-5 text-right'>
-                <Badge className='bg-yellow-100 text-[#000000] text-sm'>+2,5%</Badge>
-              </div> */}
-            </div>
-          </div>
-          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
-            <div className='text-xl font-semibold py-4 px-5'>
-              Total Product
-            </div>
-            <div className='flex flex-row text-left'>
-              <div className='basis-1/2 text-xl font-semibold py-0 px-5'>
-                {Numbering.format(dataDashboard.result.total_product)}
+              <div className=' basis-auto mt-1 mx-5'>
+                <BarChart4 className="h-6 w-6 text-black text-right" />
               </div>
-              {/* <div className=' basis-1/2 pull-right mt-1 mx-5'>
-                <Badge className='bg-red-800 text-black text-sm'>-1,2%</Badge>
-              </div> */}
             </div>
           </div>
 
-          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
-            <div className='text-xl font-semibold py-4 px-5'>
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
+              Total Product
+            </div>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
+                {Numbering.format(dataDashboard.result.total_product)}
+              </div>
+              <div className=' basis-auto mt-1 mx-5'>
+                <Package className="h-6 w-6 text-black text-right" />
+              </div>
+            </div>
+          </div>
+
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Available Stock
             </div>
             <div className='flex flex-row text-left'>
-              <div className='basis-1/2 text-xl font-semibold py-0 px-5'>
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
                 {Numbering.format(dataDashboard.result.stok_tersedia)}
               </div>
-              {/* <div className=' basis-1/2 pull-right mt-1 mx-5'>
-                <Badge className='bg-yellow-100 text-[#000000] text-sm'>+11%</Badge>
-              </div> */}
+              <div className=' basis-auto mt-1 mx-5'>
+                <Coffee className="h-6 w-6 text-black text-right" />
+              </div>
             </div>
           </div>
-          <div className='basis-1/4 bg-black border-2 border-black-500 h-[110px] rounded-lg shadow-md'>
-            <div className='text-xl font-semibold py-4 px-5'>
+
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Unfilled Stock
             </div>
             <div className='flex flex-row text-left'>
-              <div className='basis-1/2 text-xl font-semibold py-0 px-5'>
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
                 {Numbering.format(dataDashboard.result.belum_terpenuhi)}
+
               </div>
-              {/* <div className=' basis-1/2 pull-right mt-1 mx-5'>
-                <Badge className='bg-yellow-100 text-[#000000] text-sm'>+11%</Badge>
-              </div> */}
+              <div className=' basis-auto mt-1 mx-5'>
+                <Container className="h-6 w-6 text-black text-right" />
+              </div>
             </div>
           </div>
         </div>
 
-        <div className='flex flex-row mt-4  gap-4 text-white'>
-          <div className='basis-3/4 bg-black border-2 border-black-500 h-[448px] rounded-lg shadow-md'>
+        <div className='flex flex-row mt-4  gap-4 text-black'>
+          <div className='basis-3/4 bg-white border border-gray-300 h-[448px] rounded-lg shadow-md'>
             <div className='text-xl font-bold py-3 px-5 '>
               Chart Sales
             </div>
 
           </div>
           <div className='grow'>
-            <div className='text-xl font-bold py-3 px-5  bg-black border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
-              Invoices
-              <p>{Numbering.format(dataDashboard.result.total_pesanan)}</p>
+            <div className='text-md font-bold bg-white border border-gray-300 h-[100px] rounded-lg shadow-md mb-4'>
+              <div className='text-md font-semibold py-4 px-5'>
+                Invoices
+              </div>
+              <div className='flex flex-row text-left'>
+                <div className='basis-full text-lg font-semibold py-0 px-5'>
+                  <p>{Numbering.format(dataDashboard.result.total_pesanan)}</p>
+                </div>
+                <div className=' basis-auto mt-1 mx-5'>
+                  <FileStack className="h-6 w-6 text-black text-right" />
+                </div>
+              </div>
             </div>
 
-            <div className='text-xl font-bold py-3 px-5 mt-4 bg-black border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
-              Qty
-              <p>{Numbering.format(dataDashboard.result.qty)}</p>
+            <div className='text-md font-bold bg-white border border-gray-300 h-[100px] rounded-lg shadow-md mb-4'>
+              <div className='text-md font-semibold py-4 px-5'>
+                Qty
+              </div>
+              <div className='flex flex-row text-left'>
+                <div className='basis-full text-lg font-semibold py-0 px-5'>
+                  <p>{Numbering.format(dataDashboard.result.qty)}</p>
+
+                </div>
+                <div className=' basis-auto mt-1 mx-5'>
+                  <Boxes className="h-6 w-6 text-black text-right" />
+                </div>
+              </div>
             </div>
 
-            <div className='text-xl font-bold py-3 px-5 mt-4 bg-black border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
-              Estimated Weight
-              <p>{Numbering.format(dataDashboard.result.weight)} GR | {Numbering.format(dataDashboard.result.weight / 1000)} KG</p>
+            <div className='text-md font-bold bg-white border border-gray-300 h-[100px] rounded-lg shadow-md mb-4'>
+              <div className='text-md font-semibold py-4 px-5'>
+                Estimated Weight
+              </div>
+              <div className='flex flex-row text-left'>
+                <div className='basis-full text-lg font-semibold py-0 px-5'>
+                  <p>{Numbering.format(dataDashboard.result.weight)} GR | {Numbering.format(dataDashboard.result.weight / 1000)} KG</p>
+                </div>
+                <div className=' basis-auto mt-1 mx-5'>
+                  <Dumbbell className="h-6 w-6 text-black text-right" />
+                </div>
+              </div>
             </div>
 
-            <div className='text-xl font-bold py-3 px-5 mt-4 bg-black border-2 border-black-500 h-[100px] rounded-lg shadow-md'>
-              Estimated Overhead
-              <p>{Rupiah.format(dataDashboard.result.overhead)}</p>
+            <div className='text-md font-bold bg-white border border-gray-300 h-[100px] rounded-lg shadow-md mb-4'>
+              <div className='text-md font-semibold py-4 px-5'>
+                Estimated Overhead
+              </div>
+              <div className='flex flex-row text-left'>
+                <div className='basis-full text-lg font-semibold py-0 px-5'>
+                  <p>{Rupiah.format(dataDashboard.result.overhead)}</p>
+                </div>
+                <div className=' basis-auto mt-1 mx-5'>
+                  <Coins className="h-6 w-6 text-black text-right" />
+                </div>
+              </div>
             </div>
 
           </div>

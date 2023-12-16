@@ -239,11 +239,11 @@ export default function GroupInvoicesPage() {
                                             </div> */}
                                             <div className='w-full flex flex-row gap-2 font-bold'>
                                                 <div className='basis-1/2 text-left'>Dibayar</div>
-                                                <div className='basis-1/2 text-right'>{Rupiah.format(total_paid)}</div>
+                                                <div className='basis-1/2 text-right text-lime-600'>{Rupiah.format(total_paid)}</div>
                                             </div>
                                             <div className='w-full flex flex-row gap-2 font-bold'>
                                                 <div className='basis-1/2 text-left'>Sisa</div>
-                                                <div className='basis-1/2 text-right'>{Rupiah.format(total_amount - total_paid)}</div>
+                                                <div className='basis-1/2 text-right text-red-600'>{Rupiah.format(total_amount - total_paid)}</div>
                                             </div>
 
                                         </div>
@@ -293,26 +293,26 @@ export default function GroupInvoicesPage() {
 
                     <div className='text-xs my-3'>
                         <div className='w-full flex flex-row gap-2'>
-                            <div className='basis-1/2 text-left'>Total Pelunasan</div>
-                            <div className='basis-1/2 text-right'>{Rupiah.format(total_pelunasan)}</div>
+                            <div className='basis-1/2 text-left font-medium'>Total Pelunasan</div>
+                            <div className='basis-1/2 text-right font-semibold'>{Rupiah.format(total_pelunasan)}</div>
                         </div>
-                        <div className='w-full flex flex-row gap-2'>
-                            <div className='basis-1/2 text-left'>Total Biaya ongkir ({total_berat / 1000}kg)</div>
-                            <div className='basis-1/2 text-right'>{Rupiah.format(total_ongkir)}</div>
+                        <div className='w-full flex flex-row gap-2 '>
+                            <div className='basis-1/2 text-left font-medium'>Total Biaya ongkir ({total_berat / 1000}kg)</div>
+                            <div className='basis-1/2 text-right font-semibold'>{Rupiah.format(total_ongkir)}</div>
                         </div>
-                        <div className='w-full flex flex-row gap-2 border-b pb-1'>
-                            <div className='basis-1/2 text-left'>Sudah Dibayar</div>
-                            <div className='basis-1/2 text-right'>{Rupiah.format(sudah_dibayar)}</div>
+                        <div className='w-full flex flex-row gap-2  border-b pb-1'>
+                            <div className='basis-1/2 text-left font-medium'>Sudah Dibayar</div>
+                            <div className='basis-1/2 text-right text-lime-600 font-semibold'>{Rupiah.format(sudah_dibayar)}</div>
                         </div>
 
 
-                        <div className='w-full flex flex-row gap-2'>
-                            <div className='basis-1/2 text-left'>Sisa Pelunasan + Biaya ongkir</div>
-                            <div className='basis-1/2 text-right'>{Rupiah.format(min_lunas)}</div>
+                        <div className='w-full flex flex-row gap-2 '>
+                            <div className='basis-1/2 text-left font-medium'>Sisa Pelunasan + Biaya ongkir</div>
+                            <div className='basis-1/2 text-right text-red-600 font-semibold'>{Rupiah.format(min_lunas)}</div>
                         </div>
-                        <div className='w-full flex flex-row gap-2 border-b pb-1'>
-                            <div className='basis-1/2 text-left'>Sisa Minimum Pembayaran DP</div>
-                            <div className='basis-1/2 text-right'>{Rupiah.format(min_dp)}</div>
+                        <div className='w-full flex flex-row gap-2  border-b pb-1'>
+                            <div className='basis-1/2 text-left font-medium'>Sisa Minimum Pembayaran DP</div>
+                            <div className='basis-1/2 text-right  text-red-600 font-semibold'>{Rupiah.format(min_dp)}</div>
                         </div>
                     </div>
 

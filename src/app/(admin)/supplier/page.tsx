@@ -145,7 +145,7 @@ export default function Supplier() {
 
   return (
     <div>
-      <div className="font-bold text-4xl">
+      <div className="font-bold text-2xl">
         Supplier
       </div>
       <div className="flex flex-nowrap mt-4">

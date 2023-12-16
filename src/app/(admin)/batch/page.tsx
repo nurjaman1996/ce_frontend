@@ -147,37 +147,37 @@ export default function Batch() {
         return (
             <main className="">
                 <div className="flex flex-nowrap mt-4">
-                    <div className="font-bold text-4xl">
+                    <div className="font-bold text-2xl">
                         Batch
                     </div>
                 </div>
 
                 {/* {JSON.stringify(dataBatch.result)} */}
 
-                <div className='flex flex-row mt-4 gap-8  text-white'>
-                    <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900'>
-                        <div className='text-xl font-semibold py-4 px-5'>
+                <div className='flex flex-row mt-4 gap-8  text-black'>
+                    <div className='basis-1/2 h-[110px] bg-white border border-gray-300 rounded-xl'>
+                        <div className='text-lg font-semibold py-4 px-5'>
                             Total Batch
                         </div>
                         <div className='flex flex-row text-left px-5'>
-                            <div className='basis-1/2 text-4xl font-semibold'>
+                            <div className='basis-1/2 text-2xl font-semibold'>
                                 {Numbering.format(dataBatch.result.total_batch)}
                             </div>
-                            <div className=' basis-1/2 flex justify-end'>
-                                <Icon.ShoppingCart size={45} color="#ffffff" />
+                            <div className=' basis-1/2 flex justify-end -mt-2'>
+                                <Icon.Layers3 size={45} color="#000000" />
                             </div>
                         </div>
                     </div>
-                    <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900'>
-                        <div className='text-xl font-semibold py-4 px-5'>
+                    <div className='basis-1/2 h-[110px] bg-white border border-gray-300 rounded-xl'>
+                        <div className='text-lg font-semibold py-4 px-5'>
                             Capital Amount Batch
                         </div>
                         <div className='flex flex-row text-left px-5'>
-                            <div className='basis-1/2 text-4xl font-semibold'>
+                            <div className='basis-1/2 text-2xl font-semibold'>
                                 {Rupiah.format(dataBatch.result.amount_batch)}
                             </div>
-                            <div className=' basis-1/2 flex justify-end'>
-                                <Icon.DollarSign size={45} color="#ffffff" />
+                            <div className=' basis-1/2 flex justify-end -mt-2'>
+                                <Icon.DollarSign size={45} color="#000000" />
                             </div>
                         </div>
                     </div>

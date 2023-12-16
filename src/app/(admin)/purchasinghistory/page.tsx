@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { Badge } from "@/components/ui/badge"
 import * as Icon from "lucide-react"
 import { Input } from "@/components/ui/input"
+import { BeakerIcon, ClipboardDocumentIcon } from '@heroicons/react/24/solid'
+
 import {
   Table,
   TableBody,
@@ -213,64 +215,69 @@ export default function PurchasingHistory() {
     return (
       <main className="">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl">
+          <div className="font-bold text-2xl">
             Purchasing History
           </div>
         </div>
 
-        <div className='flex flex-row mt-4 gap-8  text-white'>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 rounded-xl'>
-            <div className='text-xl font-semibold py-5 px-5'>
+        <div className='flex flex-row mt-4 gap-4  text-black'>
+
+          <div className='basis-1/4 bg-white border border-gray-300 h-[100px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Total Transaction History
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
                 {Numbering.format(dataPurchasing.result.total_transaksi)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.ShoppingCart size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.BarChart4 className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 rounded-xl'>
-            <div className='text-xl font-semibold py-5 px-5'>
+
+          <div className='basis-1/4 bg-white border border-gray-300 h-[100px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Article
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
                 {Numbering.format(dataPurchasing.result.total_artikel)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.BoxIcon size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.BarChart4 className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 rounded-xl'>
-            <div className='text-xl font-semibold py-5 px-5'>
+
+          <div className='basis-1/4 bg-white border border-gray-300 h-[100px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Total Qty
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
                 {Numbering.format(dataPurchasing.result.total_qty)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.Boxes size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.BarChart4 className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
-          <div className='basis-1/2 border-2 border-black-500 h-[125px] bg-gray-900 rounded-xl'>
-            <div className='text-xl font-semibold py-5 px-5'>
+
+          <div className='basis-1/4 bg-white border border-gray-300 h-[100px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Capital Amount
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
                 {Rupiah.format(dataPurchasing.result.capital_amount)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.DollarSign size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.BarChart4 className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
+
         </div>
 
         {/* {JSON.stringify(dataPurchasing)} */}

@@ -28,7 +28,7 @@ export default function DashboardLayout({
         <div className="border-r">
           <Sidebar />
         </div>
-        <div className='grow h-full overflow-x-hidden overflow-y-auto bg-gray-50 p-5'>
+        <div className='grow h-full overflow-x-hidden overflow-y-auto bg-[#F4F4F4] p-5'>
           {children}
         </div>
       </div>

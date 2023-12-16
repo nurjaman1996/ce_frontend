@@ -819,9 +819,13 @@ export default function Order() {
                 <div className='grid md:grid-cols-5 lg:grid-cols-5 gap-2 pb-0 h-full overflow-y-auto scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-sm'>
                   {produk}
                 </div>
+
               </div>
 
-              <div className='border rounded-md p-2 flex flex-col w-[40%] h-[652px]'>
+
+
+
+              <div className='border rounded-md p-2 flex flex-col w-[40%] h-[870px]'>
 
                 <div className='grow overflow-y-auto scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-sm'>
                   {rincian}
@@ -867,7 +871,8 @@ export default function Order() {
                   </div>
                 </div>
 
-                {dataOngkir.length > 0 ?
+
+                {/* {dataOngkir.length > 0 ?
                   <RadioGroup className="grid grid-cols-4 text-center mt-2"
                     onValueChange={(e) => {
                       setSelectongkir(e)
@@ -876,7 +881,7 @@ export default function Order() {
                     {dataOngkir.map((data: any, index: number) => {
                       return (
                         <div key={index} className="p-2 rounded-md border">
-                          <div className="border-b pb-2 text-xs ">
+                          <div className="border-b pb-2 text-[10px] font-bold">
                             {data.name}
                           </div>
                           {data.costs.map((data_cost: any, indexs: number) => {
@@ -884,7 +889,7 @@ export default function Order() {
                               <div key={indexs}>
                                 <RadioGroupItem className="hidden" value={`${data_cost.cost[0].value}#${data.name}`} id={`${data.name}${data_cost.service}`} />
                                 <Label
-                                  className={`${Selectongkir === data_cost.cost[0].value + "#" + data.name ? "border-blue-500" : ""} flex items-center space-x-2 my-2 p-2 border rounded-md cursor-pointer`} htmlFor={`${data.name}${data_cost.service}`}>{data_cost.service} : {Rupiah.format(data_cost.cost[0].value)}</Label>
+                                  className={`${Selectongkir === data_cost.cost[0].value + "#" + data.name ? "border-lime-600 bg-lime-300" : ""} flex items-center space-x-2 my-2 p-2 border rounded-md cursor-pointer text-[10px] text-center`} htmlFor={`${data.name}${data_cost.service}`}>{data_cost.service} : {Rupiah.format(data_cost.cost[0].value)}</Label>
                               </div>
                             )
                           })}
@@ -894,7 +899,7 @@ export default function Order() {
                   </RadioGroup>
                   :
                   null
-                }
+                } */}
 
                 <div className="mt-2 text-right">
                   {(function () {
@@ -946,6 +951,36 @@ export default function Order() {
 
 
 
+            </div>
+            <div className='flex flex-col gap-2 p-2 rounded-md h-[200px] w-[59.5%] border -mt-60'>
+              {dataOngkir.length > 0 ?
+                <RadioGroup className="grid grid-cols-4 text-center mt-2"
+                  onValueChange={(e) => {
+                    setSelectongkir(e)
+                  }}
+                >
+                  {dataOngkir.map((data: any, index: number) => {
+                    return (
+                      <div key={index} className="p-2 rounded-md border">
+                        <div className="border-b pb-2 text-[10px] font-bold">
+                          {data.name}
+                        </div>
+                        {data.costs.map((data_cost: any, indexs: number) => {
+                          return (
+                            <div key={indexs}>
+                              <RadioGroupItem className="hidden" value={`${data_cost.cost[0].value}#${data.name}`} id={`${data.name}${data_cost.service}`} />
+                              <Label
+                                className={`${Selectongkir === data_cost.cost[0].value + "#" + data.name ? "border-lime-600 bg-lime-300" : ""} flex items-center space-x-2 my-2 p-2 border rounded-md cursor-pointer text-[10px] text-center`} htmlFor={`${data.name}${data_cost.service}`}>{data_cost.service} : {Rupiah.format(data_cost.cost[0].value)}</Label>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )
+                  })}
+                </RadioGroup>
+                :
+                null
+              }
             </div>
 
 
