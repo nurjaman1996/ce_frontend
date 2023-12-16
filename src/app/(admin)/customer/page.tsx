@@ -28,7 +28,19 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Textarea } from "@/components/ui/textarea"
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 import axios from 'axios'
+
+import { getdatakecamatan, getdatakota, getProvinsi } from "../../../helpers/getOngkir";
 
 export default function Customer() {
 
@@ -61,6 +73,66 @@ export default function Customer() {
     loadCustomer()
   }, [])
 
+  const [provinsiLoading, setprovinsiLoading]: any = useState(true);
+  const [kotaLoading, setkotaLoading]: any = useState(true);
+  const [kecamatanLoading, setkecamatanLoading]: any = useState(true);
+
+  const [dataProvinsi, setdataProvinsi]: any = useState([]);
+  const [dataKota, setdataKota]: any = useState([]);
+  const [dataKecamatan, setdataKecamatan]: any = useState([]);
+
+  async function openAddCustomer() {
+    setv_customer("")
+    setv_hp("")
+    setv_alamat("")
+    setv_provinsi("")
+    setv_kota("")
+    setv_kecamatan("")
+    setv_kodepos("")
+    setopen(true)
+    getProv()
+  }
+
+  async function getProv() {
+    setprovinsiLoading(true)
+    setkotaLoading(true)
+    setkecamatanLoading(true)
+    setdataProvinsi([])
+    setdataKota([])
+    setdataKecamatan([])
+
+    const data = await getProvinsi()
+
+    if (data) {
+      setdataProvinsi(data)
+      setprovinsiLoading(false)
+    }
+  }
+
+  async function getkota(province: any) {
+    setkotaLoading(true)
+    setkecamatanLoading(true)
+    setv_kota("")
+    setv_kecamatan("")
+    const data = await getdatakota(province)
+
+    if (data) {
+      setdataKota(data)
+      setkotaLoading(false)
+    }
+  }
+
+  async function getKecamatan(city: any) {
+    setv_kecamatan("")
+    setkecamatanLoading(true)
+    const data = await getdatakecamatan(city)
+
+    if (data) {
+      setdataKecamatan(data)
+      setkecamatanLoading(false)
+    }
+  }
+
   const [open, setopen]: any = useState(false);
   const [v_customer, setv_customer]: any = useState('');
   const [v_hp, setv_hp]: any = useState('');
@@ -68,18 +140,20 @@ export default function Customer() {
   const [v_provinsi, setv_provinsi]: any = useState('');
   const [v_kota, setv_kota]: any = useState('');
   const [v_kecamatan, setv_kecamatan]: any = useState('');
+  const [v_kelurahan, setv_kelurahan]: any = useState('');
   const [v_kodepos, setv_kodepos]: any = useState('');
 
   async function saveCustomer() {
-    if (v_customer === "" || v_hp === "" || v_alamat === "" || v_provinsi === "" || v_kecamatan === "" || v_kota === "" || v_kodepos === "") {
+    if (v_customer === "" || v_hp === "" || v_alamat === "" || v_provinsi === "" || v_kecamatan === "" || v_kota === "" || v_kelurahan === "" || v_kodepos === "") {
       alert("Mohon lengkapi Formulir")
     } else {
       // console.log(v_customer)
       // console.log(v_hp)
       // console.log(v_alamat)
-      // console.log(v_kel)
-      // console.log(v_kec)
+      // console.log(v_provinsi)
       // console.log(v_kota)
+      // console.log(v_kecamatan)
+      // console.log(v_kelurahan)
       // console.log(v_kodepos)
 
       await axios({
@@ -92,6 +166,7 @@ export default function Customer() {
           provinsi: v_provinsi,
           kota: v_kota,
           kecamatan: v_kecamatan,
+          kelurahan: v_kelurahan,
           kodepos: v_kodepos,
         }
       })
@@ -103,6 +178,7 @@ export default function Customer() {
           setv_provinsi("")
           setv_kota("")
           setv_kecamatan("")
+          setv_kelurahan("")
           setv_kodepos("")
           setopen(false)
         })
@@ -118,9 +194,10 @@ export default function Customer() {
   const [e_customer, sete_customer]: any = useState('');
   const [e_hp, sete_hp]: any = useState('');
   const [e_alamat, sete_alamat]: any = useState('');
-  const [e_kel, sete_kel]: any = useState('');
-  const [e_kec, sete_kec]: any = useState('');
+  const [e_provinsi, sete_provinsi]: any = useState('');
   const [e_kota, sete_kota]: any = useState('');
+  const [e_kecamatan, sete_kecamatan]: any = useState('');
+  const [e_kelurahan, sete_kelurahan]: any = useState('');
   const [e_kodepos, sete_kodepos]: any = useState('');
 
   async function editCustomer() {
@@ -128,9 +205,10 @@ export default function Customer() {
     // console.log(e_customer)
     // console.log(e_hp)
     // console.log(e_alamat)
-    // console.log(e_kel)
-    // console.log(e_kec)
+    // console.log(e_provinsi)
     // console.log(e_kota)
+    // console.log(e_kecamatan)
+    // console.log(e_kelurahan)
     // console.log(e_kodepos)
 
     await axios({
@@ -141,10 +219,11 @@ export default function Customer() {
         customer: e_customer,
         hp: e_hp,
         alamat: e_alamat,
-        kel: e_kel,
-        kec: e_kec,
+        provinsi: e_provinsi,
         kota: e_kota,
-        kodepos: e_kodepos
+        kecamatan: e_kecamatan,
+        kelurahan: e_kelurahan,
+        kodepos: e_kodepos,
       }
     })
       .then(function (response) {
@@ -153,9 +232,10 @@ export default function Customer() {
         sete_customer("")
         sete_hp("")
         sete_alamat("")
-        sete_kel("")
-        sete_kec("")
+        sete_provinsi("")
+        sete_kecamatan("")
         sete_kota("")
+        sete_kelurahan("")
         sete_kodepos("")
         setopenEdit(false)
       })
@@ -165,7 +245,7 @@ export default function Customer() {
   }
 
   async function deleteCustomer(id_cust: any) {
-    console.log(id_cust)
+    // console.log(id_cust)
 
     await axios({
       method: 'post',
@@ -202,9 +282,7 @@ export default function Customer() {
           </div>
           <div className="absolute right-5">
             <AlertDialog open={open} onOpenChange={setopen}>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline" className='bg-gray-900 text-white font-bold hover:bg-gray-200'>Add New</Button>
-              </AlertDialogTrigger>
+              <Button variant="outline" className='bg-gray-900 text-white font-bold hover:bg-gray-200' onClick={() => { openAddCustomer() }}>Add New</Button>
               <AlertDialogContent className='w-[600px]'>
                 <AlertDialogHeader className='border-b pb-4'>
                   <AlertDialogTitle >Add New Customer</AlertDialogTitle>
@@ -214,7 +292,7 @@ export default function Customer() {
                     Customer :
                   </div>
                   <div className='basis-3/4'>
-                    <Input type="text" placeholder="Supplier.." value={v_customer} onChange={(e) => { setv_customer(e.currentTarget.value) }} />
+                    <Input type="text" placeholder="Customer.." value={v_customer} onChange={(e) => { setv_customer(e.currentTarget.value) }} />
                   </div>
                 </div>
                 <div className='flex flex-row text-center mt-2 items-center'>
@@ -238,7 +316,20 @@ export default function Customer() {
                     Provinsi :
                   </div>
                   <div className='basis-3/4'>
-                    <Input type="text" placeholder="Provinsi.." value={v_provinsi} onChange={(e) => { setv_provinsi(e.currentTarget.value) }} />
+                    <Select value={v_provinsi} onValueChange={(e) => { setv_provinsi(e), getkota(e.split("#")[0]) }} disabled={provinsiLoading}>
+                      <SelectTrigger className="w-full">
+                        {provinsiLoading ? <SelectValue placeholder="Loading Data.." /> : <SelectValue placeholder="Pilih Provinsi.." />}
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {dataProvinsi.map((data_provinsi: any, index: number) => {
+                            return (
+                              <SelectItem key={index} value={data_provinsi.province_id + "#" + data_provinsi.province}>{data_provinsi.province}</SelectItem>
+                            )
+                          })}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className='flex flex-row text-center mt-2 items-center'>
@@ -246,7 +337,20 @@ export default function Customer() {
                     Kota :
                   </div>
                   <div className='basis-3/4'>
-                    <Input type="text" placeholder="Kota.." value={v_kota} onChange={(e) => { setv_kota(e.currentTarget.value) }} />
+                    <Select value={v_kota} onValueChange={(e) => { setv_kota(e), getKecamatan(e.split("#")[0]) }} disabled={kotaLoading}>
+                      <SelectTrigger className="w-full">
+                        {kotaLoading ? <SelectValue placeholder="Loading Data.." /> : <SelectValue placeholder="Pilih Kota.." />}
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {dataKota.map((data_kota: any, index: number) => {
+                            return (
+                              <SelectItem key={index} value={data_kota.city_id + "#" + data_kota.type + " " + data_kota.city_name}>{data_kota.type} {data_kota.city_name}</SelectItem>
+                            )
+                          })}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className='flex flex-row text-center mt-2 items-center'>
@@ -254,7 +358,28 @@ export default function Customer() {
                     Kecamatan :
                   </div>
                   <div className='basis-3/4'>
-                    <Input type="text" placeholder="Kecamatan.." value={v_kecamatan} onChange={(e) => { setv_kecamatan(e.currentTarget.value) }} />
+                    <Select value={v_kecamatan} onValueChange={(e) => { setv_kecamatan(e) }} disabled={kecamatanLoading}>
+                      <SelectTrigger className="w-full">
+                        {kecamatanLoading ? <SelectValue placeholder="Loading Data.." /> : <SelectValue placeholder="Pilih Kecamatan.." />}
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {dataKecamatan.map((data_kecamatan: any, index: number) => {
+                            return (
+                              <SelectItem key={index} value={data_kecamatan.subdistrict_id + "#" + data_kecamatan.subdistrict_name}>{data_kecamatan.subdistrict_name}</SelectItem>
+                            )
+                          })}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className='flex flex-row text-center mt-2 items-center'>
+                  <div className='basis-1/4 font-bold text-left'>
+                    Kelurahan :
+                  </div>
+                  <div className='basis-3/4'>
+                    <Input type="text" placeholder="Kelurahan.." value={v_kelurahan} onChange={(e) => { setv_kelurahan(e.currentTarget.value) }} />
                   </div>
                 </div>
                 <div className='flex flex-row text-center mt-2 items-center'>
@@ -288,6 +413,7 @@ export default function Customer() {
                 <TableHead className="bg-gray-900 border text-center font-bold text-white">Provinsi</TableHead>
                 <TableHead className="bg-gray-900 border text-center font-bold text-white">Kota</TableHead>
                 <TableHead className="bg-gray-900 border text-center font-bold text-white">Kecamatan</TableHead>
+                <TableHead className="bg-gray-900 border text-center font-bold text-white">Kelurahan</TableHead>
                 <TableHead className="bg-gray-900 border text-center font-bold text-white">Kode Pos</TableHead>
                 <TableHead className="bg-gray-900 border w-[150px] text-center font-bold text-white">Act</TableHead>
               </TableRow>
@@ -303,6 +429,7 @@ export default function Customer() {
                   <TableCell className="border text-center">{dataisi.province}</TableCell>
                   <TableCell className="border text-center">{dataisi.city_name}</TableCell>
                   <TableCell className="border text-center">{dataisi.subdistrict_name}</TableCell>
+                  <TableCell className="border text-center">{dataisi.kelurahan}</TableCell>
                   <TableCell className="border text-center">{dataisi.kodepos}</TableCell>
                   <TableCell className="border w-[150px]">
                     <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
@@ -314,10 +441,12 @@ export default function Customer() {
                             sete_customer(dataisi.customer)
                             sete_hp(dataisi.hp)
                             sete_alamat(dataisi.alamat)
-                            sete_kel(dataisi.kel)
-                            sete_kec(dataisi.kec)
-                            sete_kota(dataisi.kota)
+                            sete_provinsi(dataisi.province_id + "#" + dataisi.province)
+                            sete_kota(dataisi.city_id + "#" + dataisi.city_name)
+                            sete_kecamatan(dataisi.subdistrict_id + "#" + dataisi.subdistrict_name)
+                            sete_kelurahan(dataisi.kelurahan)
                             sete_kodepos(dataisi.kodepos)
+                            getProv()
                           }}>
                           <Icon.FileEdit color="#000000" /></Button>
                       </AlertDialogTrigger>
@@ -351,18 +480,23 @@ export default function Customer() {
                         </div>
                         <div className='flex flex-row text-center mt-2 items-center'>
                           <div className='basis-1/4 font-bold text-left'>
-                            Kelurahan :
+                            Provinsi :
                           </div>
                           <div className='basis-3/4'>
-                            <Input type="text" placeholder="Kelurahan.." value={e_kel} onChange={(e) => { sete_kel(e.currentTarget.value) }} />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Kecamatan :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" placeholder="Kecamatan.." value={e_kec} onChange={(e) => { sete_kec(e.currentTarget.value) }} />
+                            <Select value={e_provinsi} onValueChange={(e) => { sete_provinsi(e), getkota(e.split("#")[0]) }} disabled={provinsiLoading}>
+                              <SelectTrigger className="w-full">
+                                {provinsiLoading ? <SelectValue placeholder="Loading Data.." /> : <SelectValue placeholder="Pilih Provinsi.." />}
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  {dataProvinsi.map((data_provinsi: any, index: number) => {
+                                    return (
+                                      <SelectItem key={index} value={data_provinsi.province_id + "#" + data_provinsi.province}>{data_provinsi.province}</SelectItem>
+                                    )
+                                  })}
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
                           </div>
                         </div>
                         <div className='flex flex-row text-center mt-2 items-center'>
@@ -370,7 +504,55 @@ export default function Customer() {
                             Kota :
                           </div>
                           <div className='basis-3/4'>
-                            <Input type="text" placeholder="Kota.." value={e_kota} onChange={(e) => { sete_kota(e.currentTarget.value) }} />
+                            <Select value={e_kota} onValueChange={(e) => { sete_kota(e), getKecamatan(e.split("#")[0]) }} disabled={kotaLoading}>
+                              <SelectTrigger className="w-full">
+                                {kotaLoading ? <SelectValue placeholder="Loading Data.." /> : <SelectValue placeholder="Pilih Kota.." />}
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  {
+                                    dataKota.map((data_kota: any, index: number) => {
+                                      return (
+                                        <SelectItem key={index} value={data_kota.city_id + "#" + data_kota.type + " " + data_kota.city_name}>{data_kota.type} {data_kota.city_name}</SelectItem>
+                                      )
+                                    })
+                                  }
+                                  {kotaLoading ? <SelectItem value={e_kota}>{e_kota.split("#")[1]}</SelectItem> : null}
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                        <div className='flex flex-row text-center mt-2 items-center'>
+                          <div className='basis-1/4 font-bold text-left'>
+                            Kecamatan :
+                          </div>
+                          <div className='basis-3/4'>
+                            <Select value={e_kecamatan} onValueChange={(e) => { sete_kecamatan(e) }} disabled={kecamatanLoading}>
+                              <SelectTrigger className="w-full">
+                                {kecamatanLoading ? <SelectValue placeholder="Loading Data.." /> : <SelectValue placeholder="Pilih Kecamatan.." />}
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  {
+                                    dataKecamatan.map((data_kecamatan: any, index: number) => {
+                                      return (
+                                        <SelectItem key={index} value={data_kecamatan.subdistrict_id + "#" + data_kecamatan.subdistrict_name}>{data_kecamatan.subdistrict_name}</SelectItem>
+                                      )
+                                    })
+                                  }
+                                  {kecamatanLoading ? <SelectItem value={e_kecamatan}>{e_kecamatan.split("#")[1]}</SelectItem> : null}
+                                </SelectGroup>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                        <div className='flex flex-row text-center mt-2 items-center'>
+                          <div className='basis-1/4 font-bold text-left'>
+                            Kelurahan :
+                          </div>
+                          <div className='basis-3/4'>
+                            <Input type="text" placeholder="Kelurahan.." value={e_kelurahan} onChange={(e) => { sete_kelurahan(e.currentTarget.value) }} />
                           </div>
                         </div>
                         <div className='flex flex-row text-center mt-2 items-center'>

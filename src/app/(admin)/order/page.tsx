@@ -56,7 +56,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 
 import { uid } from 'uid';
-import { getOngkirApi } from "./getOngkir";
+import { getOngkirApi } from "../../../helpers/getOngkir";
 
 export default function Order() {
   const [isLoading, setisLoading]: any = useState(true)
@@ -515,6 +515,7 @@ export default function Order() {
     // console.log(valueCustomer)
     // console.log(valueBatch)
     // console.log(rowsData)
+    // console.log(Selectongkir)
 
     if (valueCustomer === "" || valueBatch === "") {
       alert("Mohon Lengkapi Form")
@@ -538,6 +539,7 @@ export default function Order() {
           }
         })
           .then(function (response) {
+            // console.log(response.data)
             window.location.href = "/order"
           })
           .catch(function (error) {
