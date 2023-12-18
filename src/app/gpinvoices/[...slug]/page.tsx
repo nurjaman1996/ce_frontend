@@ -177,7 +177,7 @@ export default function GroupInvoicesPage() {
                             <span className='font-bold text-base'>Billed to</span><br></br>
                             <span className='font-medium text-base'>{dataCustomer.customer}</span><br></br>
                             <span className='font-normal text-xs'>{dataCustomer.hp}</span><br></br>
-                            <span className='font-normal text-xs'>{dataCustomer.alamat}, {dataCustomer.kota}, {dataCustomer.kel}, {dataCustomer.kec}, {dataCustomer.kodepos}</span><br></br>
+                            <span className='font-normal text-xs'>{dataCustomer.alamat}, {dataCustomer.city_name}, {dataCustomer.subdistrict_name}, {dataCustomer.kelurahan}, {dataCustomer.kodepos}</span><br></br>
                         </div>
                     </div>
 

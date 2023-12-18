@@ -82,7 +82,7 @@ export default function PurchaseOrder() {
   const handleValueChange = (newValue: any) => {
     if (newValue.startDate != null && newValue.endDate != null) {
       setValue(newValue);
-      loaddataOrders(newValue.startDate, newValue.endDate, valueBatch, searchInvoices)
+      loaddataOrders(newValue.startDate, newValue.endDate, valueBatch, searchInvoices, paymentQuerys)
     }
   }
 
@@ -90,7 +90,9 @@ export default function PurchaseOrder() {
   const [dataOrders, setdataOrders]: any = useState([])
   const [dataOrdersdetails, setdataOrdersdetails]: any = useState([])
 
-  async function loaddataOrders(start: any, end: any, batch: any, query: any) {
+  const [paymentQuerys, setpaymentQuerys]: any = useState("")
+
+  async function loaddataOrders(start: any, end: any, batch: any, query: any, payment: any) {
     setisLoading(true)
     await axios({
       method: 'post',
@@ -99,18 +101,20 @@ export default function PurchaseOrder() {
         id_batch: batch,
         start: format(new Date(start), "yyyy-MM-dd"),
         end: format(new Date(end), "yyyy-MM-dd"),
+        payment: payment,
         search_query: query
       }
     })
       .then(function (response) {
-        setdataOrders(response.data)
-        setdataOrdersdetails(response.data.result)
+        setdataOrders(response.data.result)
+        setdataOrdersdetails(response.data.result.data)
         setisLoading(false)
       })
       .catch(function (error) {
         console.log(error);
       })
   }
+
 
   async function loadDataBatch() {
     await axios({
@@ -121,9 +125,9 @@ export default function PurchaseOrder() {
         if (valueBatch === "") {
           setdataBatch(response.data.data)
           setValueBatch(response.data.data[0].id_batch)
-          loaddataOrders(value.startDate, value.endDate, response.data.data[0].id_batch, searchInvoices)
+          loaddataOrders(value.startDate, value.endDate, response.data.data[0].id_batch, searchInvoices, paymentQuerys)
         } else {
-          loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices)
+          loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices, paymentQuerys)
         }
       })
       .catch(function (error) {
@@ -159,7 +163,7 @@ export default function PurchaseOrder() {
       }
     })
       .then(function (response) {
-        loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices)
+        loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices, paymentQuerys)
         setopenEditKurir(false)
       })
       .catch(function (error) {
@@ -178,7 +182,61 @@ export default function PurchaseOrder() {
       }
     })
       .then(function (response) {
-        loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices)
+        loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices, paymentQuerys)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+
+  const [dataCustBatch, setdataCustBatch]: any = useState([])
+
+  async function getCustomerBatch() {
+    setum_id_cust()
+    setum_jasa_kirim()
+    setum_resi("")
+
+    await axios({
+      method: 'post',
+      url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/getcustomerbatch`,
+      data: {
+        id_batch: valueBatch
+      }
+    })
+      .then(function (response) {
+        // console.log(response.data.result)
+        setdataCustBatch(response.data.result)
+        setopenMassEditKurir(true)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+
+  const [um_id_cust, setum_id_cust]: any = useState()
+  const [um_jasa_kirim, setum_jasa_kirim]: any = useState()
+  const [um_resi, setum_resi]: any = useState("")
+
+  async function updateMassalResi() {
+    // console.log(valueBatch)
+    // console.log(um_id_cust)
+    // console.log(um_jasa_kirim)
+    // console.log(um_resi)
+
+    await axios({
+      method: 'post',
+      url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/updateresimassal`,
+      data: {
+        id_batch: valueBatch,
+        id_cust: um_id_cust,
+        jasa_kirim: um_jasa_kirim,
+        resi: um_resi
+      }
+    })
+      .then(function (response) {
+        alert(response.data.result)
+        loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices, paymentQuerys)
+        setopenMassEditKurir(false)
       })
       .catch(function (error) {
         console.log(error);
@@ -201,26 +259,26 @@ export default function PurchaseOrder() {
         </div>
 
         <div className='flex flex-row mt-4 gap-4 text-black'>
-          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/5 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
             <div className='text-md font-semibold py-4 px-5'>
-              Sales Summary
+              Invoices Summary
             </div>
             <div className='flex flex-row text-left'>
               <div className='basis-full text-lg font-semibold py-0 px-5'>
-                Rp 15.232.000
+                {Numbering.format(dataOrders.invoices)}
               </div>
               <div className=' basis-auto mt-1 mx-5'>
                 <ClipboardDocumentIcon className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
-          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/5 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
             <div className='text-md font-semibold py-4 px-5'>
               Gross Sales
             </div>
             <div className='flex flex-row text-left'>
               <div className='basis-full text-lg font-semibold py-0 px-5'>
-                Rp 15.232.000
+                {Rupiah.format(dataOrders.gross_sales)}
               </div>
               <div className=' basis-auto mt-1 mx-5'>
                 <Icon.PercentSquare className="h-6 w-6 text-black text-right" />
@@ -228,26 +286,40 @@ export default function PurchaseOrder() {
             </div>
           </div>
 
-          <div className='basis-1/4 bg-lime-300 border border-gray-300 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/5 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
+              Ongkir
+            </div>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 px-5'>
+                {Rupiah.format(dataOrders.ongkir)}
+              </div>
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.PercentSquare className="h-6 w-6 text-black text-right" />
+              </div>
+            </div>
+          </div>
+
+          <div className='basis-1/5 bg-lime-300 border border-gray-300 h-[110px] rounded-lg shadow-md'>
             <div className='text-md font-semibold py-4 px-5'>
               Amount Paid
             </div>
             <div className='flex flex-row text-left'>
               <div className='basis-full text-lg font-semibold py-0 px-5'>
-                Rp 15.232.000
+                {Rupiah.format(dataOrders.amount_paid)}
               </div>
               <div className=' basis-auto mt-1 mx-5'>
                 <Icon.DollarSign className="h-6 w-6 text-black text-right" />
               </div>
             </div>
           </div>
-          <div className='basis-1/4 bg-red-300 border border-gray-300 h-[110px] rounded-lg shadow-md'>
+          <div className='basis-1/5 bg-red-300 border border-gray-300 h-[110px] rounded-lg shadow-md'>
             <div className='text-md font-semibold py-4 px-5'>
               Amount Unpaid
             </div>
             <div className='flex flex-row text-left'>
               <div className='basis-full text-lg font-semibold py-0 px-5'>
-                Rp 15.232.000
+                {Rupiah.format(dataOrders.amount_unpaid)}
               </div>
               <div className=' basis-auto mt-1 mx-5'>
                 <Icon.DollarSign className="h-6 w-6 text-black text-right" />
@@ -257,13 +329,12 @@ export default function PurchaseOrder() {
         </div>
 
         <div className="flex flex-nowrap mt-4">
-          {/*  */}
-          <div className="font-bold text-4xl flex flex-row">
+          <div className="font-bold text-4xl flex flex-row mr-4">
             <Input type="text" className='w-[400px] shadow-md rounded-r-none' placeholder="Search Orders.." value={searchInvoices}
               onChange={(e) => {
                 setsearchInvoices(e.currentTarget.value)
                 if (e.currentTarget.value === "") {
-                  loaddataOrders(value.startDate, value.endDate, valueBatch, "")
+                  loaddataOrders(value.startDate, value.endDate, valueBatch, "", paymentQuerys)
                 }
               }}
             />
@@ -272,11 +343,39 @@ export default function PurchaseOrder() {
               role="combobox"
               className="w-[auto] rounded-l-none shadow-md"
               onClick={() => {
-                loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices)
+                loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices, paymentQuerys)
 
               }}
             >
               <Icon.Search />
+            </Button>
+          </div>
+          <div className='w-[450px] text-left flex flex-row'>
+            <Select value={paymentQuerys} onValueChange={(e) => {
+              setpaymentQuerys(e)
+              loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices, e)
+            }}>
+              <SelectTrigger className="w-full rounded-r-none outline-none focus:outline-none">
+                <SelectValue placeholder="Filter Payment" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="belum_bayar">Belum Bayar</SelectItem>
+                  <SelectItem value="dp">Sudah DP 50%</SelectItem>
+                  <SelectItem value="lunas">Sudah Pelunasan</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Button
+              variant="default"
+              role="combobox"
+              className="w-[auto] rounded-l-none shadow-md"
+              onClick={() => {
+                setpaymentQuerys("")
+                loaddataOrders(value.startDate, value.endDate, valueBatch, searchInvoices, "")
+              }}
+            >
+              <Icon.X />
             </Button>
           </div>
           <div className="ml-auto w-auto mr-4">
@@ -305,7 +404,7 @@ export default function PurchaseOrder() {
                         key={batch.id}
                         value={batch.id_batch}
                         onSelect={(currentValue) => {
-                          loaddataOrders(value.startDate, value.endDate, currentValue.toUpperCase(), searchInvoices)
+                          loaddataOrders(value.startDate, value.endDate, currentValue.toUpperCase(), searchInvoices, paymentQuerys)
                           setValueBatch(currentValue.toUpperCase() === valueBatch ? "" : currentValue.toUpperCase())
                           setOpen(false)
                         }}
@@ -366,16 +465,18 @@ export default function PurchaseOrder() {
         </div>
 
         <div className='flex flex-row mt-4'>
-          <div className='basis-full text-left'>
-            <Button className='bg-lime-300 text-black font-semibold mr-2'>Mass Update Payment <Icon.DollarSign className='ml-2' size={18} color="#000000" /></Button>
+          <div className='basis-full text-right'>
+            {/* <Button className='bg-lime-300 text-black font-semibold mr-2'>Mass Update Payment <Icon.DollarSign className='ml-2' size={18} color="#000000" /></Button> */}
 
             <AlertDialog open={openMassEditKurir} onOpenChange={setopenMassEditKurir}>
-              <AlertDialogTrigger asChild>
-
-                <Button className='bg-gray-300 text-black font-semibold'>Mass Update Delivery <Icon.PackageCheck className='ml-2' size={18} color="#000000" /></Button>
-
-
-              </AlertDialogTrigger>
+              <Button className='bg-gray-300 text-black font-semibold'
+                onClick={() => {
+                  getCustomerBatch()
+                }}
+              >
+                Mass Update Delivery
+                <Icon.PackageCheck className='ml-2' size={18} color="#000000" />
+              </Button>
               <AlertDialogContent className='w-[600px]'>
                 <AlertDialogHeader className='border-b pb-4'>
                   <AlertDialogTitle >Mass Update Delivery Status</AlertDialogTitle>
@@ -384,37 +485,24 @@ export default function PurchaseOrder() {
                 <div className="flex flex-row items-center space-x-2">
                   <Label className='basis-1/3 text-md text-left'>Batch</Label>
                   <div className='grow'>
-                    <Select defaultValue="null">
-                      {/* <Select defaultValue="null" value={e_kurir} onValueChange={(e) => { sete_kurir(e) }}> */}
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Local Shipping" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="null">Select Batch...</SelectItem>
-                          <SelectItem value="BATCH-0003">BATCH-0003</SelectItem>
-                          <SelectItem value="BATCH-0002">BATCH-0002</SelectItem>
-                          <SelectItem value="BATCH-0001">BATCH-0001</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
+                    <Input type="text" placeholder="No Resi.." value={valueBatch} readOnly />
                   </div>
                 </div>
 
                 <div className="flex flex-row items-center space-x-2">
                   <Label className='basis-1/3 text-md text-left'>Customer</Label>
                   <div className='grow'>
-                    <Select defaultValue="null">
-                      {/* <Select defaultValue="null" value={e_kurir} onValueChange={(e) => { sete_kurir(e) }}> */}
+                    <Select value={um_id_cust} onValueChange={(e) => { setum_id_cust(e) }}>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Local Shipping" />
+                        <SelectValue placeholder="Pilih Customer.." />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem value="null">Select Customer...</SelectItem>
-                          <SelectItem value="CUST-0001">RICO</SelectItem>
-                          <SelectItem value="CUST-0002">FERNANDO</SelectItem>
-                          <SelectItem value="CUST-0003">NURJAMAN</SelectItem>
+                          {dataCustBatch.map((dataCust: any, index: number) => {
+                            return (
+                              <SelectItem key={index} value={dataCust.id_cust}>{dataCust.customer}</SelectItem>
+                            )
+                          })}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -424,19 +512,17 @@ export default function PurchaseOrder() {
                 <div className="flex flex-row items-center space-x-2">
                   <Label className='basis-1/3 text-md text-left'>Local Delivery</Label>
                   <div className='grow'>
-                    <Select defaultValue="null">
-                      {/* <Select defaultValue="null" value={e_kurir} onValueChange={(e) => { sete_kurir(e) }}> */}
+                    <Select value={um_jasa_kirim} onValueChange={(e) => { setum_jasa_kirim(e) }}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Local Shipping" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem value="null">Select Delivery Service...</SelectItem>
-                          <SelectItem value="JNE_REG">JNE REG</SelectItem>
-                          <SelectItem value="JNE_YES">JNE YES</SelectItem>
-                          <SelectItem value="J&T_REG">J&T REG</SelectItem>
-                          <SelectItem value="SICEPAT_REG">SICEPAT REG</SelectItem>
-                          <SelectItem value="SICEPAT_BEST">SICEPAT BEST</SelectItem>
+                          <SelectItem value="Jalur Nugraha Ekakurir (JNE)">Jalur Nugraha Ekakurir (JNE)</SelectItem>
+                          <SelectItem value="J&T Express">J&T Express</SelectItem>
+                          <SelectItem value="SiCepat Express">SiCepat Express</SelectItem>
+                          <SelectItem value="Wahana Prestasi Logistik">Wahana Prestasi Logistik</SelectItem>
+                          <SelectItem value="Lainnya">Lainnya</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -445,22 +531,19 @@ export default function PurchaseOrder() {
                 <div className="flex flex-row items-center space-x-2">
                   <Label className='basis-1/3 text-md text-left'>No Resi</Label>
                   <div className='grow'>
-                    <Input type="text" placeholder="No Resi.." />
-                    {/* <Input type="text" placeholder="No Resi.." value={e_resi} onChange={(e) => { sete_resi(e.currentTarget.value) }} /> */}
+                    <Input type="text" placeholder="No Resi.." value={um_resi} onChange={(e) => { setum_resi(e.currentTarget.value) }} />
                   </div>
                 </div>
                 <AlertDialogFooter>
                   <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
                   <Button onClick={() => {
-                    updateKurir()
+                    updateMassalResi()
                   }}>Update</Button>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
           </div>
         </div>
-
-
 
 
         {/* {JSON.stringify(dataOrders.result)} */}
@@ -594,12 +677,13 @@ export default function PurchaseOrder() {
                           </AlertDialogContent>
                         </AlertDialog> */}
 
-                        <AlertDialog open={openEditKurir} onOpenChange={setopenEditKurir}>
+                        {/* <AlertDialog open={openEditKurir} onOpenChange={setopenEditKurir}> */}
+                        <AlertDialog>
                           <AlertDialogTrigger asChild>
 
                             <Button disabled={dataisi.status_pesanan === "PROGRESS" ? false : true} className='bg-gray-600 mx-2 font-bold text-[10px] rounded-lg'
                               onClick={() => {
-                                setopenEditKurir(true)
+                                // setopenEditKurir(true)
                                 sete_id_invoice(dataisi.id_invoice)
                                 sete_kurir("")
                                 sete_resi("")

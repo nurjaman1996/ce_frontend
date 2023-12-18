@@ -809,21 +809,50 @@ export default function Order() {
             </div>
 
             <div className='flex gap-2'>
-              <div className='flex flex-col gap-2 p-2 rounded-md h-[652px] w-[60%] border '>
-                <div className='flex items-center border rounded-md bg-white'>
-                  <div className='pl-3 border-none '><Icon.Search className='h-5 w-5' /></div>
-                  <Input disabled={disabled_input} onChange={(e) => { setdata_produk_search(e.currentTarget.value) }} value={data_produk_search} className='border-none' type="text" placeholder="Cari Produk..." />
-                  <button onClick={() => setdata_produk_search("")} className={`${data_produk_search === "" ? "hidden" : ""} px-3 border-none bg-gray-100 h-full flex items-center`}><Icon.X className='h-5 w-5' /></button>
+              <div className="w-[60%] flex flex-col gap-2">
+                <div className='flex flex-col gap-2 p-2 rounded-md h-[652px] border'>
+                  <div className='flex items-center border rounded-md bg-white'>
+                    <div className='pl-3 border-none '><Icon.Search className='h-5 w-5' /></div>
+                    <Input disabled={disabled_input} onChange={(e) => { setdata_produk_search(e.currentTarget.value) }} value={data_produk_search} className='border-none' type="text" placeholder="Cari Produk..." />
+                    <button onClick={() => setdata_produk_search("")} className={`${data_produk_search === "" ? "hidden" : ""} px-3 border-none bg-gray-100 h-full flex items-center`}><Icon.X className='h-5 w-5' /></button>
+                  </div>
+
+                  <div className='grid md:grid-cols-5 lg:grid-cols-5 gap-2 pb-0 h-full overflow-y-auto scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-sm'>
+                    {produk}
+                  </div>
                 </div>
 
-                <div className='grid md:grid-cols-5 lg:grid-cols-5 gap-2 pb-0 h-full overflow-y-auto scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-300 scrollbar-thumb-rounded-sm'>
-                  {produk}
+                <div className='flex flex-col gap-2 p-2 rounded-md grow w-[100%] border'>
+                  {dataOngkir.length > 0 ?
+                    <RadioGroup className="grid grid-cols-4 text-center mt-2"
+                      onValueChange={(e) => {
+                        setSelectongkir(e)
+                      }}
+                    >
+                      {dataOngkir.map((data: any, index: number) => {
+                        return (
+                          <div key={index} className="p-2 rounded-md border">
+                            <div className="border-b pb-2 text-[10px] font-bold">
+                              {data.name}
+                            </div>
+                            {data.costs.map((data_cost: any, indexs: number) => {
+                              return (
+                                <div key={indexs}>
+                                  <RadioGroupItem className="hidden" value={`${data_cost.cost[0].value}#${data.name}`} id={`${data.name}${data_cost.service}`} />
+                                  <Label
+                                    className={`${Selectongkir === data_cost.cost[0].value + "#" + data.name ? "border-lime-600 bg-lime-300" : ""} flex items-center space-x-2 my-2 p-2 border rounded-md cursor-pointer text-[10px] text-center`} htmlFor={`${data.name}${data_cost.service}`}>{data_cost.service} : {Rupiah.format(data_cost.cost[0].value)}</Label>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        )
+                      })}
+                    </RadioGroup>
+                    :
+                    null
+                  }
                 </div>
-
               </div>
-
-
-
 
               <div className='border rounded-md p-2 flex flex-col w-[40%] h-[870px]'>
 
@@ -948,40 +977,8 @@ export default function Order() {
                 </div>
 
               </div>
-
-
-
             </div>
-            <div className='flex flex-col gap-2 p-2 rounded-md h-[200px] w-[59.5%] border -mt-60'>
-              {dataOngkir.length > 0 ?
-                <RadioGroup className="grid grid-cols-4 text-center mt-2"
-                  onValueChange={(e) => {
-                    setSelectongkir(e)
-                  }}
-                >
-                  {dataOngkir.map((data: any, index: number) => {
-                    return (
-                      <div key={index} className="p-2 rounded-md border">
-                        <div className="border-b pb-2 text-[10px] font-bold">
-                          {data.name}
-                        </div>
-                        {data.costs.map((data_cost: any, indexs: number) => {
-                          return (
-                            <div key={indexs}>
-                              <RadioGroupItem className="hidden" value={`${data_cost.cost[0].value}#${data.name}`} id={`${data.name}${data_cost.service}`} />
-                              <Label
-                                className={`${Selectongkir === data_cost.cost[0].value + "#" + data.name ? "border-lime-600 bg-lime-300" : ""} flex items-center space-x-2 my-2 p-2 border rounded-md cursor-pointer text-[10px] text-center`} htmlFor={`${data.name}${data_cost.service}`}>{data_cost.service} : {Rupiah.format(data_cost.cost[0].value)}</Label>
-                            </div>
-                          )
-                        })}
-                      </div>
-                    )
-                  })}
-                </RadioGroup>
-                :
-                null
-              }
-            </div>
+
 
 
           </CardContent>
