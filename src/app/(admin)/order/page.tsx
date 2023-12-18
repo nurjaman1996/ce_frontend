@@ -71,6 +71,24 @@ export default function Order() {
   const [dataBatch, setdataBatch]: any = useState([])
   const [valueBatch, setvalueBatch]: any = useState("")
 
+  const [openwarehouse, setopenwarehouse] = useState(false)
+  const [datawarehouse, setdatawarehouse]: any = useState([])
+  const [valuewarehouse, setvaluewarehouse]: any = useState("")
+
+  async function loadDatawarehouse() {
+    await axios({
+      method: 'get',
+      url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/warehouse`,
+    })
+      .then(function (response) {
+        setdatawarehouse(response.data.data)
+        setisLoading(false)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+
 
   async function loadDataCustomer() {
     await axios({
@@ -102,6 +120,7 @@ export default function Order() {
   useEffect(() => {
     loadDataBatch()
     loadDataCustomer()
+    loadDatawarehouse()
   }, [])
 
   const [data_produk, setdata_produk]: any = useState([])
@@ -490,13 +509,14 @@ export default function Order() {
   const [dataOngkir, setdataOngkir]: any = useState([]);
   const [loadingOngkir, setloadingOngkir]: any = useState(false);
   const [AlamatCustomer, setAlamatCustomer]: any = useState("");
+  const [Alamatwarehouse, setAlamatwarehouse]: any = useState("");
 
   async function getOngkir() {
-    if (AlamatCustomer === "" || weight === 0) {
+    if (Alamatwarehouse === "" || AlamatCustomer === "" || weight === 0) {
       alert("Mohon Pilih Customer dan Isi Keranjang belanja")
     } else {
       setloadingOngkir(true)
-      const data_ongkir = await getOngkirApi("344", AlamatCustomer.subdistrict_id, weight)
+      const data_ongkir = await getOngkirApi(Alamatwarehouse.subdistrict_id, AlamatCustomer.subdistrict_id, weight)
       setdataOngkir(data_ongkir)
       if (data_ongkir) {
         setloadingOngkir(false)
@@ -672,7 +692,7 @@ export default function Order() {
 
         <Card>
           <CardContent className='p-4 flex flex-col gap-5'>
-            <div className="w-full items-center gap-2 grid grid-cols-4">
+            <div className="w-full items-center gap-2 grid grid-cols-5">
               <div className="grid gap-2">
                 <Label><span className='text-red-500'>*</span> Date Order</Label>
                 <Popover>
@@ -744,6 +764,51 @@ export default function Order() {
                               )}
                             />
                             {dataCustomer.customer}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="grid gap-2">
+                <Label><span className='text-red-500'>*</span> Warehouse</Label>
+                <Popover open={openwarehouse} onOpenChange={setopenwarehouse}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openwarehouse}
+                      className="justify-between"
+                    >
+                      {valuewarehouse
+                        ? datawarehouse.find((datawarehouse: any) => datawarehouse.id_ware === valuewarehouse)?.warehouse
+                        : "Select Warehouse..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="p-0">
+                    <Command>
+                      <CommandInput placeholder="Search Warehouse..." />
+                      <CommandEmpty>No data warehouse found.</CommandEmpty>
+                      <CommandGroup className='overflow-auto scrollbar-none'>
+                        {datawarehouse.map((datawarehouse: any) => (
+                          <CommandItem
+                            key={datawarehouse.id_ware}
+                            onSelect={() => {
+                              setvaluewarehouse(datawarehouse.id_ware === valuewarehouse ? "" : datawarehouse.id_ware)
+                              setAlamatwarehouse(datawarehouse.id_ware === valuewarehouse ? "" : datawarehouse)
+                              setopenwarehouse(false)
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                valuewarehouse === datawarehouse.id_ware ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                            {datawarehouse.warehouse}
                           </CommandItem>
                         ))}
                       </CommandGroup>
