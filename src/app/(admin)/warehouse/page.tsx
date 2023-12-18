@@ -42,18 +42,18 @@ import axios from 'axios'
 
 import { getdatakecamatan, getdatakota, getProvinsi } from "../../../helpers/getOngkir";
 
-export default function Customer() {
+export default function warehouse() {
 
     const [isLoading, setisLoading]: any = useState(true)
-    const [dataCustomer, setdataCustomer]: any = useState([])
+    const [dataWarehouse, setdataWarehouse]: any = useState([])
 
-    async function loadCustomer() {
+    async function loadwarehouse() {
         await axios({
             method: 'get',
-            url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/customer`,
+            url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/warehouse`,
         })
             .then(function (response) {
-                setdataCustomer(response.data.data)
+                setdataWarehouse(response.data.data)
                 setisLoading(false)
             })
             .catch(function (error) {
@@ -63,14 +63,14 @@ export default function Customer() {
 
     const [searchwarehouse, setsearchwarehouse]: any = useState('');
 
-    const filtercustomer: any = dataCustomer.filter((data: any) => {
+    const filterwarehouse: any = dataWarehouse.filter((data: any) => {
         return (
-            data.customer.toLocaleLowerCase().includes(searchwarehouse.toLocaleLowerCase())
+            data.warehouse.toLocaleLowerCase().includes(searchwarehouse.toLocaleLowerCase())
         );
     });
 
     useEffect(() => {
-        loadCustomer()
+        loadwarehouse()
     }, [])
 
     const [provinsiLoading, setprovinsiLoading]: any = useState(true);
@@ -81,8 +81,8 @@ export default function Customer() {
     const [dataKota, setdataKota]: any = useState([]);
     const [dataKecamatan, setdataKecamatan]: any = useState([]);
 
-    async function openAddCustomer() {
-        setv_customer("")
+    async function openAddwarehouse() {
+        setv_warehouse("")
         setv_hp("")
         setv_alamat("")
         setv_provinsi("")
@@ -134,7 +134,7 @@ export default function Customer() {
     }
 
     const [open, setopen]: any = useState(false);
-    const [v_customer, setv_customer]: any = useState('');
+    const [v_warehouse, setv_warehouse]: any = useState('');
     const [v_hp, setv_hp]: any = useState('');
     const [v_alamat, setv_alamat]: any = useState('');
     const [v_provinsi, setv_provinsi]: any = useState('');
@@ -143,11 +143,11 @@ export default function Customer() {
     const [v_kelurahan, setv_kelurahan]: any = useState('');
     const [v_kodepos, setv_kodepos]: any = useState('');
 
-    async function saveCustomer() {
-        if (v_customer === "" || v_hp === "" || v_alamat === "" || v_provinsi === "" || v_kecamatan === "" || v_kota === "" || v_kelurahan === "" || v_kodepos === "") {
+    async function savewarehouse() {
+        if (v_warehouse === "" || v_hp === "" || v_alamat === "" || v_provinsi === "" || v_kecamatan === "" || v_kota === "" || v_kelurahan === "" || v_kodepos === "") {
             alert("Mohon lengkapi Formulir")
         } else {
-            // console.log(v_customer)
+            // console.log(v_warehouse)
             // console.log(v_hp)
             // console.log(v_alamat)
             // console.log(v_provinsi)
@@ -158,9 +158,9 @@ export default function Customer() {
 
             await axios({
                 method: 'post',
-                url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/addcustomer`,
+                url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/addwarehouse`,
                 data: {
-                    customer: v_customer,
+                    warehouse: v_warehouse,
                     hp: v_hp,
                     alamat: v_alamat,
                     provinsi: v_provinsi,
@@ -171,8 +171,8 @@ export default function Customer() {
                 }
             })
                 .then(function (response) {
-                    loadCustomer()
-                    setv_customer("")
+                    loadwarehouse()
+                    setv_warehouse("")
                     setv_hp("")
                     setv_alamat("")
                     setv_provinsi("")
@@ -190,8 +190,8 @@ export default function Customer() {
     }
 
     const [openEdit, setopenEdit]: any = useState(false);
-    const [e_id_cust, sete_id_cust]: any = useState('');
-    const [e_customer, sete_customer]: any = useState('');
+    const [e_id_ware, sete_id_ware]: any = useState('');
+    const [e_warehouse, sete_warehouse]: any = useState('');
     const [e_hp, sete_hp]: any = useState('');
     const [e_alamat, sete_alamat]: any = useState('');
     const [e_provinsi, sete_provinsi]: any = useState('');
@@ -200,9 +200,9 @@ export default function Customer() {
     const [e_kelurahan, sete_kelurahan]: any = useState('');
     const [e_kodepos, sete_kodepos]: any = useState('');
 
-    async function editCustomer() {
-        // console.log(e_id_cust)
-        // console.log(e_customer)
+    async function editwarehouse() {
+        // console.log(e_id_ware)
+        // console.log(e_warehouse)
         // console.log(e_hp)
         // console.log(e_alamat)
         // console.log(e_provinsi)
@@ -213,10 +213,10 @@ export default function Customer() {
 
         await axios({
             method: 'post',
-            url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/editcustomer`,
+            url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/editwarehouse`,
             data: {
-                id_cust: e_id_cust,
-                customer: e_customer,
+                id_ware: e_id_ware,
+                warehouse: e_warehouse,
                 hp: e_hp,
                 alamat: e_alamat,
                 provinsi: e_provinsi,
@@ -227,9 +227,9 @@ export default function Customer() {
             }
         })
             .then(function (response) {
-                loadCustomer()
-                sete_id_cust("")
-                sete_customer("")
+                loadwarehouse()
+                sete_id_ware("")
+                sete_warehouse("")
                 sete_hp("")
                 sete_alamat("")
                 sete_provinsi("")
@@ -244,18 +244,18 @@ export default function Customer() {
             })
     }
 
-    async function deleteCustomer(id_cust: any) {
-        // console.log(id_cust)
+    async function deletewarehouse(id_ware: any) {
+        // console.log(id_ware)
 
         await axios({
             method: 'post',
-            url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/deletecustomer`,
+            url: `${process.env.NEXT_PUBLIC_HOST}/dekstop/deletewarehouse`,
             data: {
-                id_cust: id_cust
+                id_ware: id_ware
             }
         })
             .then(function (response) {
-                loadCustomer()
+                loadwarehouse()
             })
             .catch(function (error) {
                 console.log(error);
@@ -282,17 +282,17 @@ export default function Customer() {
                     </div>
                     <div className="absolute right-5">
                         <AlertDialog open={open} onOpenChange={setopen}>
-                            <Button variant="outline" className='bg-gray-900 text-white font-bold hover:bg-gray-200' onClick={() => { openAddCustomer() }}>Add New</Button>
+                            <Button variant="outline" className='bg-gray-900 text-white font-bold hover:bg-gray-200' onClick={() => { openAddwarehouse() }}>Add New</Button>
                             <AlertDialogContent className='w-[600px]'>
                                 <AlertDialogHeader className='border-b pb-4'>
                                     <AlertDialogTitle >Add New Warehouse</AlertDialogTitle>
                                 </AlertDialogHeader>
                                 <div className='flex flex-row text-center mt-2 items-center'>
                                     <div className='basis-1/4 font-bold text-left'>
-                                        Name Warehouse :
+                                        Warehouse :
                                     </div>
                                     <div className='basis-3/4'>
-                                        <Input type="text" placeholder="Customer.." value={v_customer} onChange={(e) => { setv_customer(e.currentTarget.value) }} />
+                                        <Input type="text" placeholder="warehouse.." value={v_warehouse} onChange={(e) => { setv_warehouse(e.currentTarget.value) }} />
                                     </div>
                                 </div>
                                 <div className='flex flex-row text-center mt-2 items-center'>
@@ -392,14 +392,14 @@ export default function Customer() {
                                 </div>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel className='bg-red-400 font-bold text-white'>Cancel</AlertDialogCancel>
-                                    <Button onClick={() => { saveCustomer() }}>Save</Button>
+                                    <Button onClick={() => { savewarehouse() }}>Save</Button>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
                         </AlertDialog>
                     </div>
                 </div>
 
-                {/* {JSON.stringify(dataCustomer.data)} */}
+                {/* {JSON.stringify(dataWarehouse.data)} */}
 
                 <div className="mt-5 shadow-md">
                     <Table className='border'>
@@ -419,11 +419,11 @@ export default function Customer() {
                             </TableRow>
                         </TableHeader>
                         <TableBody className='bg-white'>
-                            {filtercustomer.map((dataisi: any, index: number) => (
+                            {filterwarehouse.map((dataisi: any, index: number) => (
                                 <TableRow key={dataisi.id}>
                                     <TableCell className="border w-[50px] text-center font-bold">{index + 1}</TableCell>
-                                    <TableCell className="border w-[120px] text-center font-medium">{dataisi.id_cust}</TableCell>
-                                    <TableCell className="border font-medium text-left">{dataisi.customer}</TableCell>
+                                    <TableCell className="border w-[120px] text-center font-medium">{dataisi.id_ware}</TableCell>
+                                    <TableCell className="border font-medium text-left">{dataisi.warehouse}</TableCell>
                                     <TableCell className="border text-center">{dataisi.hp}</TableCell>
                                     <TableCell className="border text-center">{dataisi.alamat}</TableCell>
                                     <TableCell className="border text-center">{dataisi.province}</TableCell>
@@ -437,8 +437,8 @@ export default function Customer() {
                                                 <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
                                                     onClick={() => {
                                                         setopenEdit(true)
-                                                        sete_id_cust(dataisi.id_cust)
-                                                        sete_customer(dataisi.customer)
+                                                        sete_id_ware(dataisi.id_ware)
+                                                        sete_warehouse(dataisi.warehouse)
                                                         sete_hp(dataisi.hp)
                                                         sete_alamat(dataisi.alamat)
                                                         sete_provinsi(dataisi.province_id + "#" + dataisi.province)
@@ -459,7 +459,7 @@ export default function Customer() {
                                                         Warehouse :
                                                     </div>
                                                     <div className='basis-3/4'>
-                                                        <Input type="text" placeholder="Supplier.." value={e_customer} onChange={(e) => { sete_customer(e.currentTarget.value) }} />
+                                                        <Input type="text" placeholder="Supplier.." value={e_warehouse} onChange={(e) => { sete_warehouse(e.currentTarget.value) }} />
                                                     </div>
                                                 </div>
                                                 <div className='flex flex-row text-center mt-2 items-center'>
@@ -567,7 +567,7 @@ export default function Customer() {
                                                     <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
                                                     <Button
                                                         onClick={() => {
-                                                            editCustomer()
+                                                            editwarehouse()
                                                         }}
                                                     >Save</Button>
                                                 </AlertDialogFooter>
@@ -581,12 +581,12 @@ export default function Customer() {
                                             <AlertDialogContent className='w-[600px]'>
                                                 <AlertDialogHeader className='border-b pb-4'>
                                                     <AlertDialogTitle >Delete Warehouse</AlertDialogTitle>
-                                                    <AlertDialogDescription>Data Warehouse {dataisi.customer} akan dihapus?</AlertDialogDescription>
+                                                    <AlertDialogDescription>Data Warehouse {dataisi.warehouse} akan dihapus?</AlertDialogDescription>
                                                 </AlertDialogHeader>
 
                                                 <AlertDialogFooter>
                                                     <AlertDialogCancel >Cancel</AlertDialogCancel>
-                                                    <Button className='bg-red-400 font-bold' onClick={() => { deleteCustomer(dataisi.id_cust) }}>Delete</Button>
+                                                    <Button className='bg-red-400 font-bold' onClick={() => { deletewarehouse(dataisi.id_ware) }}>Delete</Button>
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
                                         </AlertDialog>
