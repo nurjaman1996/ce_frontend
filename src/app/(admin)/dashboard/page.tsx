@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react'
 // import { jwtDecode } from "jwt-decode";
+import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import Datepicker from "react-tailwindcss-datepicker";
 import { BarChart4, Boxes, Check, ChevronsUpDown, Coffee, Coins, Container, DollarSign, Dumbbell, FileStack, Package } from "lucide-react"
@@ -32,6 +33,8 @@ let Rupiah = new Intl.NumberFormat("id-ID", {
 });
 
 let Numbering = new Intl.NumberFormat("id-ID");
+
+
 
 export default function Home() {
   // const [Token, setToken]: any = useState("")
@@ -264,11 +267,48 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='flex flex-row mt-4  gap-4 text-black'>
-          <div className='basis-3/4 bg-white border border-gray-300 h-[448px] rounded-lg shadow-md'>
-            <div className='text-xl font-bold py-3 px-5 '>
-              Chart Sales
+        <div className='flex flex-row mt-4 gap-4 text-black'>
+          <div className='basis-3/4 bg-white border border-gray-300 h-[448px] rounded-lg shadow-md flex flex-col gap-1'>
+            <div className='text-xl font-bold py-3 px-5'>
+              Penjualan 30 Hari Terakhir
             </div>
+
+            <ResponsiveContainer width="100%" height="100%" className="px-5">
+              <BarChart
+                data={dataDashboard.result.data_weeks}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <Tooltip content={
+                  function CustomTooltip({ payload, label, active }: any) {
+                    if (active) {
+                      return (
+                        <div className="bg-white p-2 rounded-md">
+                          <p className="label">Tanggal {label}</p>
+                          <p className="intro">Invoices : {payload[0].payload.invoices}</p>
+                          <p className="desc">Gross Sale : {Rupiah.format(payload[0].payload.grosssale)}</p>
+                        </div>
+                      );
+                    }
+
+                    return null;
+                  }
+                } />
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" className='text-xs' />
+                <YAxis className='text-xs' width={80}
+                  tickFormatter={(value) =>
+                    Rupiah.format(value)
+                  } />
+                <Tooltip />
+                {/* <Legend /> */}
+                <Bar dataKey="grosssale" fill="#430f1f " activeBar={<Rectangle fill="#62001F" />} />
+              </BarChart>
+            </ResponsiveContainer>
 
           </div>
           <div className='grow'>

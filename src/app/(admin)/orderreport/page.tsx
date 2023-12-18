@@ -681,7 +681,7 @@ export default function PurchaseOrder() {
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
 
-                            <Button disabled={dataisi.status_pesanan === "PROGRESS" ? false : true} className='bg-gray-600 mx-2 font-bold text-[10px] rounded-lg'
+                            <Button disabled={dataisi.status_pesanan === "SIAP DIKIRIM" || dataisi.status_pesanan === "DALAM PENGIRIMAN" ? false : true} className='bg-gray-600 mx-2 font-bold text-[10px] rounded-lg'
                               onClick={() => {
                                 // setopenEditKurir(true)
                                 sete_id_invoice(dataisi.id_invoice)
