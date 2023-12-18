@@ -208,13 +208,16 @@ export default function GroupInvoicesPage() {
                                 <AccordionItem key={index} value={`item-${index + 1}`}>
                                     <div className='flex flex-row text-left text-xs my-2 items-center gap-1'>
                                         <div className='w-[8%]'>{index + 1}.</div>
-                                        <div className='w-[45%] underline text-blue-500 cursor-pointer'
+                                        <div className='w-[45%] cursor-pointer'
                                             onClick={() => {
                                                 setValue(value === `item-${index + 1}` ? "" : `item-${index + 1}`)
                                             }}
                                         >
-                                            {data.id_invoice}
-                                            <p>{data.tanggal}</p>
+                                            <p>ID INVOICE : <span className='underline text-blue-500'>{data.id_invoice}</span></p>
+                                            <p>TANGGAL : {data.tanggal}</p>
+                                            <p className='font-bold'>JASA KIRIM : {data.jasa_kirim}</p>
+                                            <p className='font-bold'>RESI : {data.resi}</p>
+                                            <p className=''>Total Produk : {data.details.length}</p>
                                         </div>
                                         <div className='w-[45%] flex flex-col gap-1 items-start justify-center'>
                                             <div className='w-full flex flex-row gap-2'>
