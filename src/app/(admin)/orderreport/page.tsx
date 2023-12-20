@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
@@ -59,6 +59,7 @@ import {
 
 import { addDays, format, subDays, subWeeks, startOfWeek, lastDayOfWeek } from "date-fns"
 import axios from 'axios'
+
 
 let Rupiah = new Intl.NumberFormat("id-ID", {
   style: "currency",
@@ -577,7 +578,10 @@ export default function PurchaseOrder() {
                       <TableCell colSpan={3} className='text-lg font-bold p-0 '>
                         <span className='ml-4'>{Numbering.format(index + 1)}) #{dataisi.tanggal} - {dataisi.id_invoice}</span>
                         <span>
-                          <AlertDialog>
+
+
+
+                          {/* <AlertDialog>
                             <AlertDialogTrigger asChild>
                               <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.Printer size={18} color="#00b3ff" /></Button>
                             </AlertDialogTrigger>
@@ -598,7 +602,7 @@ export default function PurchaseOrder() {
                                 <Button >Save</Button>
                               </AlertDialogFooter>
                             </AlertDialogContent>
-                          </AlertDialog>
+                          </AlertDialog> */}
 
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
