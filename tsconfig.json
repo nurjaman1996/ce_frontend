@@ -28,7 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/(admin)/order/getOngkir.tsx",
-, "src/app/print/page.js"    "src/app/print/page.js"
+    "src/app/print/page.js"
   ],
   "exclude": ["node_modules"]
 }
