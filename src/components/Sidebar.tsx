@@ -38,8 +38,13 @@ const Sidebar = () => {
                 <div className='font-bold text-[#2A3647]'>Master</div>
 
                 <Link href="/warehouse" className={`${params === '/warehouse' ? `bg-gray-100` : `hover:bg-gray-100`} flex gap-2 py-2 rounded-xl px-3 cursor-pointer items-center font-medium text-[#2A3647]`}>
-                    <Icon.User size={20} />
+                    <Icon.Warehouse size={20} />
                     <div>Warehouse</div>
+                </Link>
+
+                <Link href="/account" className={`${params === '/account' ? `bg-gray-100` : `hover:bg-gray-100`} flex gap-2 py-2 rounded-xl px-3 cursor-pointer items-center font-medium text-[#2A3647]`}>
+                    <Icon.UserCog size={20} />
+                    <div>Account</div>
                 </Link>
 
                 <Link href="/supplier" className={`${params === '/supplier' ? `bg-gray-100` : `hover:bg-gray-100`} flex gap-2 py-2 rounded-xl px-3 cursor-pointer items-center font-medium text-[#2A3647]`}>

@@ -119,7 +119,7 @@ export default function Neraca() {
     return (
       <main className="">
         <div className="flex flex-nowrap mt-4">
-          <div className="font-bold text-4xl text-gray-500">
+          <div className="font-bold text-2xl text-black">
             Neraca
           </div>
           <div className="ml-auto w-auto">
@@ -169,110 +169,111 @@ export default function Neraca() {
           </div>
         </div>
 
-        <div className='flex flex-row mt-4 gap-4 '>
-          <div className='basis-1/4 bg-white-50 border-2 border-black-500 h-[125px]  bg-gray-400 text-white'>
-            <div className='text-xl font-semibold py-5 px-5'>
-              Sales
+        <div className='flex flex-row mt-2 gap-4 text-black'>
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
+              Sales Summary
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-2xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 px-5 mt-3'>
                 {Numbering.format(dataNeraca.sales)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.ShoppingCart size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <BarChart4 className="h-10 w-10 -mt-1 text-black text-right" />
               </div>
             </div>
           </div>
 
-          <div className='basis-1/4 bg-white-50 border-2 border-black-500 h-[125px] bg-gray-400 text-white'>
-            <div className='text-xl font-semibold py-5 px-5'>
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Gross Sales
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-4/6 text-2xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 mt-3 px-5'>
                 {Rupiah.format(dataNeraca.grosssale)}
               </div>
-              <div className=' basis-1/3 flex justify-end'>
-                <Icon.TrendingUp size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.TrendingUp className="h-10 w-10 -mt-1 text-black text-right" />
               </div>
             </div>
           </div>
 
-          <div className='basis-1/4 bg-white-50 border-2 border-black-500 h-[125px] bg-gray-400 text-white'>
-            <div className='text-xl font-semibold py-5 px-5'>
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Costs
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-4/6 text-2xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 mt-3 px-5'>
                 {Rupiah.format(dataNeraca.cost)}
               </div>
-              <div className=' basis-1/3 flex justify-end'>
-                <Icon.DollarSign size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.DollarSign className="h-10 w-10 -mt-1 text-black text-right" />
               </div>
             </div>
           </div>
 
-          <div className='basis-1/4 bg-white-50 border-2 border-black-500 h-[125px] bg-gray-400 text-white'>
-            <div className='text-xl font-semibold py-5 px-5'>
-              Margin
+          <div className='basis-1/4 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
+              Unfilled Stock
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-4/6 text-2xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 mt-3 px-5'>
                 {Rupiah.format(dataNeraca.margin)}
               </div>
-              <div className=' basis-1/3 flex justify-end'>
-                <Icon.FishSymbol size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.FishSymbol className="h-10 w-10 -mt-1 text-black text-right" />
               </div>
             </div>
           </div>
-
         </div>
 
-        <div className='flex flex-row mt-4 gap-4 '>
-          <div className='basis-1/3 bg-white-50 border-2 border-black-500 h-[125px]  bg-red-400 text-white'>
-            <div className='text-xl font-semibold py-5 px-5'>
+        <div className='flex flex-row mt-2 gap-4 text-black'>
+          <div className='basis-1/3 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Pending Revenue
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-2xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 px-5 mt-3'>
                 {Rupiah.format(dataNeraca.pending_revenue)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.CircleDashedIcon size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.CircleDashedIcon className="h-10 w-10 -mt-1 text-black text-right" />
               </div>
             </div>
           </div>
-          <div className='basis-1/3 bg-white-50 border-2 border-black-500 h-[125px]  bg-blue-400 text-white'>
-            <div className='text-xl font-semibold py-5 px-5'>
+
+          <div className='basis-1/3 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Paid Revenue
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-2xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 mt-3 px-5'>
                 {Rupiah.format(dataNeraca.paid_revenue)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.CheckSquare size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.CheckSquare className="h-10 w-10 -mt-1 text-black text-right" />
               </div>
             </div>
           </div>
-          <div className='basis-1/3 bg-white-50 border-2 border-black-500 h-[125px]  bg-green-400 text-white'>
-            <div className='text-xl font-semibold py-5 px-5'>
+
+          <div className='basis-1/3 bg-white border border-gray-300 h-[110px] rounded-lg shadow-md'>
+            <div className='text-md font-semibold py-4 px-5'>
               Profit
             </div>
-            <div className='flex flex-row text-left px-5'>
-              <div className='basis-1/2 text-2xl font-semibold'>
+            <div className='flex flex-row text-left'>
+              <div className='basis-full text-lg font-semibold py-0 mt-3 px-5'>
                 {Rupiah.format(dataNeraca.profit)}
               </div>
-              <div className=' basis-1/2 flex justify-end'>
-                <Icon.DollarSignIcon size={45} color="#ffffff" />
+              <div className=' basis-auto mt-1 mx-5'>
+                <Icon.DollarSign className="h-10 w-10 -mt-1 text-black text-right" />
               </div>
             </div>
           </div>
+
         </div>
 
-
         <div className='flex flex-row mt-4 gap-4 '>
-          <div className='basis-1/2 bg-white-50 border-2 border-black-500 h-[300px] bg-gray-200 text-black flex flex-col'>
+          <div className='basis-1/2 border-2 border-black-500 h-[300px] bg-white rounded-md shadow-md text-black flex flex-col'>
             <div className='text-xl font-semibold pt-3 px-5'>
               Revenue VS Costs
             </div>
@@ -313,7 +314,7 @@ export default function Neraca() {
               </ResponsiveContainer>
             </div>
           </div>
-          <div className='basis-1/2 bg-white-50 border-2 border-black-500 h-[300px] bg-gray-200 text-black flex flex-col'>
+          <div className='basis-1/2 border-2 border-black-500 h-[300px] bg-white rounded-md shadow-md text-black flex flex-col'>
             <div className='text-xl font-semibold pt-3 px-5'>
               Pending VS Paid
             </div>
@@ -358,36 +359,36 @@ export default function Neraca() {
         </div>
 
         <div className='flex flex-row mt-4 gap-4 '>
-          <div className='basis-1/2 bg-white-50 border-2 border-black-500 h-[300px] bg-gray-200 text-black'>
-            <div className='text-xl font-semibold py-5 px-5'>
+          <div className='basis-1/2 border-2 border-black-500 h-[300px] bg-white rounded-md shadow-md text-black'>
+            <div className='text-md font-semibold py-5 px-5'>
               Products Top Sales
             </div>
             {dataNeraca.producttopsales.map((data: any, index: number) => {
               return (
-                <div key={index} className='flex flex-row text-left px-5'>
-                  <div className='basis-4/6 text-xl font-semibold'>
+                <div key={index} className='flex flex-row text-left px-5 mb-1'>
+                  <div className='basis-4/6 text-xs font-semibold'>
                     {data.produk}
                   </div>
-                  <div className=' basis-1/3 flex justify-end text-xl'>
-                    {data.qty} Pcs
+                  <div className=' basis-1/3 flex justify-end text-xs italic'>
+                    <Badge variant="destructive">{data.qty} Pcs</Badge>
                   </div>
                 </div>
               )
             })}
           </div>
 
-          <div className='basis-1/2 bg-white-50 border-2 border-black-500 h-[300px] bg-gray-200 text-black'>
-            <div className='text-xl font-semibold py-5 px-5'>
+          <div className='basis-1/2 border-2 border-black-500 h-[300px] bg-white rounded-md shadow-md text-black'>
+            <div className='text-md font-semibold py-5 px-5'>
               Customer Top Sales
             </div>
             {dataNeraca.customertopsales.map((data: any, index: number) => {
               return (
-                <div key={index} className='flex flex-row text-left px-5'>
-                  <div className='basis-4/6 text-xl font-semibold'>
+                <div key={index} className='flex flex-row text-left px-5 mb-1'>
+                  <div className='basis-4/6 text-xs font-semibold'>
                     {data.customer}
                   </div>
-                  <div className=' basis-1/3 flex justify-end text-xl'>
-                    {data.qty} Pcs
+                  <div className=' basis-1/3 flex justify-end text-xs italic'>
+                    <Badge variant="destructive">{data.qty} Pcs</Badge>
                   </div>
                 </div>
               )

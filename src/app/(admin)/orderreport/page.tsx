@@ -579,30 +579,9 @@ export default function PurchaseOrder() {
                         <span className='ml-4'>{Numbering.format(index + 1)}) #{dataisi.tanggal} - {dataisi.id_invoice}</span>
                         <span>
 
-
-
-                          {/* <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.Printer size={18} color="#00b3ff" /></Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent className='w-[600px]'>
-                              <AlertDialogHeader className='border-b pb-4'>
-                                <AlertDialogTitle >Print Resi</AlertDialogTitle>
-                              </AlertDialogHeader>
-                              <div className='flex flex-row text-center mt-2 items-center'>
-                                <div className='basis-1/4 font-bold text-left'>
-                                  Product :
-                                </div>
-                                <div className='basis-3/4'>
-                                  <Input type="text" placeholder="Product.." />
-                                </div>
-                              </div>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
-                                <Button >Save</Button>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog> */}
+                          <Button variant="link" onClick={() => {
+                            window.open(`/print`)
+                          }} className=' text-white font-bold hover:bg-gray-200'> <Icon.Printer size={18} color="#00b3ff" /></Button>
 
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
