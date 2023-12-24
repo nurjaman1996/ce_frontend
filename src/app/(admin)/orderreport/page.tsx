@@ -574,13 +574,17 @@ export default function PurchaseOrder() {
                 <Table className='text-xs bg-white'>
                   <TableHeader>
                     <TableRow>
-                      <TableCell colSpan={3} className='text-lg font-bold p-0 '>
+                      <TableCell colSpan={4} className='text-lg font-bold p-0 '>
                         <span className='ml-4'>{Numbering.format(index + 1)}) #{dataisi.tanggal} - {dataisi.id_invoice}</span>
                         <span>
 
                           <Button variant="link" onClick={() => {
                             window.open(`/print/${dataisi.id_cust}/${dataisi.id_batch}`)
                           }} className=' text-white font-bold hover:bg-gray-200'> <Icon.Printer size={18} color="#00b3ff" /></Button>
+
+                          <Button variant="link" onClick={() => {
+                            window.open(`/share/${dataisi.id_cust}/${dataisi.id_batch}`)
+                          }} className=' text-white font-bold hover:bg-gray-200'> <Icon.Share2 size={18} color="#00b3ff" /></Button>
 
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
