@@ -5,11 +5,9 @@ import { cookies } from "next/headers";
 export default function middleware(request: NextRequest) {
   const cookieStore: any = cookies();
   const isLogin = cookieStore.has("refreshToken");
-  // if (!isLogin) {
-  //   return NextResponse.redirect(new URL("/", request.url));
-  // }
-
-  console.log(request.nextUrl.pathname + " " + isLogin);
+  if (!isLogin) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 }
 
 export const config = {

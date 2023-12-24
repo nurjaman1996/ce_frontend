@@ -230,7 +230,7 @@ export default function account() {
                                 <TableHead className="bg-gray-900 border text-center font-bold text-white w-[10%]">Username</TableHead>
                                 <TableHead className='bg-gray-900 border text-center font-bold text-white w-[20%]'>Name</TableHead>
                                 <TableHead className='bg-gray-900 border text-center font-bold text-white w-[10%]'>Role</TableHead>
-                                <TableHead className="bg-gray-900 border text-center font-bold text-white w-[5%]">Status Account</TableHead>
+                                {/* <TableHead className="bg-gray-900 border text-center font-bold text-white w-[5%]">Status Account</TableHead> */}
                                 <TableHead className="bg-gray-900 border text-center w-[5%] font-bold text-white">Act</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -241,9 +241,9 @@ export default function account() {
                                     <TableCell className="border text-center w-[10%]">{dataisi.username}</TableCell>
                                     <TableCell className="border text-center w-[20%]">{dataisi.name}</TableCell>
                                     <TableCell className="border text-center w-[10%]">{dataisi.role}</TableCell>
-                                    <TableCell className="border text-center w-[5%]">
+                                    {/* <TableCell className="border text-center w-[5%]">
                                         {dataisi.login_status === "ACTIVED" ? <span className='font-bold text-lime-600'>{dataisi.login_status}</span> : <span className='font-bold text-red-600'>{dataisi.login_status}</span>}
-                                    </TableCell>
+                                    </TableCell> */}
                                     <TableCell className="border text-center w-[5%]">
                                         <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
                                             onClick={() => {

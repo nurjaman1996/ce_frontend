@@ -53,8 +53,8 @@ const Navbar = (data: any) => {
                                 </Avatar>
 
                                 <div className='flex flex-col items-start justify-center gap-1'>
-                                    {/* <small className="text-xs font-medium leading-none">{data.data.dataname}</small>
-                                    <span className="text-xs text-muted-foreground leading-none capitalize">{data.data.datarole.toLowerCase()}</span> */}
+                                    <small className="text-xs font-medium leading-none">{data.data.dataname}</small>
+                                    <span className="text-xs text-muted-foreground leading-none capitalize">{data.data.datarole.toLowerCase()}</span>
                                 </div>
                             </div>
                         </DropdownMenuTrigger>

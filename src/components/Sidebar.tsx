@@ -4,9 +4,8 @@ import * as Icon from "lucide-react"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const Sidebar = () => {
+const Sidebar = (data: any) => {
     const params = usePathname()
-
 
     return (
         <div className='w-[280px] h-full overflow-x-hidden overflow-y-auto py-3 px-2 text-sm bg-white'>

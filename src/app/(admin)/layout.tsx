@@ -15,10 +15,10 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
 
-  // const cookieStore: any = cookies();
-  // const isLogin = cookieStore.get("refreshToken");
-  // const dataLogin: any = jwtDecode(isLogin.value)
-  const dataLogin: any = "Data"
+  const cookieStore: any = cookies();
+  const isLogin = cookieStore.get("refreshToken");
+  const dataLogin: any = jwtDecode(isLogin.value)
+  // const dataLogin: any = "Data"
 
   return (
     <div className='flex flex-col h-full'>
@@ -26,7 +26,7 @@ export default function DashboardLayout({
 
       <div className='flex h-full overflow-x-hidden overflow-y-hidden'>
         <div className="border-r">
-          <Sidebar />
+          <Sidebar data={dataLogin} />
         </div>
         <div className='grow h-full overflow-x-hidden overflow-y-auto bg-[#F4F4F4] p-5'>
           {children}
