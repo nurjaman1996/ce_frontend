@@ -30,7 +30,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         const data_login = await getLogin(username, password)
 
         if (data_login) {
-            // router.push('/dashboard')
+            router.push('/dashboard')
         }
     }
 
