@@ -82,3 +82,40 @@ export async function getdatakecamatan(city: any) {
   return data[0].results
 
 }
+
+export async function getWaybill(data_resi: any) {
+  var data: any = []
+
+  for (let index = 0; index < data_resi.length; index++) {
+    let formData: any = new FormData();
+    formData.append("waybill", data_resi[index].resi);
+
+    if (data_resi[index].jasa_kirim === "Jalur Nugraha Ekakurir (JNE)") {
+      formData.append("courier", "jne");
+    } else if (data_resi[index].jasa_kirim === "J&T Express") {
+      formData.append("courier", "jnt");
+    } else if (data_resi[index].jasa_kirim === "Wahana Prestasi Logistik") {
+      formData.append("courier", "wahana");
+    } else if (data_resi[index].jasa_kirim === "SiCepat Express") {
+      formData.append("courier", "sicepat");
+    }
+
+    await axios({
+      method: 'POST',
+      url: `https://pro.rajaongkir.com/api/waybill`,
+      data: formData
+    })
+      .then(function (response) {
+        data.push({
+          resi: response.data.rajaongkir.result.summary.waybill_number,
+          jasa_kirim: response.data.rajaongkir.result.summary.courier_name,
+          manifest: response.data.rajaongkir.result.manifest
+        })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  return data
+}

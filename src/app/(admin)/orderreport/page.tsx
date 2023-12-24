@@ -523,7 +523,6 @@ export default function PurchaseOrder() {
                           <SelectItem value="J&T Express">J&T Express</SelectItem>
                           <SelectItem value="SiCepat Express">SiCepat Express</SelectItem>
                           <SelectItem value="Wahana Prestasi Logistik">Wahana Prestasi Logistik</SelectItem>
-                          <SelectItem value="Lainnya">Lainnya</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -580,7 +579,7 @@ export default function PurchaseOrder() {
                         <span>
 
                           <Button variant="link" onClick={() => {
-                            window.open(`/print`)
+                            window.open(`/print/${dataisi.id_cust}/${dataisi.id_batch}`)
                           }} className=' text-white font-bold hover:bg-gray-200'> <Icon.Printer size={18} color="#00b3ff" /></Button>
 
                           <AlertDialog>
@@ -681,18 +680,18 @@ export default function PurchaseOrder() {
                             <div className="flex flex-row items-center space-x-2">
                               <Label className='basis-1/3 text-md text-left'>Lokal Kurir</Label>
                               <div className='grow'>
-                                <Select defaultValue="null" value={e_kurir} onValueChange={(e) => { sete_kurir(e) }}>
+                                <Select value={e_kurir} onValueChange={(e) => { sete_kurir(e) }}>
                                   <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Local Shipping" />
                                   </SelectTrigger>
                                   <SelectContent>
                                     <SelectGroup>
-                                      <SelectItem value="null">Pilih Kurir...</SelectItem>
-                                      <SelectItem value="JNE_REG">JNE REG</SelectItem>
-                                      <SelectItem value="JNE_YES">JNE YES</SelectItem>
-                                      <SelectItem value="J&T_REG">J&T REG</SelectItem>
-                                      <SelectItem value="SICEPAT_REG">SICEPAT REG</SelectItem>
-                                      <SelectItem value="SICEPAT_BEST">SICEPAT BEST</SelectItem>
+                                      <SelectGroup>
+                                        <SelectItem value="Jalur Nugraha Ekakurir (JNE)">Jalur Nugraha Ekakurir (JNE)</SelectItem>
+                                        <SelectItem value="J&T Express">J&T Express</SelectItem>
+                                        <SelectItem value="SiCepat Express">SiCepat Express</SelectItem>
+                                        <SelectItem value="Wahana Prestasi Logistik">Wahana Prestasi Logistik</SelectItem>
+                                      </SelectGroup>
                                     </SelectGroup>
                                   </SelectContent>
                                 </Select>
