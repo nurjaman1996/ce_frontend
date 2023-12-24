@@ -38,7 +38,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-export default function account() {
+export default function Account() {
 
     const [isLoading, setisLoading]: any = useState(true);
 

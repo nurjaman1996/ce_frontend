@@ -42,7 +42,7 @@ import axios from 'axios'
 
 import { getdatakecamatan, getdatakota, getProvinsi } from "../../../helpers/getOngkir";
 
-export default function warehouse() {
+export default function Warehouse() {
 
     const [isLoading, setisLoading]: any = useState(true)
     const [dataWarehouse, setdataWarehouse]: any = useState([])

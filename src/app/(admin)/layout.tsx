@@ -17,7 +17,7 @@ export default function DashboardLayout({
 
   const cookieStore: any = cookies();
   const isLogin = cookieStore.get("refreshToken");
-  const dataLogin: any = jwtDecode(isLogin.value)
+  const dataLogin: any = isLogin.value != '' ? jwtDecode(isLogin.value) : null
   // const dataLogin: any = "Data"
 
   return (

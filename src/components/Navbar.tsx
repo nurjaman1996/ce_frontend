@@ -13,14 +13,15 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
+import { getLogout } from "./GetCookies";
 
 const Navbar = (data: any) => {
 
     async function LogOut() {
         try {
-            await axios.delete(`${process.env.NEXT_PUBLIC_HOST}/auth/logout`)
+            // await axios.delete(`${process.env.NEXT_PUBLIC_HOST}/auth/logout`)
             // router.refresh()
+            await getLogout()
             window.location.href = "/";
         } catch (error) {
             console.log(error)

@@ -79,7 +79,7 @@ export default function Batch() {
     }
 
     useEffect(() => {
-        loadBatch(value.startDate, value.endDate)
+        loadBatch("2020-01-01", new Date())
     }, [])
 
     const [searchBatch, setsearchBatch]: any = useState('');

@@ -1,7 +1,5 @@
 "use client"
 import * as React from "react"
-import axios from "axios"
-axios.defaults.withCredentials = true
 
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from 'next/navigation'
@@ -13,6 +11,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 
+import { getLogin } from "./GetCookies";
+
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
@@ -23,29 +23,15 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     const [username, setusername] = useState("")
     const [password, setpassword] = useState("")
-    const [token, settoken] = useState("")
 
     async function onSubmit(event: React.SyntheticEvent) {
         event.preventDefault()
         setIsLoading(true)
+        const data_login = await getLogin(username, password)
 
-        axios.post(`${process.env.NEXT_PUBLIC_HOST}/auth/login`, {
-            username: username,
-            password: password
-        }).then(function (response) {
-            setTimeout(() => {
-                settoken(response.data.accessToken)
-                const decode: any = jwtDecode(response.data.accessToken)
-                setIsLoading(false)
-                router.push('/dashboard')
-            }, 1000)
-        }).catch(function (error) {
-            setTimeout(() => {
-                console.log(error.response.data.message);
-                setstatusLogin(error.response.data.message);
-                setIsLoading(false)
-            }, 1000)
-        });
+        if (data_login) {
+            // router.push('/dashboard')
+        }
     }
 
     return (
