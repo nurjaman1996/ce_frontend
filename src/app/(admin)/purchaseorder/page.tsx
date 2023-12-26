@@ -54,7 +54,9 @@ let Rupiah = new Intl.NumberFormat("id-ID", {
 
 let Numbering = new Intl.NumberFormat("id-ID");
 
-export default function PurchaseOrder() {
+export default function PurchaseOrder(Props: any): JSX.Element {
+  const [datalogin, setdatalogin]: any = useState("")
+
   const [open, setOpen] = useState(false)
   const [dataBatch, setdataBatch]: any = useState([])
   const [valueBatch, setValueBatch]: any = useState("")
@@ -99,6 +101,7 @@ export default function PurchaseOrder() {
   }
 
   useEffect(() => {
+    setdatalogin(Props.params.datalogin)
     loadDataBatch()
   }, [])
 
@@ -252,7 +255,11 @@ export default function PurchaseOrder() {
                 <TableHead className="bg-gray-900 border w-[6%] text-center text-white">Kurs</TableHead>
                 <TableHead className="bg-gray-900 border w-[5%] text-center text-white">Overhead</TableHead>
                 <TableHead className="bg-gray-900 border w-[10%] text-center text-white">Margin</TableHead>
-                <TableHead className="bg-gray-900 border w-[8%] text-center text-white">Act</TableHead>
+                {datalogin.datarole === "SUPER_ADMIN" ?
+                  <>
+                    <TableHead className="bg-gray-900 border w-[8%] text-center text-white">Act</TableHead>
+                  </>
+                  : null}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -271,93 +278,97 @@ export default function PurchaseOrder() {
                   <TableCell className="border w-[6%] text-center">{Rupiah.format(dataisi.kurs)}</TableCell>
                   <TableCell className="border w-[5%] text-center">{Rupiah.format(dataisi.overhead_gr)}</TableCell>
                   <TableCell className="border w-[10%] text-center">{dataisi.margin}%</TableCell>
-                  <TableCell className="border text-center w-[8%]">
-                    <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
-                          onClick={() => {
-                            setopenEdit(true)
-                            sete_id_po(dataisi.id_po)
-                            sete_id_batch(dataisi.id_batch)
-                            sete_tanggal_startpo(dataisi.tanggal_startpo)
-                            sete_tanggal_endpo(dataisi.tanggal_endpo)
-                            sete_kurs(dataisi.kurs)
-                            sete_overhead_gr(dataisi.overhead_gr)
-                            sete_margin(dataisi.margin)
-                          }}>
-                          <Icon.FileEdit color="#000000" />
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className='w-[600px]'>
-                        <AlertDialogHeader className='border-b pb-4'>
-                          <AlertDialogTitle >Edit Purchase Order</AlertDialogTitle>
-                        </AlertDialogHeader>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Tanggal Start PO :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" value={e_tanggal_startpo} onChange={(e) => { sete_tanggal_startpo(e.currentTarget.value) }} />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Tanggal End PO :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" value={e_tanggal_endpo} onChange={(e) => { sete_tanggal_endpo(e.currentTarget.value) }} />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Kurs :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" value={e_kurs} onChange={(e) => { sete_kurs(e.currentTarget.value) }} />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Overhead :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" value={e_overhead_gr} onChange={(e) => { sete_overhead_gr(e.currentTarget.value) }} />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Margin :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" placeholder="Product.." value={e_margin} onChange={(e) => { sete_margin(e.currentTarget.value) }} />
-                          </div>
-                        </div>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
-                          <Button onClick={() => {
-                            editPo()
-                          }}>Update</Button>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                  {datalogin.datarole === "SUPER_ADMIN" ?
+                    <>
+                      <TableCell className="border text-center w-[8%]">
+                        <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
+                              onClick={() => {
+                                setopenEdit(true)
+                                sete_id_po(dataisi.id_po)
+                                sete_id_batch(dataisi.id_batch)
+                                sete_tanggal_startpo(dataisi.tanggal_startpo)
+                                sete_tanggal_endpo(dataisi.tanggal_endpo)
+                                sete_kurs(dataisi.kurs)
+                                sete_overhead_gr(dataisi.overhead_gr)
+                                sete_margin(dataisi.margin)
+                              }}>
+                              <Icon.FileEdit color="#000000" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className='w-[600px]'>
+                            <AlertDialogHeader className='border-b pb-4'>
+                              <AlertDialogTitle >Edit Purchase Order</AlertDialogTitle>
+                            </AlertDialogHeader>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Tanggal Start PO :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" value={e_tanggal_startpo} onChange={(e) => { sete_tanggal_startpo(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Tanggal End PO :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" value={e_tanggal_endpo} onChange={(e) => { sete_tanggal_endpo(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Kurs :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" value={e_kurs} onChange={(e) => { sete_kurs(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Overhead :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" value={e_overhead_gr} onChange={(e) => { sete_overhead_gr(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Margin :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" placeholder="Product.." value={e_margin} onChange={(e) => { sete_margin(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
+                              <Button onClick={() => {
+                                editPo()
+                              }}>Update</Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
 
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className='w-[600px]'>
-                        <AlertDialogHeader className='border-b pb-4'>
-                          <AlertDialogTitle >Delete Purchase Order</AlertDialogTitle>
-                          <AlertDialogDescription>Data PO {dataisi.id_po} akan dihapus?</AlertDialogDescription>
-                        </AlertDialogHeader>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className='w-[600px]'>
+                            <AlertDialogHeader className='border-b pb-4'>
+                              <AlertDialogTitle >Delete Purchase Order</AlertDialogTitle>
+                              <AlertDialogDescription>Data PO {dataisi.id_po} akan dihapus?</AlertDialogDescription>
+                            </AlertDialogHeader>
 
-                        <AlertDialogFooter>
-                          <AlertDialogCancel >Cancel</AlertDialogCancel>
-                          <Button className='bg-red-400 font-bold' onClick={() => { deletePo(dataisi.id_po, dataisi.id_batch) }}>Delete</Button>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </TableCell>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel >Cancel</AlertDialogCancel>
+                              <Button className='bg-red-400 font-bold' onClick={() => { deletePo(dataisi.id_po, dataisi.id_batch) }}>Delete</Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </TableCell>
+                    </>
+                    : null}
                 </TableRow>
               ))}
             </TableBody>

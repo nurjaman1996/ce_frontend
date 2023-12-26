@@ -69,7 +69,9 @@ let Rupiah = new Intl.NumberFormat("id-ID", {
 
 let Numbering = new Intl.NumberFormat("id-ID");
 
-export default function PurchaseOrder() {
+export default function PurchaseOrder(Props: any): JSX.Element {
+
+  const [datalogin, setdatalogin]: any = useState("")
 
   const [open, setOpen] = useState(false)
   const [dataBatch, setdataBatch]: any = useState([])
@@ -137,6 +139,7 @@ export default function PurchaseOrder() {
   }
 
   useEffect(() => {
+    setdatalogin(Props.params.datalogin)
     loadDataBatch()
   }, [])
 
@@ -553,9 +556,10 @@ export default function PurchaseOrder() {
             <TableHeader>
               <TableRow className='bg-gray-900 font-bold'>
                 <TableHead className="bg-gray-900 border font-bold w-[3%] text-center text-white">No</TableHead>
-                <TableHead className="bg-gray-900 border font-bold w-[21%] text-left text-white">NAME</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[21.5%] text-left text-white">NAME</TableHead>
+
                 <TableHead className="bg-gray-900 border font-bold w-[2%] text-center text-white">ACT</TableHead>
-                <TableHead className="bg-gray-900 border font-bold w-[3.5%] text-center text-white">VARIATION</TableHead>
+                <TableHead className="bg-gray-900 border font-bold w-[6%] text-center text-white">VARIATION</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[5%] text-center text-white">SIZE</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[5.5%] text-center text-white">WEIGHT</TableHead>
                 <TableHead className="bg-gray-900 border font-bold w-[4%] text-center text-white">QTY</TableHead>
@@ -588,8 +592,11 @@ export default function PurchaseOrder() {
 
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-
-                              <Button variant="link" disabled={dataisi.status_pesanan === "UNPAID" ? false : true} className='text-white font-bold hover:bg-gray-200 -ml-3'><Icon.XCircle size={18} color="#ff0000" /></Button>
+                              {datalogin.datarole === "SUPER_ADMIN" ?
+                                <>
+                                  <Button variant="link" disabled={dataisi.status_pesanan === "UNPAID" ? false : true} className='text-white font-bold hover:bg-gray-200 -ml-3'><Icon.XCircle size={18} color="#ff0000" /></Button>
+                                </>
+                                : null}
                             </AlertDialogTrigger>
                             <AlertDialogContent className='w-[600px]'>
                               <AlertDialogHeader className='border-b pb-4'>
@@ -743,49 +750,55 @@ export default function PurchaseOrder() {
                             </div>
                           </div>
                         </TableCell>
-                        <TableCell className="border w-[1%] text-center">
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button className='bg-red-500 font-bold text-[8px] p-2 rounded-lg'><Icon.RotateCcw className='' size={16} color="#ffffff" /></Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent className='w-[50%]'>
-                              <AlertDialogHeader className='border-b pb-4'>
-                                <AlertDialogTitle >Refund This Order</AlertDialogTitle>
-                              </AlertDialogHeader>
-                              <RadioGroup defaultValue="international_shipping">
-                                <div className='flex flex-row'>
-                                  <div className='grow'>
-                                    <Label className='text-md font-medium p-4 -ml-3'>Product</Label>
-                                    {/* <Input className='h-8 mt-2' /> */}
-                                  </div>
-                                  <div className='basis-1/5 text-center'>
-                                    <Label className='text-md font-medium p-4'>Qty</Label>
-                                  </div>
-                                  <div className='basis-1/8 text-center'>
-                                    <Label className='text-md font-medium p-4 -mr-1'>Act</Label>
-                                  </div>
-                                </div>
-                                <div className='flex flex-row'>
-                                  <div className='grow'>
-                                    <Input className='mt-1 shadow-sm' />
-                                  </div>
-                                  <div className='basis-1/5 text-center flex flex-row mt-1 ml-2 mr-2'>
-                                    <Button className='basis-full p-0 '><Icon.Minus className='ml-1' size={18} color="#ffffff" /></Button>
-                                    <Input className='grow ml-2 mr-2 shadow-sm text-center text-base' placeholder='0' />
-                                    <Button className='basis-full p-0'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
-                                  </div>
-                                  <div className='basis-1/8 text-center bg-cyan-200 mt-1 mb-4'>
-                                    <Button className='p-3 bg-red-500'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
-                                  </div>
-                                </div>
-                              </RadioGroup>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel className='bg-red-400 font-bold'>Cancel</AlertDialogCancel>
-                                <Button className='font-bold'> Save</Button>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
+
+                        <TableCell className="border w-[2.5%] text-center">
+                          {datalogin.datarole === "SUPER_ADMIN" ?
+                            <>
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button className='bg-red-500 font-bold text-[8px] p-2 rounded-lg'><Icon.RotateCcw className='' size={16} color="#ffffff" /></Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent className='w-[50%]'>
+                                  <AlertDialogHeader className='border-b pb-4'>
+                                    <AlertDialogTitle >Refund This Order</AlertDialogTitle>
+                                  </AlertDialogHeader>
+                                  <RadioGroup defaultValue="international_shipping">
+                                    <div className='flex flex-row'>
+                                      <div className='grow'>
+                                        <Label className='text-md font-medium p-4 -ml-3'>Product</Label>
+                                        {/* <Input className='h-8 mt-2' /> */}
+                                      </div>
+                                      <div className='basis-1/5 text-center'>
+                                        <Label className='text-md font-medium p-4'>Qty</Label>
+                                      </div>
+                                      <div className='basis-1/8 text-center'>
+                                        <Label className='text-md font-medium p-4 -mr-1'>Act</Label>
+                                      </div>
+                                    </div>
+                                    <div className='flex flex-row'>
+                                      <div className='grow'>
+                                        <Input className='mt-1 shadow-sm' />
+                                      </div>
+                                      <div className='basis-1/5 text-center flex flex-row mt-1 ml-2 mr-2'>
+                                        <Button className='basis-full p-0 '><Icon.Minus className='ml-1' size={18} color="#ffffff" /></Button>
+                                        <Input className='grow ml-2 mr-2 shadow-sm text-center text-base' placeholder='0' />
+                                        <Button className='basis-full p-0'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
+                                      </div>
+                                      <div className='basis-1/8 text-center bg-cyan-200 mt-1 mb-4'>
+                                        <Button className='p-3 bg-red-500'><Icon.Plus className='ml-1' size={18} color="#ffffff" /></Button>
+                                      </div>
+                                    </div>
+                                  </RadioGroup>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel className='bg-red-400 font-bold'>Cancel</AlertDialogCancel>
+                                    <Button className='font-bold'> Save</Button>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </>
+                            : null}
                         </TableCell>
+
                         <TableCell className="border w-[6%] text-center">{details.variasi}</TableCell>
                         <TableCell className="border w-[5%] text-center">{details.ukuran}</TableCell>
                         <TableCell className="border w-[6%] text-center">{Numbering.format(details.berat)}</TableCell>

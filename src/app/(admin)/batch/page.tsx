@@ -42,7 +42,10 @@ let Rupiah = new Intl.NumberFormat("id-ID", {
 let Numbering = new Intl.NumberFormat("id-ID");
 
 
-export default function Batch() {
+export default function Batch(Props: any): JSX.Element {
+
+    const [datalogin, setdatalogin]: any = useState("")
+
     const [isLoading, setisLoading]: any = useState(true)
     const [dataBatch, setdataBatch]: any = useState([])
     const [dataDEtailsBatch, setdataDEtailsBatch]: any = useState([])
@@ -79,6 +82,7 @@ export default function Batch() {
     }
 
     useEffect(() => {
+        setdatalogin(Props.params.datalogin)
         loadBatch("2020-01-01", new Date())
     }, [])
 
@@ -240,7 +244,11 @@ export default function Batch() {
                                 <TableHead className="bg-gray-900 border  text-white w-[10% text-center">City</TableHead>
                                 <TableHead className="bg-gray-900 border  text-white w-[10%] text-center">Gross Sales</TableHead>
                                 <TableHead className="bg-gray-900 border  text-white w-[10%] text-center">Profit</TableHead>
-                                <TableHead className="bg-gray-900 border  text-white w-[10%] text-center">ACT</TableHead>
+                                {datalogin.datarole === "SUPER_ADMIN" ?
+                                    <>
+                                        <TableHead className="bg-gray-900 border  text-white w-[10%] text-center">ACT</TableHead>
+                                    </>
+                                    : null}
                             </TableRow>
                         </TableHeader>
                         <TableBody className='bg-white'>
@@ -253,66 +261,70 @@ export default function Batch() {
                                     <TableCell className="border w-[10%] text-center ">{dataisi.city}</TableCell>
                                     <TableCell className="border w-[10%] text-center bg-orange-100">{Rupiah.format(dataisi.gross)}</TableCell>
                                     <TableCell className="border w-[10%] text-center  bg-orange-100">{Rupiah.format(dataisi.profit)}</TableCell>
-                                    <TableCell className="border text-center w-[10%]">
+                                    {datalogin.datarole === "SUPER_ADMIN" ?
+                                        <>
+                                            <TableCell className="border text-center w-[10%]">
 
-                                        <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
-                                            <AlertDialogTrigger asChild>
-                                                <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
-                                                    onClick={() => {
-                                                        setopenEdit(true)
-                                                        sete_id_batch(dataisi.id_batch)
-                                                        sete_country(dataisi.country)
-                                                        sete_city(dataisi.city)
-                                                    }}>
-                                                    <Icon.FileEdit color="#000000" />
-                                                </Button>
-                                            </AlertDialogTrigger>
-                                            <AlertDialogContent className='w-[600px]'>
-                                                <AlertDialogHeader className='border-b pb-4'>
-                                                    <AlertDialogTitle >Edit Batch</AlertDialogTitle>
-                                                </AlertDialogHeader>
-                                                <div className='flex flex-row text-center mt-2 items-center'>
-                                                    <div className='basis-1/4 font-bold text-left'>
-                                                        Country :
-                                                    </div>
-                                                    <div className='basis-3/4'>
-                                                        <Input type="text" value={e_country} onChange={(e) => { sete_country(e.currentTarget.value) }} placeholder="Country.." />
-                                                    </div>
-                                                </div>
-                                                <div className='flex flex-row text-center mt-2 items-center'>
-                                                    <div className='basis-1/4 font-bold text-left'>
-                                                        City :
-                                                    </div>
-                                                    <div className='basis-3/4'>
-                                                        <Input type="text" value={e_city} onChange={(e) => { sete_city(e.currentTarget.value) }} placeholder="City.." />
-                                                    </div>
-                                                </div>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
-                                                    <Button onClick={() => {
-                                                        editBatch()
-                                                    }}>Update</Button>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
+                                                <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
+                                                    <AlertDialogTrigger asChild>
+                                                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
+                                                            onClick={() => {
+                                                                setopenEdit(true)
+                                                                sete_id_batch(dataisi.id_batch)
+                                                                sete_country(dataisi.country)
+                                                                sete_city(dataisi.city)
+                                                            }}>
+                                                            <Icon.FileEdit color="#000000" />
+                                                        </Button>
+                                                    </AlertDialogTrigger>
+                                                    <AlertDialogContent className='w-[600px]'>
+                                                        <AlertDialogHeader className='border-b pb-4'>
+                                                            <AlertDialogTitle >Edit Batch</AlertDialogTitle>
+                                                        </AlertDialogHeader>
+                                                        <div className='flex flex-row text-center mt-2 items-center'>
+                                                            <div className='basis-1/4 font-bold text-left'>
+                                                                Country :
+                                                            </div>
+                                                            <div className='basis-3/4'>
+                                                                <Input type="text" value={e_country} onChange={(e) => { sete_country(e.currentTarget.value) }} placeholder="Country.." />
+                                                            </div>
+                                                        </div>
+                                                        <div className='flex flex-row text-center mt-2 items-center'>
+                                                            <div className='basis-1/4 font-bold text-left'>
+                                                                City :
+                                                            </div>
+                                                            <div className='basis-3/4'>
+                                                                <Input type="text" value={e_city} onChange={(e) => { sete_city(e.currentTarget.value) }} placeholder="City.." />
+                                                            </div>
+                                                        </div>
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
+                                                            <Button onClick={() => {
+                                                                editBatch()
+                                                            }}>Update</Button>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
 
-                                        <AlertDialog>
-                                            <AlertDialogTrigger asChild>
-                                                <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
-                                            </AlertDialogTrigger>
-                                            <AlertDialogContent className='w-[600px]'>
-                                                <AlertDialogHeader className='border-b pb-4'>
-                                                    <AlertDialogTitle >Delete Batch</AlertDialogTitle>
-                                                    <AlertDialogDescription>Semua Data dari {dataisi.id_batch}, seperti Produk, History belanja dan lainnya akan dihapus?</AlertDialogDescription>
-                                                </AlertDialogHeader>
+                                                <AlertDialog>
+                                                    <AlertDialogTrigger asChild>
+                                                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
+                                                    </AlertDialogTrigger>
+                                                    <AlertDialogContent className='w-[600px]'>
+                                                        <AlertDialogHeader className='border-b pb-4'>
+                                                            <AlertDialogTitle >Delete Batch</AlertDialogTitle>
+                                                            <AlertDialogDescription>Semua Data dari {dataisi.id_batch}, seperti Produk, History belanja dan lainnya akan dihapus?</AlertDialogDescription>
+                                                        </AlertDialogHeader>
 
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel >Cancel</AlertDialogCancel>
-                                                    <Button className='bg-red-400 font-bold' onClick={() => { deleteBatch(dataisi.id_batch) }}>Delete</Button>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
-                                    </TableCell>
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel >Cancel</AlertDialogCancel>
+                                                            <Button className='bg-red-400 font-bold' onClick={() => { deleteBatch(dataisi.id_batch) }}>Delete</Button>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
+                                            </TableCell>
+                                        </>
+                                        : null}
                                 </TableRow>
                             ))}
                         </TableBody>

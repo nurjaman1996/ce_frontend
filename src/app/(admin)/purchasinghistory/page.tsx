@@ -60,7 +60,9 @@ let Rupiah = new Intl.NumberFormat("id-ID", {
 
 let Numbering = new Intl.NumberFormat("id-ID");
 
-export default function PurchasingHistory() {
+export default function PurchasingHistory(Props: any): JSX.Element {
+  const [datalogin, setdatalogin]: any = useState("")
+
   const [open, setOpen] = useState(false)
   const [dataBatch, setdataBatch]: any = useState([])
   const [valueBatch, setValueBatch]: any = useState("")
@@ -121,6 +123,7 @@ export default function PurchasingHistory() {
   }
 
   useEffect(() => {
+    setdatalogin(Props.params.datalogin)
     loadDataBatch()
   }, [])
 
@@ -389,7 +392,11 @@ export default function PurchasingHistory() {
                 <TableHead className="bg-gray-900 border text-white w-[10%] text-center">Ukuran</TableHead>
                 <TableHead className="bg-gray-900 border text-white w-[3%] text-center">Qty</TableHead>
                 <TableHead className="bg-gray-900 border text-white w-[10%] text-center">Sub Total</TableHead>
-                <TableHead className="bg-gray-900 border text-white w-[10%] text-center">ACT</TableHead>
+                {datalogin.datarole === "SUPER_ADMIN" ?
+                  <>
+                    <TableHead className="bg-gray-900 border text-white w-[10%] text-center">ACT</TableHead>
+                  </>
+                  : null}
               </TableRow>
             </TableHeader>
             <TableBody className='bg-white'>
@@ -407,97 +414,101 @@ export default function PurchasingHistory() {
                   <TableCell className="border w-[10%] text-center">{dataisi.ukuran}</TableCell>
                   <TableCell className="border w-[3%] text-center">{Numbering.format(dataisi.qty)}</TableCell>
                   <TableCell className="border w-[10%] text-center">{Rupiah.format(dataisi.sub_total)}</TableCell>
-                  <TableCell className="border text-center w-[10%]">
+                  {datalogin.datarole === "SUPER_ADMIN" ?
+                    <>
+                      <TableCell className="border text-center w-[10%]">
 
-                    <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
-                          onClick={() => {
-                            setopenEdit(true)
-                            sete_id_purchasing(dataisi.id_purchasing)
-                            sete_id_po(dataisi.id_po)
-                            sete_id_batch(dataisi.id_batch)
-                            sete_id_produk(dataisi.id_produk)
-                            sete_warna(dataisi.warna)
-                            sete_ukuran(dataisi.ukuran)
-                          }}>
-                          <Icon.FileEdit color="#000000" />
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className='w-[600px]'>
-                        <AlertDialogHeader className='border-b pb-4'>
-                          <AlertDialogTitle >Edit History</AlertDialogTitle>
-                        </AlertDialogHeader>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Produk :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" readOnly={true} value={dataisi.produk} />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Warna :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" readOnly={true} value={dataisi.warna} />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Ukuran :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" readOnly={true} value={dataisi.ukuran} />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Qty Lama :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="text" readOnly={true} value={dataisi.qty} />
-                          </div>
-                        </div>
-                        <div className='flex flex-row text-center mt-2 items-center'>
-                          <div className='basis-1/4 font-bold text-left'>
-                            Qty Baru :
-                          </div>
-                          <div className='basis-3/4'>
-                            <Input type="number" min={1} value={e_qty_baru} onChange={(e) => { sete_qty_baru(e.currentTarget.value) }} />
-                          </div>
-                        </div>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
-                          <Button onClick={() => {
-                            editPurchasing()
-                          }}>Update</Button>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                        <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
+                              onClick={() => {
+                                setopenEdit(true)
+                                sete_id_purchasing(dataisi.id_purchasing)
+                                sete_id_po(dataisi.id_po)
+                                sete_id_batch(dataisi.id_batch)
+                                sete_id_produk(dataisi.id_produk)
+                                sete_warna(dataisi.warna)
+                                sete_ukuran(dataisi.ukuran)
+                              }}>
+                              <Icon.FileEdit color="#000000" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className='w-[600px]'>
+                            <AlertDialogHeader className='border-b pb-4'>
+                              <AlertDialogTitle >Edit History</AlertDialogTitle>
+                            </AlertDialogHeader>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Produk :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" readOnly={true} value={dataisi.produk} />
+                              </div>
+                            </div>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Warna :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" readOnly={true} value={dataisi.warna} />
+                              </div>
+                            </div>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Ukuran :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" readOnly={true} value={dataisi.ukuran} />
+                              </div>
+                            </div>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Qty Lama :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="text" readOnly={true} value={dataisi.qty} />
+                              </div>
+                            </div>
+                            <div className='flex flex-row text-center mt-2 items-center'>
+                              <div className='basis-1/4 font-bold text-left'>
+                                Qty Baru :
+                              </div>
+                              <div className='basis-3/4'>
+                                <Input type="number" min={1} value={e_qty_baru} onChange={(e) => { sete_qty_baru(e.currentTarget.value) }} />
+                              </div>
+                            </div>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
+                              <Button onClick={() => {
+                                editPurchasing()
+                              }}>Update</Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
 
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className='w-[600px]'>
-                        <AlertDialogHeader className='border-b pb-4'>
-                          <AlertDialogTitle >Delete History</AlertDialogTitle>
-                          <AlertDialogDescription>Data Purchasing {dataisi.id_purchasing} akan dihapus?</AlertDialogDescription>
-                        </AlertDialogHeader>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className='w-[600px]'>
+                            <AlertDialogHeader className='border-b pb-4'>
+                              <AlertDialogTitle >Delete History</AlertDialogTitle>
+                              <AlertDialogDescription>Data Purchasing {dataisi.id_purchasing} akan dihapus?</AlertDialogDescription>
+                            </AlertDialogHeader>
 
-                        <AlertDialogFooter>
-                          <AlertDialogCancel >Cancel</AlertDialogCancel>
-                          <Button className='bg-red-400 font-bold'
-                            onClick={() => {
-                              deletePurchasing(dataisi.id_purchasing, dataisi.id_po, dataisi.id_batch, dataisi.id_produk, dataisi.warna, dataisi.ukuran)
-                            }}
-                          >Delete</Button>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </TableCell>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel >Cancel</AlertDialogCancel>
+                              <Button className='bg-red-400 font-bold'
+                                onClick={() => {
+                                  deletePurchasing(dataisi.id_purchasing, dataisi.id_po, dataisi.id_batch, dataisi.id_produk, dataisi.warna, dataisi.ukuran)
+                                }}
+                              >Delete</Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </TableCell>
+                    </>
+                    : null}
                 </TableRow>
               ))}
             </TableBody>

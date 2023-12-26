@@ -380,7 +380,7 @@ export default function Products(Props: any): JSX.Element {
                 <TableHead className="border  text-white w-[10%] text-center bg-gray-900">Stock</TableHead>
                 <TableHead className="border  text-white w-[3%] text-center bg-gray-900">Varian</TableHead>
 
-                {datalogin.datarole === "SUPER_ADMIN" ?
+                {datalogin.datarole === "SUPER_ADMIN" || datalogin.datarole === "FINANCE" ?
                   <>
                     <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Kurs</TableHead>
                     <TableHead className="border  text-white w-[5%] text-center bg-gray-900">Overhead</TableHead>
@@ -390,7 +390,11 @@ export default function Products(Props: any): JSX.Element {
                   : null}
 
                 <TableHead className="border  text-white w-[15%] text-center bg-gray-900">Selling Price</TableHead>
-                <TableHead className="border  text-white w-[5%] text-center bg-gray-900">ACT</TableHead>
+                {datalogin.datarole === "SUPER_ADMIN" ?
+                  <>
+                    <TableHead className="border  text-white w-[5%] text-center bg-gray-900">ACT</TableHead>
+                  </>
+                  : null}
               </TableRow>
             </TableHeader>
             <TableBody className='bg-white'>
@@ -490,7 +494,7 @@ export default function Products(Props: any): JSX.Element {
 
                   <TableCell className="border w-[3%] text-center ">{Numbering.format(dataisi.total_variasi)}</TableCell>
 
-                  {datalogin.datarole === "SUPER_ADMIN" ?
+                  {datalogin.datarole === "SUPER_ADMIN" || datalogin.datarole === "FINANCE" ?
                     <>
                       <TableCell className="border w-[5%] text-center bg-orange-100">{Rupiah.format(dataisi.kurs)}</TableCell>
                       <TableCell className="border w-[5%] text-center  bg-orange-100">{Rupiah.format(dataisi.overhead)}</TableCell>
@@ -500,84 +504,63 @@ export default function Products(Props: any): JSX.Element {
                     : null}
 
                   <TableCell className="border w-[15%] text-center ">{Rupiah.format(dataisi.harga_jual)}</TableCell>
-                  <TableCell className="border w-[5%]">
 
-                    <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
-                          onClick={() => {
-                            setopenEdit(true)
-                            setselectedCover([])
-                            sete_imageCover([])
-                            sete_imageDetails([])
-                            sete_deleteImages([])
-                            setopenEditImage(dataisi.images)
+                  {datalogin.datarole === "SUPER_ADMIN" ?
+                    <>
+                      <TableCell className="border w-[5%]">
 
-                            sete_produk(dataisi.produk)
-                            sete_berat_produk(dataisi.berat_produk)
-                            sete_modal_asing(dataisi.modal_asing)
-                            sete_margin(dataisi.margin)
-                            sete_overhead(dataisi.overhead)
-                            sete_kurs(dataisi.kurs)
-                            sete_id_po(dataisi.id_po)
-                            sete_id_batch(dataisi.id_batch)
-                            sete_id_produk(dataisi.id_produk)
+                        <AlertDialog open={openEdit} onOpenChange={setopenEdit}>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="link" className=' text-white font-bold hover:bg-gray-200'
+                              onClick={() => {
+                                setopenEdit(true)
+                                setselectedCover([])
+                                sete_imageCover([])
+                                sete_imageDetails([])
+                                sete_deleteImages([])
+                                setopenEditImage(dataisi.images)
 
-                            const imageDetails: any = []
-                            dataisi.details_img.map((datas: any, index: number) => {
-                              imageDetails.push({
-                                img: `${process.env.NEXT_PUBLIC_HOST}/assets/img/${datas.images}`,
-                                name: datas.images
-                              })
-                            }
-                            )
+                                sete_produk(dataisi.produk)
+                                sete_berat_produk(dataisi.berat_produk)
+                                sete_modal_asing(dataisi.modal_asing)
+                                sete_margin(dataisi.margin)
+                                sete_overhead(dataisi.overhead)
+                                sete_kurs(dataisi.kurs)
+                                sete_id_po(dataisi.id_po)
+                                sete_id_batch(dataisi.id_batch)
+                                sete_id_produk(dataisi.id_produk)
 
-                            setselectedImages(imageDetails)
-                          }}>
-                          <Icon.FileEdit color="#000000" />
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className='w-[60%]'>
-                        <AlertDialogHeader className='border-b pb-4'>
-                          <AlertDialogTitle >Edit Product</AlertDialogTitle>
-                        </AlertDialogHeader>
-                        <div className='flex flex-row'>
-                          <div className='basis-1/3'>
-                            {/* <div className='text-base font-medium text-center'>Cover Image</div> */}
-                            <div className='items-start gap-2  h-[auto]  mb-2'>
-                              {selectedCover.length < 1 ?
-                                <div className=" h-auto pb-2 rounded-md text-center">
-                                  <Image
-                                    className='aspect-square rounded-md -mb-6'
-                                    src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${openEditImage}`}
-                                    width={300}
-                                    height={300}
-                                    alt="Picture of the author"
-                                    // style={{ height: 300, width: 300 }}
-                                    priority
-                                  />
-                                  <label className='cursor-pointer text-xs text-black p-1 rounded-md'>
-                                    <Input
-                                      className=' -mb-10 w-[95%]'
-                                      type="file"
-                                      onChange={onSelectCover}
-                                      accept='image/png, image/jpeg'
-                                    />
-                                  </label>
-                                </div>
-                                :
-                                selectedCover &&
-                                selectedCover.map((image: any, index: number) => {
-                                  return (
-                                    <div key={index} className=" pb-2 rounded-md text-center ">
+                                const imageDetails: any = []
+                                dataisi.details_img.map((datas: any, index: number) => {
+                                  imageDetails.push({
+                                    img: `${process.env.NEXT_PUBLIC_HOST}/assets/img/${datas.images}`,
+                                    name: datas.images
+                                  })
+                                }
+                                )
+
+                                setselectedImages(imageDetails)
+                              }}>
+                              <Icon.FileEdit color="#000000" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className='w-[60%]'>
+                            <AlertDialogHeader className='border-b pb-4'>
+                              <AlertDialogTitle >Edit Product</AlertDialogTitle>
+                            </AlertDialogHeader>
+                            <div className='flex flex-row'>
+                              <div className='basis-1/3'>
+                                {/* <div className='text-base font-medium text-center'>Cover Image</div> */}
+                                <div className='items-start gap-2  h-[auto]  mb-2'>
+                                  {selectedCover.length < 1 ?
+                                    <div className=" h-auto pb-2 rounded-md text-center">
                                       <Image
                                         className='aspect-square rounded-md -mb-6'
-                                        // src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataisi.images}`}
-                                        src={image}
+                                        src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${openEditImage}`}
                                         width={300}
                                         height={300}
                                         alt="Picture of the author"
-                                        // style={{ height: "auto", width: "100%" }}
+                                        // style={{ height: 300, width: 300 }}
                                         priority
                                       />
                                       <label className='cursor-pointer text-xs text-black p-1 rounded-md'>
@@ -589,14 +572,38 @@ export default function Products(Props: any): JSX.Element {
                                         />
                                       </label>
                                     </div>
-                                  )
-                                })
-                              }
+                                    :
+                                    selectedCover &&
+                                    selectedCover.map((image: any, index: number) => {
+                                      return (
+                                        <div key={index} className=" pb-2 rounded-md text-center ">
+                                          <Image
+                                            className='aspect-square rounded-md -mb-6'
+                                            // src={`${process.env.NEXT_PUBLIC_HOST}/assets/img/${dataisi.images}`}
+                                            src={image}
+                                            width={300}
+                                            height={300}
+                                            alt="Picture of the author"
+                                            // style={{ height: "auto", width: "100%" }}
+                                            priority
+                                          />
+                                          <label className='cursor-pointer text-xs text-black p-1 rounded-md'>
+                                            <Input
+                                              className=' -mb-10 w-[95%]'
+                                              type="file"
+                                              onChange={onSelectCover}
+                                              accept='image/png, image/jpeg'
+                                            />
+                                          </label>
+                                        </div>
+                                      )
+                                    })
+                                  }
 
 
-                            </div>
+                                </div>
 
-                            {/* <div className='text-base font-medium mt-4 text-center'>Details Image</div>
+                                {/* <div className='text-base font-medium mt-4 text-center'>Details Image</div>
                             <div className='items-start gap-2 mt-2 h-[auto]'>
                               {selectedImages.length < 1 ?
                                 <div className="border rounded-md">
@@ -650,91 +657,93 @@ export default function Products(Props: any): JSX.Element {
                                 : null}
                             </div> */}
 
-                          </div>
-
-                          <div className='grow flex flex-col gap-2'>
-                            <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-1/3 font-bold text-left'>
-                                Nama Produk :
                               </div>
-                              <div className='grow'>
-                                <Input type="text" placeholder="Product.." value={e_produk} onChange={(e) => { sete_produk(e.currentTarget.value) }} />
+
+                              <div className='grow flex flex-col gap-2'>
+                                <div className='flex flex-row text-center mt-2 items-center'>
+                                  <div className='basis-1/3 font-bold text-left'>
+                                    Nama Produk :
+                                  </div>
+                                  <div className='grow'>
+                                    <Input type="text" placeholder="Product.." value={e_produk} onChange={(e) => { sete_produk(e.currentTarget.value) }} />
+                                  </div>
+                                </div>
+
+                                <div className='flex flex-row text-center mt-2 items-center'>
+                                  <div className='basis-1/3 font-bold text-left'>
+                                    Berat Produk :
+                                  </div>
+                                  <div className='grow'>
+                                    <Input type="text" placeholder="Product.." value={e_berat_produk} onChange={(e) => { sete_berat_produk(e.currentTarget.value) }} />
+                                  </div>
+                                </div>
+
+                                <div className='flex flex-row text-center mt-2 items-center'>
+                                  <div className='basis-1/3 font-bold text-left'>
+                                    Modal Produk (Asing) :
+                                  </div>
+                                  <div className='grow'>
+                                    <Input type="text" placeholder="Product.." value={e_modal_asing} onChange={(e) => { sete_modal_asing(e.currentTarget.value) }} />
+                                  </div>
+                                </div>
+
+                                <div className='flex flex-row text-center mt-2 items-center'>
+                                  <div className='basis-1/3 font-bold text-left'>
+                                    Kurs :
+                                  </div>
+                                  <div className='grow'>
+                                    <Input type="text" placeholder="Product.." value={e_kurs} onChange={(e) => { sete_kurs(e.currentTarget.value) }} />
+                                  </div>
+                                </div>
+
+                                <div className='flex flex-row text-center mt-2 items-center'>
+                                  <div className='basis-1/3 font-bold text-left'>
+                                    Overhead :
+                                  </div>
+                                  <div className='grow'>
+                                    <Input type="text" placeholder="Product.." value={e_overhead} onChange={(e) => { sete_overhead(e.currentTarget.value) }} />
+                                  </div>
+                                </div>
+
+                                <div className='flex flex-row text-center mt-2 items-center'>
+                                  <div className='basis-1/3 font-bold text-left'>
+                                    Margin :
+                                  </div>
+                                  <div className='grow'>
+                                    <Input type="text" placeholder="Product.." value={e_margin} onChange={(e) => { sete_margin(e.currentTarget.value) }} />
+                                  </div>
+                                </div>
                               </div>
                             </div>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
+                              <Button onClick={() => {
+                                editProduk()
+                              }}>Update</Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
 
-                            <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-1/3 font-bold text-left'>
-                                Berat Produk :
-                              </div>
-                              <div className='grow'>
-                                <Input type="text" placeholder="Product.." value={e_berat_produk} onChange={(e) => { sete_berat_produk(e.currentTarget.value) }} />
-                              </div>
-                            </div>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className='w-[600px]'>
+                            <AlertDialogHeader className='border-b pb-4'>
+                              <AlertDialogTitle >Delete Product</AlertDialogTitle>
+                              <AlertDialogDescription>Data Supplier {dataisi.supplier} akan dihapus?</AlertDialogDescription>
+                            </AlertDialogHeader>
 
-                            <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-1/3 font-bold text-left'>
-                                Modal Produk (Asing) :
-                              </div>
-                              <div className='grow'>
-                                <Input type="text" placeholder="Product.." value={e_modal_asing} onChange={(e) => { sete_modal_asing(e.currentTarget.value) }} />
-                              </div>
-                            </div>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel >Cancel</AlertDialogCancel>
+                              <Button className='bg-red-400 font-bold' onClick={() => { deleteProduk(dataisi.id_produk, dataisi.id_po, dataisi.id_batch) }}>Delete</Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
 
-                            <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-1/3 font-bold text-left'>
-                                Kurs :
-                              </div>
-                              <div className='grow'>
-                                <Input type="text" placeholder="Product.." value={e_kurs} onChange={(e) => { sete_kurs(e.currentTarget.value) }} />
-                              </div>
-                            </div>
-
-                            <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-1/3 font-bold text-left'>
-                                Overhead :
-                              </div>
-                              <div className='grow'>
-                                <Input type="text" placeholder="Product.." value={e_overhead} onChange={(e) => { sete_overhead(e.currentTarget.value) }} />
-                              </div>
-                            </div>
-
-                            <div className='flex flex-row text-center mt-2 items-center'>
-                              <div className='basis-1/3 font-bold text-left'>
-                                Margin :
-                              </div>
-                              <div className='grow'>
-                                <Input type="text" placeholder="Product.." value={e_margin} onChange={(e) => { sete_margin(e.currentTarget.value) }} />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel className='bg-red-400'>Cancel</AlertDialogCancel>
-                          <Button onClick={() => {
-                            editProduk()
-                          }}>Update</Button>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="link" className=' text-white font-bold hover:bg-gray-200'> <Icon.XCircle color="#ff0000" /></Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className='w-[600px]'>
-                        <AlertDialogHeader className='border-b pb-4'>
-                          <AlertDialogTitle >Delete Product</AlertDialogTitle>
-                          <AlertDialogDescription>Data Supplier {dataisi.supplier} akan dihapus?</AlertDialogDescription>
-                        </AlertDialogHeader>
-
-                        <AlertDialogFooter>
-                          <AlertDialogCancel >Cancel</AlertDialogCancel>
-                          <Button className='bg-red-400 font-bold' onClick={() => { deleteProduk(dataisi.id_produk, dataisi.id_po, dataisi.id_batch) }}>Delete</Button>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-
-                  </TableCell>
+                      </TableCell>
+                    </>
+                    : null}
                 </TableRow>
               ))}
             </TableBody>
