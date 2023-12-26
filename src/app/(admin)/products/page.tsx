@@ -60,7 +60,13 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-export default function Products() {
+interface HeaderProps {
+  foo: string,
+}
+
+export default function Products(Props: HeaderProps): JSX.Element {
+  const { foo } = Props;
+  console.log(foo);
   const [open, setOpen] = useState(false)
   const [dataBatch, setdataBatch]: any = useState([])
   const [valueBatch, setValueBatch]: any = useState("")
@@ -262,6 +268,8 @@ export default function Products() {
         console.log(error);
       })
   }
+
+
 
   if (isLoading) {
     return (

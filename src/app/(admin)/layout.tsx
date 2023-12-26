@@ -10,10 +10,15 @@ export const metadata: Metadata = {
 }
 
 export default function DashboardLayout({
-  children, // will be a page or nested layout
+  children,
+  params,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
+  params: {
+    foo: string;
+  };
 }) {
+  params.foo = "bar";
 
   const cookieStore: any = cookies();
   const isLogin = cookieStore.get("refreshToken");
@@ -30,6 +35,7 @@ export default function DashboardLayout({
         </div>
         <div className='grow h-full overflow-x-hidden overflow-y-auto bg-[#F4F4F4] p-5'>
           {children}
+
         </div>
       </div>
     </div>
