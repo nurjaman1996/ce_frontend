@@ -73,17 +73,13 @@ export default function Warehouse(Props: any): JSX.Element | undefined {
     });
 
     useEffect(() => {
-
-        return () => {
-            setdatalogin(Props.params.datalogin)
-            loadwarehouse()
-            // if (Props.params.datalogin.datarole != "SUPER_ADMIN") {
-            //     window.location.href = "/dashboard";
-            // } else {
-            //     setdatalogin(Props.params.datalogin)
-            //     loadwarehouse()
-            // }
-        }
+        loadwarehouse()
+        // if (Props.params.datalogin.datarole != "SUPER_ADMIN") {
+        //     window.location.href = "/dashboard";
+        // } else {
+        //     setdatalogin(Props.params.datalogin)
+        //     loadwarehouse()
+        // }
     }, [])
 
     const [provinsiLoading, setprovinsiLoading]: any = useState(true);

@@ -16,17 +16,19 @@ import { cookies } from 'next/headers'
 
 export async function getLogin(username: any, password: any) {
     const data: any = []
+    const login: any = []
 
     await axios.post(`${process.env.NEXT_PUBLIC_HOST}/auth/login`, {
         username: username,
         password: password
     }).then(function (response) {
         data.push(response.data.accessToken)
+        cookies().set('refreshToken', response.data.accessToken)
+        login.push(true)
     }).catch(function (error) {
-        console.log(error.response.data.message);
+        data.push(error.response.data.message);
+        login.push(false)
     })
-
-    cookies().set('refreshToken', data)
 
     // cookies().set({
     //     name: 'refreshToken',
@@ -35,7 +37,7 @@ export async function getLogin(username: any, password: any) {
     //     sameSite: 'none'
     // })
 
-    return data
+    return { data, login }
 }
 
 export async function getLogout() {

@@ -409,7 +409,7 @@ export default function PurchasingHistory(Props: any): JSX.Element {
                   <TableCell className="border w-[7%] text-center">{dataisi.id_po}</TableCell>
                   <TableCell className="border w-[10%] text-center ">{dataisi.id_produk}</TableCell>
                   <TableCell className="border w-[10%] text-center ">{dataisi.produk}</TableCell>
-                  <TableCell className="border w-[10%] text-center">{dataisi.supplier}</TableCell>
+                  <TableCell className="border w-[10%] text-center">{dataisi.id_sup}</TableCell>
                   <TableCell className="border w-[10%] text-center">{dataisi.warna}</TableCell>
                   <TableCell className="border w-[10%] text-center">{dataisi.ukuran}</TableCell>
                   <TableCell className="border w-[3%] text-center">{Numbering.format(dataisi.qty)}</TableCell>

@@ -28,9 +28,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         event.preventDefault()
         setIsLoading(true)
         const data_login = await getLogin(username, password)
-
-        if (data_login) {
+        if (data_login.login[0]) {
             router.push('/dashboard')
+        } else {
+            alert(data_login.data)
+            setstatusLogin(data_login.data)
+            setIsLoading(false)
         }
     }
 
