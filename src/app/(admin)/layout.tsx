@@ -18,11 +18,12 @@ export default function DashboardLayout({
     foo: string;
   };
 }) {
-  params.foo = "bar";
 
   const cookieStore: any = cookies();
   const isLogin = cookieStore.get("refreshToken");
   const dataLogin: any = isLogin.value != '' ? jwtDecode(isLogin.value) : null
+
+  params.foo = dataLogin;
   // const dataLogin: any = "Data"
 
   return (
