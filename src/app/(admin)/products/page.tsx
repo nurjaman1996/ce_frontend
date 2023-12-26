@@ -63,6 +63,8 @@ import {
 export default function Products(Props: any): JSX.Element {
   // console.log(Props.params.datalogin);
 
+  const [datalogin, setdatalogin]: any = useState("")
+
   const [open, setOpen] = useState(false)
   const [dataBatch, setdataBatch]: any = useState([])
   const [valueBatch, setValueBatch]: any = useState("")
@@ -110,8 +112,6 @@ export default function Products(Props: any): JSX.Element {
         console.log(error);
       })
   }
-
-  const [datalogin, setdatalogin]: any = useState("")
   useEffect(() => {
     setdatalogin(Props.params.datalogin)
     loadDataBatch()
@@ -371,7 +371,6 @@ export default function Products(Props: any): JSX.Element {
         </div>
 
         <div className="mt-5 shadow-md">
-          {JSON.stringify(datalogin.datarole)}
           <Table className='border text-xs'>
             <TableHeader>
               <TableRow className='bg-gray-900 font-bold '>
