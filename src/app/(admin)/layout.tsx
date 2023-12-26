@@ -15,7 +15,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
   params: {
-    foo: string;
+    datalogin: string;
   };
 }) {
 
@@ -23,7 +23,7 @@ export default function DashboardLayout({
   const isLogin = cookieStore.get("refreshToken");
   const dataLogin: any = isLogin.value != '' ? jwtDecode(isLogin.value) : null
 
-  params.foo = dataLogin;
+  params.datalogin = dataLogin;
   // const dataLogin: any = "Data"
 
   return (

@@ -61,7 +61,8 @@ import {
 } from "@/components/ui/table"
 
 export default function Products(Props: any): JSX.Element {
-  console.log(Props.params.foo);
+  // console.log(Props.params.datalogin);
+
   const [open, setOpen] = useState(false)
   const [dataBatch, setdataBatch]: any = useState([])
   const [valueBatch, setValueBatch]: any = useState("")
@@ -110,7 +111,9 @@ export default function Products(Props: any): JSX.Element {
       })
   }
 
+  const [datalogin, setdatalogin]: any = useState("")
   useEffect(() => {
+    setdatalogin(Props.params.datalogin)
     loadDataBatch()
   }, [])
 
@@ -368,6 +371,7 @@ export default function Products(Props: any): JSX.Element {
         </div>
 
         <div className="mt-5 shadow-md">
+          {JSON.stringify(datalogin.datarole)}
           <Table className='border text-xs'>
             <TableHeader>
               <TableRow className='bg-gray-900 font-bold '>
@@ -376,10 +380,16 @@ export default function Products(Props: any): JSX.Element {
                 <TableHead className="border  text-white w-[30%] text-left bg-gray-900">Name</TableHead>
                 <TableHead className="border  text-white w-[10%] text-center bg-gray-900">Stock</TableHead>
                 <TableHead className="border  text-white w-[3%] text-center bg-gray-900">Varian</TableHead>
-                <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Kurs</TableHead>
-                <TableHead className="border  text-white w-[5%] text-center bg-gray-900">Overhead</TableHead>
-                <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Margin</TableHead>
-                <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Cost</TableHead>
+
+                {datalogin.datarole === "SUPER_ADMIN" ?
+                  <>
+                    <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Kurs</TableHead>
+                    <TableHead className="border  text-white w-[5%] text-center bg-gray-900">Overhead</TableHead>
+                    <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Margin</TableHead>
+                    <TableHead className="border  text-white w-[6%] text-center bg-gray-900">Cost</TableHead>
+                  </>
+                  : null}
+
                 <TableHead className="border  text-white w-[15%] text-center bg-gray-900">Selling Price</TableHead>
                 <TableHead className="border  text-white w-[5%] text-center bg-gray-900">ACT</TableHead>
               </TableRow>
@@ -480,10 +490,16 @@ export default function Products(Props: any): JSX.Element {
 
 
                   <TableCell className="border w-[3%] text-center ">{Numbering.format(dataisi.total_variasi)}</TableCell>
-                  <TableCell className="border w-[5%] text-center bg-orange-100">{Rupiah.format(dataisi.kurs)}</TableCell>
-                  <TableCell className="border w-[5%] text-center  bg-orange-100">{Rupiah.format(dataisi.overhead)}</TableCell>
-                  <TableCell className="border w-[6%] text-center font-bold text-red-600  bg-orange-100">{dataisi.margin}%</TableCell>
-                  <TableCell className="border w-[10%] text-center  bg-orange-100">{Rupiah.format(dataisi.total_modal_produk)}</TableCell>
+
+                  {datalogin.datarole === "SUPER_ADMIN" ?
+                    <>
+                      <TableCell className="border w-[5%] text-center bg-orange-100">{Rupiah.format(dataisi.kurs)}</TableCell>
+                      <TableCell className="border w-[5%] text-center  bg-orange-100">{Rupiah.format(dataisi.overhead)}</TableCell>
+                      <TableCell className="border w-[6%] text-center font-bold text-red-600  bg-orange-100">{dataisi.margin}%</TableCell>
+                      <TableCell className="border w-[10%] text-center  bg-orange-100">{Rupiah.format(dataisi.total_modal_produk)}</TableCell>
+                    </>
+                    : null}
+
                   <TableCell className="border w-[15%] text-center ">{Rupiah.format(dataisi.harga_jual)}</TableCell>
                   <TableCell className="border w-[5%]">
 

@@ -38,7 +38,7 @@ const Sidebar = (data: any) => {
                     </>
                     : null}
 
-                {/* <div className='font-bold text-[#2A3647]'>Master</div>
+                <div className='font-bold text-[#2A3647]'>Master</div>
 
                 <Link href="/warehouse" className={`${params === '/warehouse' ? `bg-gray-100` : `hover:bg-gray-100`} flex gap-2 py-2 rounded-xl px-3 cursor-pointer items-center font-medium text-[#2A3647]`}>
                     <Icon.Warehouse size={20} />
@@ -78,13 +78,12 @@ const Sidebar = (data: any) => {
                 </Link>
 
 
-
                 <div className='font-bold text-[#2A3647]'>Reporting</div>
 
                 <Link href="/neraca" className={`${params === '/neraca' ? `bg-gray-100` : `hover:bg-gray-100`} flex gap-2 py-2 rounded-xl px-3 cursor-pointer items-center font-medium text-[#2A3647]`}>
                     <Icon.FileBarChart size={20} />
                     <div>Neraca</div>
-                </Link> */}
+                </Link>
             </div>
         </div>
     )
