@@ -10,6 +10,11 @@ const nextConfig = {
     minimumCacheTTL: 1500000,
     unoptimized: true,
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["cecorp.site", "cecollection.id"],
+    },
+  },
 };
 
 module.exports = nextConfig;
